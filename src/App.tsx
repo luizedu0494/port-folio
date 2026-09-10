@@ -46,6 +46,38 @@ export const App: React.FC = () => {
     return () => observer.disconnect();
   }, []);
 
+  // Typewriter effect state
+  const roles = [
+    'Desenvolvedor de Agentes & Inteligência Artificial',
+    'Engenheiro de IA & Soluções Generativas',
+    'Desenvolvedor Fullstack React 19 & Python'
+  ];
+  const [roleIndex, setRoleIndex] = useState(0);
+  const [displayText, setDisplayText] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    const currentRole = roles[roleIndex];
+    const typingSpeed = isDeleting ? 30 : 60;
+
+    const timeout = setTimeout(() => {
+      if (!isDeleting) {
+        setDisplayText(currentRole.substring(0, displayText.length + 1));
+        if (displayText.length === currentRole.length) {
+          setTimeout(() => setIsDeleting(true), 2200);
+        }
+      } else {
+        setDisplayText(currentRole.substring(0, displayText.length - 1));
+        if (displayText.length === 0) {
+          setIsDeleting(false);
+          setRoleIndex((prev) => (prev + 1) % roles.length);
+        }
+      }
+    }, typingSpeed);
+
+    return () => clearTimeout(timeout);
+  }, [displayText, isDeleting, roleIndex]);
+
   const featuredProject = projects.find(p => p.featured) || projects[0];
 
   const filteredProjects = projects.filter(project => {
@@ -102,43 +134,65 @@ export const App: React.FC = () => {
       {/* Hero Section (#inicio) */}
       <section id="inicio" className="hero-section reveal-on-scroll">
         <div className="container">
-          <div className="hero-badge-tag">
-            <span className="ai-pulse-dot"></span>
-            <Brain size={16} /> {profile.targetRole}
-          </div>
-          <h1 className="hero-title font-display">
-            {profile.name}
-          </h1>
-          <p className="hero-headline font-subtitle">
-            {profile.headline}
-          </p>
-          <p className="hero-bio">
-            {profile.aboutMe.summary}
-          </p>
+          <div className="hero-grid">
+            <div className="hero-text-content">
+              <div className="hero-badge-tag">
+                <Brain size={16} color="#ff4d6d" />
+                <span className="typewriter-role">{displayText}</span>
+                <span className="cursor-blink">|</span>
+              </div>
 
-          <div className="hero-actions">
-            <a href={profile.contacts.github} target="_blank" rel="noopener noreferrer" className="btn-primary">
-              <GithubIcon size={18} /> Ver Perfil no GitHub
-            </a>
-            <a href={profile.contacts.linkedin} target="_blank" rel="noopener noreferrer" className="btn-secondary">
-              <LinkedinIcon size={18} color="#0077b5" /> Conectar no LinkedIn
-            </a>
-          </div>
+              <h1 className="hero-title font-display">
+                {profile.name}
+              </h1>
+              <p className="hero-headline font-subtitle">
+                {profile.headline}
+              </p>
+              <p className="hero-bio">
+                {profile.aboutMe.summary}
+              </p>
 
-          {/* Quick Contact Pills */}
-          <div className="contact-pills">
-            <a href={profile.contacts.linkedin} target="_blank" rel="noopener noreferrer" className="contact-pill">
-              <LinkedinIcon size={14} color="#0077b5" /> LinkedIn
-            </a>
-            <a href={profile.contacts.whatsapp} target="_blank" rel="noopener noreferrer" className="contact-pill">
-              <MessageSquare size={14} color="#ff4d6d" /> WhatsApp
-            </a>
-            <a href={profile.contacts.email} className="contact-pill">
-              <Mail size={14} color="#ff4d6d" /> E-mail
-            </a>
-            <span className="contact-pill">
-              📍 {profile.location}
-            </span>
+              <div className="hero-actions">
+                <a href={profile.contacts.github} target="_blank" rel="noopener noreferrer" className="btn-primary">
+                  <GithubIcon size={18} /> Ver Perfil no GitHub
+                </a>
+                <a href={profile.contacts.linkedin} target="_blank" rel="noopener noreferrer" className="btn-secondary">
+                  <LinkedinIcon size={18} color="#0077b5" /> Conectar no LinkedIn
+                </a>
+              </div>
+
+              {/* Quick Contact Pills */}
+              <div className="contact-pills">
+                <a href={profile.contacts.linkedin} target="_blank" rel="noopener noreferrer" className="contact-pill">
+                  <LinkedinIcon size={14} color="#0077b5" /> LinkedIn
+                </a>
+                <a href={profile.contacts.whatsapp} target="_blank" rel="noopener noreferrer" className="contact-pill">
+                  <MessageSquare size={14} color="#ff4d6d" /> WhatsApp
+                </a>
+                <a href={profile.contacts.email} className="contact-pill">
+                  <Mail size={14} color="#ff4d6d" /> E-mail
+                </a>
+                <span className="contact-pill">
+                  📍 {profile.location}
+                </span>
+              </div>
+            </div>
+
+            {/* AI Avatar / Image side by title */}
+            <div className="hero-avatar-container">
+              <div className="hero-avatar-wrapper">
+                <img 
+                  src="/ai_avatar.jpg" 
+                  alt="Luiz Eduardo - AI Engineer & Developer Avatar" 
+                  className="hero-avatar-img"
+                />
+                <div className="hero-avatar-glow"></div>
+                <div className="avatar-tech-badge">
+                  <Sparkles size={14} color="#ff4d6d" />
+                  <span>NEURAL AGENT ACTIVE</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -259,8 +313,8 @@ export const App: React.FC = () => {
             </div>
 
             <div className="featured-card">
-              <div className="featured-content">
-                <div>
+              <div className="featured-grid">
+                <div className="featured-text">
                   <h3 className="featured-title">{featuredProject.name}</h3>
                   <p className="featured-description">{featuredProject.description}</p>
                   
@@ -305,6 +359,20 @@ export const App: React.FC = () => {
                     >
                       <GithubIcon size={18} /> Ver Repositório no GitHub
                     </a>
+                  </div>
+                </div>
+
+                {/* Demonstration Preview Container (GIF / Screen) */}
+                <div className="featured-media-container">
+                  <div className="featured-media-wrapper">
+                    <img 
+                      src="/cronolab_preview.jpg" 
+                      alt="CronoLab 2.0 Interface & AI Assistant Preview" 
+                      className="featured-media-img"
+                    />
+                    <div className="media-overlay-badge font-subtitle">
+                      <span>IA LIVE DEMO</span>
+                    </div>
                   </div>
                 </div>
               </div>

@@ -228,143 +228,89 @@ button {
   color: var(--accent-soft);
 }
 
-/* Hero Section */
-.hero-section {
-  padding-top: 150px;
-  padding-bottom: 70px;
-}
-
-.hero-badge-tag {
-  display: inline-flex;
+/* Hero Layout Grid (Desktop 2 Colunas com Avatar 3D) */
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
   align-items: center;
-  gap: 8px;
-  background: rgba(220, 20, 60, 0.12);
-  border: 1px solid var(--border-crimson);
-  color: var(--accent-soft);
-  padding: 6px 16px;
-  border-radius: var(--radius-pill);
-  font-size: 0.85rem;
-  margin-bottom: 20px;
-  box-shadow: 0 0 15px rgba(220, 20, 60, 0.2);
 }
 
-/* Efeito de Pulsar no Badge de IA */
-.ai-pulse-dot {
-  width: 8px;
-  height: 8px;
-  background-color: var(--accent-soft);
-  border-radius: 50%;
-  box-shadow: 0 0 10px var(--accent-soft);
-  animation: pulseDot 1.8s infinite ease-in-out;
+@media (min-width: 992px) {
+  .hero-grid {
+    grid-template-columns: 1.3fr 0.9fr;
+  }
 }
 
-@keyframes pulseDot {
-  0% { transform: scale(0.9); opacity: 0.6; }
-  50% { transform: scale(1.4); opacity: 1; }
-  100% { transform: scale(0.9); opacity: 0.6; }
-}
-
-.hero-title {
-  font-size: 3.6rem;
-  font-weight: 900;
-  line-height: 1.1;
-  margin-bottom: 16px;
-  background: linear-gradient(180deg, #ffffff 40%, #b0b0d0 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.hero-headline {
-  font-size: 1.35rem;
+.typewriter-role {
   color: var(--accent-soft);
   font-weight: 600;
-  margin-bottom: 16px;
 }
 
-.hero-bio {
-  font-size: 1.05rem;
-  color: var(--text-secondary);
-  max-width: 760px;
-  margin-bottom: 32px;
+.cursor-blink {
+  color: var(--accent-crimson);
+  font-weight: 700;
+  animation: blinkCursor 0.8s infinite;
+  margin-left: 2px;
 }
 
-.hero-actions {
+@keyframes blinkCursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Avatar Cyberpunk 3D Flutuante */
+.hero-avatar-container {
   display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
+  justify-content: center;
   align-items: center;
-}
-
-/* Primary Button (Crimson) com Efeito Glow Vivo */
-.btn-primary {
-  background: var(--accent-crimson);
-  color: #ffffff;
-  font-weight: 600;
-  padding: 12px 26px;
-  border-radius: var(--radius-md);
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  transition: all var(--transition-fast);
-  box-shadow: 0 4px 20px var(--accent-glow);
   position: relative;
-  overflow: hidden;
 }
 
-.btn-primary:hover {
-  background: var(--accent-soft);
-  transform: translateY(-3px);
-  box-shadow: 0 8px 28px rgba(255, 77, 109, 0.6);
-}
-
-/* Secondary Button */
-.btn-secondary {
-  background: rgba(26, 26, 46, 0.6);
-  color: var(--text-primary);
+.hero-avatar-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  border-radius: var(--radius-lg);
+  padding: 8px;
+  background: linear-gradient(135deg, rgba(220, 20, 60, 0.4) 0%, rgba(26, 26, 46, 0.8) 100%);
   border: 1px solid var(--border-crimson);
-  font-weight: 600;
-  padding: 12px 24px;
-  border-radius: var(--radius-md);
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  transition: all var(--transition-fast);
-  backdrop-filter: blur(8px);
+  box-shadow: 0 12px 40px rgba(220, 20, 60, 0.3);
+  animation: floatAnimation 6s ease-in-out infinite;
 }
 
-.btn-secondary:hover {
-  background: rgba(220, 20, 60, 0.15);
-  border-color: var(--accent-soft);
-  color: var(--accent-soft);
-  transform: translateY(-3px);
+@keyframes floatAnimation {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-12px) rotate(0.8deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
 }
 
-/* Contact Pills */
-.contact-pills {
-  display: flex;
-  gap: 12px;
-  margin-top: 24px;
-  flex-wrap: wrap;
+.hero-avatar-img {
+  width: 100%;
+  height: auto;
+  border-radius: calc(var(--radius-lg) - 4px);
+  display: block;
+  object-fit: cover;
 }
 
-.contact-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 14px;
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
+.avatar-tech-badge {
+  position: absolute;
+  bottom: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(5, 5, 16, 0.95);
+  border: 1px solid var(--border-crimson);
+  padding: 6px 14px;
   border-radius: var(--radius-pill);
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-  transition: all var(--transition-fast);
-}
-
-.contact-pill:hover {
-  border-color: var(--accent-crimson);
+  font-size: 0.75rem;
+  font-family: var(--font-subtitle);
+  letter-spacing: 0.06em;
   color: #fff;
-  background: rgba(26, 26, 46, 0.9);
-  transform: translateY(-2px);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  box-shadow: 0 4px 20px var(--accent-glow);
 }
 
 /* Featured Hero Project Card (CronoLab 2.0) */
@@ -402,10 +348,57 @@ button {
   transform: translateY(-4px);
 }
 
-.featured-content {
+.featured-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 24px;
+  gap: 32px;
+  align-items: center;
+}
+
+@media (min-width: 992px) {
+  .featured-grid {
+    grid-template-columns: 1.2fr 1fr;
+  }
+}
+
+.featured-media-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.featured-media-wrapper {
+  position: relative;
+  width: 100%;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--border-crimson);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+}
+
+.featured-media-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.featured-media-wrapper:hover .featured-media-img {
+  transform: scale(1.03);
+}
+
+.media-overlay-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(220, 20, 60, 0.88);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  letter-spacing: 0.05em;
 }
 
 .featured-title {
