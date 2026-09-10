@@ -32,20 +32,20 @@ export const NeuralNetworkBg: React.FC = () => {
 
     window.addEventListener('resize', handleResize);
 
-    // Ajuste equilibrado: quantidade e brilho elegantes sem ofuscar o conteúdo
-    const particleCount = Math.min(Math.floor((width * height) / 9000), 90);
-    const maxDistance = 130;
+    // Ajuste perfeito: nós e conexões neurais visíveis e nítidas sem poluir a leitura
+    const particleCount = Math.min(Math.floor((width * height) / 7500), 110);
+    const maxDistance = 145;
     const particles: Particle[] = [];
 
     for (let i = 0; i < particleCount; i++) {
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.5,
-        vy: (Math.random() - 0.5) * 0.5,
-        radius: Math.random() * 1.8 + 1.0,
-        alpha: Math.random() * 0.4 + 0.15,
-        pulseSpeed: (Math.random() * 0.015 + 0.005) * (Math.random() > 0.5 ? 1 : -1)
+        vx: (Math.random() - 0.5) * 0.6,
+        vy: (Math.random() - 0.5) * 0.6,
+        radius: Math.random() * 2.2 + 1.2,
+        alpha: Math.random() * 0.5 + 0.35,
+        pulseSpeed: (Math.random() * 0.02 + 0.008) * (Math.random() > 0.5 ? 1 : -1)
       });
     }
 
@@ -62,22 +62,22 @@ export const NeuralNetworkBg: React.FC = () => {
         p.y += p.vy;
 
         p.alpha += p.pulseSpeed;
-        if (p.alpha > 0.55 || p.alpha < 0.12) {
+        if (p.alpha > 0.85 || p.alpha < 0.3) {
           p.pulseSpeed *= -1;
         }
 
         if (p.x < 0 || p.x > width) p.vx *= -1;
         if (p.y < 0 || p.y > height) p.vy *= -1;
 
-        // Nós suaves com transparência refinada e brilho sutil
+        // Nós vibrantes com halo de luz suave
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(255, 77, 109, ${p.alpha})`;
-        ctx.shadowBlur = 4;
-        ctx.shadowColor = 'rgba(220, 20, 60, 0.4)';
+        ctx.shadowBlur = 8;
+        ctx.shadowColor = 'rgba(220, 20, 60, 0.6)';
         ctx.fill();
 
-        // Linhas de sinapse discretas e sofisticadas
+        // Linhas de sinapse visíveis e marcantes
         for (let j = i + 1; j < particles.length; j++) {
           const p2 = particles[j];
           const dx = p.x - p2.x;
@@ -85,12 +85,12 @@ export const NeuralNetworkBg: React.FC = () => {
           const dist = Math.sqrt(dx * dx + dy * dy);
 
           if (dist < maxDistance) {
-            const lineAlpha = (1 - dist / maxDistance) * 0.18;
+            const lineAlpha = (1 - dist / maxDistance) * 0.32;
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(p2.x, p2.y);
             ctx.strokeStyle = `rgba(220, 20, 60, ${lineAlpha})`;
-            ctx.lineWidth = 0.8;
+            ctx.lineWidth = 1.1;
             ctx.shadowBlur = 0;
             ctx.stroke();
           }
@@ -119,7 +119,7 @@ export const NeuralNetworkBg: React.FC = () => {
         height: '100vh',
         zIndex: -1,
         pointerEvents: 'none',
-        opacity: 0.75
+        opacity: 0.88
       }}
     />
   );
