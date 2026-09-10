@@ -42,6 +42,7 @@ export interface Project {
   language: string;
   featured?: boolean;
   demoUrl?: string;
+  imageUrl?: string;
   description: string;
   stack: string[];
   highlights?: string[];
