@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none">
+  <!-- Fundo escuro elegante com cantos suaves -->
+  <rect width="32" height="32" rx="8" fill="#050510"/>
+  
+  <!-- Ícone de Cérebro/IA & Sparkle em Vermelho Crimson (#dc143c & #ff4d6d) -->
+  <path d="M16 4L18.2 11.8L26 14L18.2 16.2L16 24L13.8 16.2L6 14L13.8 11.8L16 4Z" fill="url(#crimsonGlow)"/>
+  <circle cx="24" cy="8" r="2.5" fill="#ff4d6d"/>
+  <circle cx="8" cy="22" r="2" fill="#dc143c"/>
+  
+  <!-- Gradiente Crimson Neon -->
+  <defs>
+    <linearGradient id="crimsonGlow" x1="6" y1="4" x2="26" y2="24" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ff4d6d"/>
+      <stop offset="100%" stop-color="#dc143c"/>
+    </linearGradient>
+  </defs>
+</svg>

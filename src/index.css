@@ -340,6 +340,7 @@ button {
   font-weight: 600;
   display: inline-block;
   white-space: pre;
+  margin-left: 0.4em;
 }
 
 .typewriter-cursor {
