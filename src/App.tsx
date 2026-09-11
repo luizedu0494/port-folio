@@ -8,6 +8,7 @@ import { initialProfile, initialProjects } from './data/initialData';
 import { TypewriterText } from './components/TypewriterText';
 import { MatrixDataStreamCard } from './components/MatrixDataStreamCard';
 import { NeuralNetworkBg } from './components/NeuralNetworkBg';
+import { AudioPlayer } from './components/AudioPlayer';
 
 const GithubIcon = ({ size = 18, color = 'currentColor' }: { size?: number; color?: string }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -96,6 +97,7 @@ export const App: React.FC = () => {
             <a href="#projetos" className="nav-link">
               <Layers size={16} /> Projetos
             </a>
+            <AudioPlayer variant="navbar" />
             <a href="#contato" className="btn-primary" style={{ padding: '6px 16px', fontSize: '0.85rem' }}>
               <Send size={14} /> Contato
             </a>
@@ -204,6 +206,11 @@ export const App: React.FC = () => {
                     </div>
                   ))}
                 </div>
+              </div>
+
+              {/* Player de Música Expandido em Sobre Mim */}
+              <div style={{ marginTop: '32px' }}>
+                <AudioPlayer variant="expanded" />
               </div>
             </div>
           </div>
