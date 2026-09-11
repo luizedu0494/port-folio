@@ -314,6 +314,12 @@ export const App: React.FC = () => {
                     </a>
                   </div>
                 </div>
+
+                {featuredProject.imageUrl && (
+                  <div className="featured-image-container">
+                    <img src={featuredProject.imageUrl} alt={featuredProject.name} className="featured-gif-preview" />
+                  </div>
+                )}
               </div>
             </div>
           </div>

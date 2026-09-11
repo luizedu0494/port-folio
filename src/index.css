@@ -433,7 +433,39 @@ button {
 .featured-content {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 24px;
+  gap: 32px;
+  align-items: center;
+}
+
+@media (min-width: 992px) {
+  .featured-content {
+    grid-template-columns: 1.1fr 1fr;
+  }
+}
+
+.featured-image-container {
+  width: 100%;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--border-crimson);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+  background: rgba(5, 5, 16, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.featured-gif-preview {
+  width: 100%;
+  height: auto;
+  max-height: 380px;
+  object-fit: cover;
+  display: block;
+  transition: transform var(--transition-normal);
+}
+
+.featured-card:hover .featured-gif-preview {
+  transform: scale(1.03);
 }
 
 .featured-title {
