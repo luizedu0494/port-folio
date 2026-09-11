@@ -9,7 +9,9 @@ interface AudioContextType {
   volume: number;
   currentTime: number;
   duration: number;
+  hasStartedWithAudio: boolean;
   togglePlay: () => void;
+  startExperienceWithAudio: () => void;
   handleNext: () => void;
   handlePrev: () => void;
   handleSeek: (time: number) => void;
@@ -24,9 +26,10 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
-  const [volume, setVolumeState] = useState(0.15); // Volume padrão suave (15%)
+  const [volume, setVolumeState] = useState(0.15); // Volume padrão 15%
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [hasStartedWithAudio, setHasStartedWithAudio] = useState(false);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const currentTrack: Track = playlist[currentTrackIndex] || playlist[0];
@@ -49,38 +52,9 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     audio.addEventListener('loadedmetadata', updateDuration);
     audio.addEventListener('ended', handleEnded);
 
-    // Tenta reprodução imediata com o volume suave de 15%
-    const attemptPlay = () => {
-      audio.play().then(() => {
-        setIsPlaying(true);
-      }).catch(() => {
-        // Caso o navegador bloqueie áudio não solicitado, inicia silenciado e desmuta na 1ª ação
-        audio.muted = true;
-        audio.play().then(() => {
-          setIsPlaying(true);
-        }).catch(() => {});
-
-        const unlockAudio = () => {
-          if (audioRef.current) {
-            audioRef.current.muted = false;
-            audioRef.current.volume = volume;
-            audioRef.current.play().then(() => {
-              setIsPlaying(true);
-            }).catch(() => {});
-          }
-        };
-
-        const opts = { once: true, capture: true };
-        window.addEventListener('pointerdown', unlockAudio, opts);
-        window.addEventListener('touchstart', unlockAudio, opts);
-        window.addEventListener('mousemove', unlockAudio, opts);
-        window.addEventListener('scroll', unlockAudio, opts);
-        window.addEventListener('keydown', unlockAudio, opts);
-        window.addEventListener('click', unlockAudio, opts);
-      });
-    };
-
-    attemptPlay();
+    if (isPlaying) {
+      audio.play().catch(() => {});
+    }
 
     return () => {
       audio.removeEventListener('timeupdate', updateTime);
@@ -95,22 +69,37 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   }, [volume, isMuted]);
 
+  const startExperienceWithAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.volume = volume;
+      audioRef.current.play().then(() => {
+        setIsPlaying(true);
+        setHasStartedWithAudio(true);
+      }).catch(err => console.log('Audio playback allowed via user click:', err));
+    }
+  };
+
   const togglePlay = () => {
     if (!audioRef.current) return;
     if (isPlaying) {
       audioRef.current.pause();
       setIsPlaying(false);
     } else {
-      audioRef.current.play().then(() => setIsPlaying(true)).catch(err => console.log(err));
+      audioRef.current.play().then(() => {
+        setIsPlaying(true);
+        setHasStartedWithAudio(true);
+      }).catch(err => console.log(err));
     }
   };
 
   const handleNext = () => {
     setCurrentTrackIndex((prev) => (prev + 1) % playlist.length);
+    setIsPlaying(true);
   };
 
   const handlePrev = () => {
     setCurrentTrackIndex((prev) => (prev - 1 + playlist.length) % playlist.length);
+    setIsPlaying(true);
   };
 
   const handleSeek = (time: number) => {
@@ -128,6 +117,7 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const selectTrack = (index: number) => {
     setCurrentTrackIndex(index);
     setIsPlaying(true);
+    setHasStartedWithAudio(true);
   };
 
   return (
@@ -139,7 +129,9 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       volume,
       currentTime,
       duration,
+      hasStartedWithAudio,
       togglePlay,
+      startExperienceWithAudio,
       handleNext,
       handlePrev,
       handleSeek,

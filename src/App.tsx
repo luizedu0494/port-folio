@@ -9,6 +9,7 @@ import { TypewriterText } from './components/TypewriterText';
 import { MatrixDataStreamCard } from './components/MatrixDataStreamCard';
 import { NeuralNetworkBg } from './components/NeuralNetworkBg';
 import { AudioPlayer } from './components/AudioPlayer';
+import { AudioEntryBanner } from './components/AudioEntryBanner';
 import { AudioProvider } from './context/AudioContext';
 
 const GithubIcon = ({ size = 18, color = 'currentColor' }: { size?: number; color?: string }) => (
@@ -72,6 +73,9 @@ export const AppContent: React.FC = () => {
     <div className="portfolio-app">
       {/* Background de Rede Neural Interativa em Movimento */}
       <NeuralNetworkBg />
+
+      {/* Banner Topo Fixo para Ativação da Trilha Sonora */}
+      <AudioEntryBanner />
 
       {/* Glassmorphism Header com Navegação Limpa */}
       <header className="navbar">

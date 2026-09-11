@@ -1092,3 +1092,83 @@ button {
   color: var(--text-muted);
 }
 
+/* Audio Entry Floating Banner */
+.audio-entry-banner {
+  position: fixed;
+  top: 76px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 99;
+  width: 90%;
+  max-width: 620px;
+  background: rgba(12, 12, 29, 0.95);
+  border: 1px solid var(--accent-crimson);
+  border-radius: var(--radius-pill);
+  padding: 8px 16px;
+  box-shadow: 0 8px 32px rgba(220, 20, 60, 0.35);
+  backdrop-filter: blur(16px);
+  animation: slideDownBanner 0.5s ease-out;
+}
+
+@keyframes slideDownBanner {
+  from { transform: translate(-50%, -20px); opacity: 0; }
+  to { transform: translate(-50%, 0); opacity: 1; }
+}
+
+.audio-entry-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: space-between;
+}
+
+.audio-entry-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: rgba(220, 20, 60, 0.15);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.audio-entry-text {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.audio-entry-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.audio-entry-desc {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.audio-entry-btn {
+  padding: 6px 14px !important;
+  font-size: 0.8rem !important;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.audio-entry-close {
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: 50%;
+  transition: color var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.audio-entry-close:hover {
+  color: var(--accent-soft);
+}
+
