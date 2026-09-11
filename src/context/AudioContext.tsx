@@ -24,7 +24,7 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
-  const [volume, setVolumeState] = useState(0.4);
+  const [volume, setVolumeState] = useState(0.15); // Volume padrão suave (15%)
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
 
@@ -34,12 +34,12 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   useEffect(() => {
     if (!audioRef.current) {
       audioRef.current = new Audio(currentTrack.src);
-      audioRef.current.volume = volume;
     } else {
       audioRef.current.src = currentTrack.src;
     }
 
     const audio = audioRef.current;
+    audio.volume = isMuted ? 0 : volume;
 
     const updateTime = () => setCurrentTime(audio.currentTime);
     const updateDuration = () => setDuration(audio.duration || 0);
@@ -49,27 +49,38 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     audio.addEventListener('loadedmetadata', updateDuration);
     audio.addEventListener('ended', handleEnded);
 
-    // Try immediate autoplay
-    audio.play().then(() => {
-      setIsPlaying(true);
-    }).catch(() => {
-      // If blocked by browser autoplay policy, start on first mouse movement, touch, key or scroll
-      const triggerPlay = () => {
-        if (audioRef.current) {
-          audioRef.current.play().then(() => {
-            setIsPlaying(true);
-          }).catch(e => console.log('Autoplay play error:', e));
-        }
-      };
+    // Tenta reprodução imediata com o volume suave de 15%
+    const attemptPlay = () => {
+      audio.play().then(() => {
+        setIsPlaying(true);
+      }).catch(() => {
+        // Caso o navegador bloqueie áudio não solicitado, inicia silenciado e desmuta na 1ª ação
+        audio.muted = true;
+        audio.play().then(() => {
+          setIsPlaying(true);
+        }).catch(() => {});
 
-      const options = { once: true, capture: true };
-      window.addEventListener('pointerdown', triggerPlay, options);
-      window.addEventListener('touchstart', triggerPlay, options);
-      window.addEventListener('mousemove', triggerPlay, options);
-      window.addEventListener('scroll', triggerPlay, options);
-      window.addEventListener('keydown', triggerPlay, options);
-      window.addEventListener('click', triggerPlay, options);
-    });
+        const unlockAudio = () => {
+          if (audioRef.current) {
+            audioRef.current.muted = false;
+            audioRef.current.volume = volume;
+            audioRef.current.play().then(() => {
+              setIsPlaying(true);
+            }).catch(() => {});
+          }
+        };
+
+        const opts = { once: true, capture: true };
+        window.addEventListener('pointerdown', unlockAudio, opts);
+        window.addEventListener('touchstart', unlockAudio, opts);
+        window.addEventListener('mousemove', unlockAudio, opts);
+        window.addEventListener('scroll', unlockAudio, opts);
+        window.addEventListener('keydown', unlockAudio, opts);
+        window.addEventListener('click', unlockAudio, opts);
+      });
+    };
+
+    attemptPlay();
 
     return () => {
       audio.removeEventListener('timeupdate', updateTime);
