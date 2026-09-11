@@ -173,8 +173,17 @@ export const App: React.FC = () => {
             </h2>
           </div>
 
-          <div className="sobre-grid" style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '32px', alignItems: 'center' }}>
-            <div style={{ background: 'var(--bg-card)', padding: '32px', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-color)' }}>
+          <div className="sobre-grid">
+            {/* Cenário Visual AGP / Earth Space GIF (Posicionado à esquerda para dinamismo) */}
+            <div className="sobre-scenery-wrapper">
+              <img 
+                src="/assets/gifs/earth-space.gif" 
+                alt="Planeta Espacial & Agente IA" 
+                className="sobre-scenery-gif"
+              />
+            </div>
+
+            <div className="sobre-card-content">
               <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', fontSize: '1.05rem', color: 'var(--text-secondary)' }}>
                 {profile.aboutMe.paragraphs.map((paragraph, index) => (
                   <p key={index} style={{ lineHeight: '1.7' }}>
@@ -196,15 +205,6 @@ export const App: React.FC = () => {
                   ))}
                 </div>
               </div>
-            </div>
-
-            {/* Cenário Visual AGP / Earth Space GIF */}
-            <div className="sobre-scenery-wrapper">
-              <img 
-                src="/assets/gifs/earth-space.gif" 
-                alt="Planeta Espacial & Agente IA" 
-                className="sobre-scenery-gif"
-              />
             </div>
           </div>
         </div>

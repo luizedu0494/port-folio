@@ -265,8 +265,9 @@ button {
   height: auto;
   max-height: 380px;
   object-fit: contain;
-  mix-blend-mode: screen;
-  filter: drop-shadow(0 0 25px rgba(220, 20, 60, 0.45));
+  mix-blend-mode: multiply;
+  border-radius: var(--radius-md);
+  filter: drop-shadow(0 0 25px rgba(220, 20, 60, 0.45)) contrast(1.1);
   transition: transform var(--transition-normal);
 }
 
@@ -322,11 +323,23 @@ button {
   100% { background-position: 0% 50%; }
 }
 
-/* Typewriter Styles */
+/* Typewriter Styles - Fixed height grid container to completely prevent layout text push */
+.hero-headline {
+  font-size: 1.35rem;
+  color: var(--accent-soft);
+  font-weight: 600;
+  margin-bottom: 16px;
+  height: 2.8em;
+  display: flex;
+  align-items: flex-start;
+  overflow: hidden;
+}
+
 .typewriter-wrapper {
   color: var(--accent-soft);
   font-weight: 600;
-  display: inline;
+  display: inline-block;
+  white-space: pre;
 }
 
 .typewriter-cursor {
@@ -620,10 +633,24 @@ button {
   border-color: var(--accent-crimson);
 }
 
+.sobre-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  align-items: center;
+}
+
 @media (min-width: 992px) {
   .sobre-grid {
-    grid-template-columns: 1.2fr 0.8fr !important;
+    grid-template-columns: 0.8fr 1.2fr !important;
   }
+}
+
+.sobre-card-content {
+  background: var(--bg-card);
+  padding: 32px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
 }
 
 .sobre-scenery-wrapper {
