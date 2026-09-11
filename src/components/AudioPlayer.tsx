@@ -39,10 +39,26 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({ variant = 'navbar' }) 
       audio.play().catch(err => console.log('Audio autoplay prevented:', err));
     }
 
+    // Auto-attempt playback on load or first user interaction (browser policy compliant)
+    const enableAutoPlayOnInteraction = () => {
+      if (audioRef.current && !isPlaying) {
+        audioRef.current.play().then(() => {
+          setIsPlaying(true);
+        }).catch(() => {
+          // Autoplay blocked by browser policy until click
+        });
+      }
+    };
+
+    window.addEventListener('click', enableAutoPlayOnInteraction, { once: true });
+    window.addEventListener('scroll', enableAutoPlayOnInteraction, { once: true });
+
     return () => {
       audio.removeEventListener('timeupdate', updateTime);
       audio.removeEventListener('loadedmetadata', updateDuration);
       audio.removeEventListener('ended', handleEnded);
+      window.removeEventListener('click', enableAutoPlayOnInteraction);
+      window.removeEventListener('scroll', enableAutoPlayOnInteraction);
     };
   }, [currentTrackIndex]);
 

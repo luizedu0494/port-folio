@@ -207,12 +207,12 @@ export const App: React.FC = () => {
                   ))}
                 </div>
               </div>
-
-              {/* Player de Música Expandido em Sobre Mim */}
-              <div style={{ marginTop: '32px' }}>
-                <AudioPlayer variant="expanded" />
-              </div>
             </div>
+          </div>
+
+          {/* Player de Música em Bloco Dedicado Elegante abaixo de Sobre Mim */}
+          <div style={{ marginTop: '48px', maxWidth: '800px', margin: '48px auto 0 auto' }}>
+            <AudioPlayer variant="expanded" />
           </div>
         </div>
       </section>
