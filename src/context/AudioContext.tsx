@@ -49,30 +49,32 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     audio.addEventListener('loadedmetadata', updateDuration);
     audio.addEventListener('ended', handleEnded);
 
-    if (isPlaying) {
-      audio.play().catch(err => console.log('Audio autoplay prevented:', err));
-    }
+    // Try immediate autoplay
+    audio.play().then(() => {
+      setIsPlaying(true);
+    }).catch(() => {
+      // If blocked by browser autoplay policy, start on first mouse movement, touch, key or scroll
+      const triggerPlay = () => {
+        if (audioRef.current) {
+          audioRef.current.play().then(() => {
+            setIsPlaying(true);
+          }).catch(e => console.log('Autoplay play error:', e));
+        }
+      };
 
-    // Auto-attempt playback on load or first user interaction (browser policy compliant)
-    const enableAutoPlayOnInteraction = () => {
-      if (audioRef.current && !isPlaying) {
-        audioRef.current.play().then(() => {
-          setIsPlaying(true);
-        }).catch(() => {
-          // Autoplay blocked by browser policy until click
-        });
-      }
-    };
-
-    window.addEventListener('click', enableAutoPlayOnInteraction, { once: true });
-    window.addEventListener('scroll', enableAutoPlayOnInteraction, { once: true });
+      const options = { once: true, capture: true };
+      window.addEventListener('pointerdown', triggerPlay, options);
+      window.addEventListener('touchstart', triggerPlay, options);
+      window.addEventListener('mousemove', triggerPlay, options);
+      window.addEventListener('scroll', triggerPlay, options);
+      window.addEventListener('keydown', triggerPlay, options);
+      window.addEventListener('click', triggerPlay, options);
+    });
 
     return () => {
       audio.removeEventListener('timeupdate', updateTime);
       audio.removeEventListener('loadedmetadata', updateDuration);
       audio.removeEventListener('ended', handleEnded);
-      window.removeEventListener('click', enableAutoPlayOnInteraction);
-      window.removeEventListener('scroll', enableAutoPlayOnInteraction);
     };
   }, [currentTrackIndex]);
 
