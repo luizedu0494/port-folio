@@ -323,24 +323,20 @@ button {
   100% { background-position: 0% 50%; }
 }
 
-/* Typewriter Styles - Fixed height grid container to completely prevent layout text push */
+/* Typewriter Headline Styles - Natural inline flow with responsive height */
 .hero-headline {
   font-size: 1.35rem;
   color: var(--accent-soft);
   font-weight: 600;
   margin-bottom: 16px;
-  height: 2.8em;
-  display: flex;
-  align-items: flex-start;
-  overflow: hidden;
+  line-height: 1.5;
+  min-height: 3.2rem;
 }
 
 .typewriter-wrapper {
   color: var(--accent-soft);
   font-weight: 600;
-  display: inline-block;
-  white-space: pre;
-  margin-left: 0.4em;
+  display: inline;
 }
 
 .typewriter-cursor {
@@ -354,14 +350,6 @@ button {
 @keyframes blinkCursor {
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
-}
-
-.hero-headline {
-  font-size: 1.35rem;
-  color: var(--accent-soft);
-  font-weight: 600;
-  margin-bottom: 16px;
-  min-height: 2.8em;
 }
 
 .hero-bio {
