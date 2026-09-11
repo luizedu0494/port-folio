@@ -13,16 +13,17 @@ export const initialProfile: DeveloperProfile = {
     whatsapp: 'https://wa.me/5582999931035'
   },
   aboutMe: {
-    summary: 'Desenvolvedor de Software focado no projeto e construção de soluções com Engenharia de IA, LLMs e Agentes Autônomos.',
+    summary: 'Desenvolvedor de Software focado em Engenharia de IA, movido pelo propósito de transformar e otimizar o dia a dia das pessoas através de sistemas inteligentes e escuta ativa dos usuários.',
     paragraphs: [
-      'Profissional focado em desenvolvimento de software e inteligência artificial, trazendo uma visão prática aguçada sobre resolução de problemas reais, arquitetura de sistemas e usabilidade.',
-      'Hoje dedico minha atuação à criação de soluções inovadoras com Inteligência Artificial Generativa, integração de LLMs (LangChain, Groq API, OpenAI), arquiteturas Web modernas com React 19 / TypeScript e bancos de dados de alta performance como Supabase (PostgreSQL).'
+      'Minha principal motivação na engenharia de software é conceber sistemas e agentes autônomos que simplifiquem, potenciem e elevem a rotina diária dos usuários. Acredito que a inteligência artificial só atinge seu propósito máximo quando resolve dores reais e elimina fricções operacionais no mundo concreto.',
+      'Adoto uma filosofia de desenvolvimento fundamentada no aprendizado contínuo através do feedback direto das pessoas. Para mim, cada interação observada, métrica de uso ou sugestão construtiva é um insumo fundamental para lapidar o código, otimizar fluxos de agentes e entregar valor constante.',
+      'Tecnicamente, aplico essa visão combinando arquiteturas Web modernas em React 19 / TypeScript, pipelines em Python, orquestração de LLMs (LangChain, Groq API, OpenAI) e bancos de dados de alta performance como Supabase (PostgreSQL).'
     ],
     highlights: [
-      'Engenharia de IA & Desenvolvimento de Agentes Inteligentes',
-      'Arquitetura de Software & Resolução de Problemas Complexos',
-      'Integração de LLMs (LangChain, Groq API, OpenAI)',
-      'Aplicações Web Modernas com React 19, TypeScript e Supabase'
+      'Propósito: Agentes e Softwares para Impactar e Facilitar o Dia a Dia',
+      'Evolução Contínua Baseada na Escuta e Feedback Ativo do Usuário',
+      'Engenharia de IA & Orquestração de Agentes Autônomos (LangChain/LLMs)',
+      'Construção de Aplicações Fullstack Modernas (React 19, Python & Supabase)'
     ]
   },
   skillCategories: [
