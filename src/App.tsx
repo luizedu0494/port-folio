@@ -308,7 +308,7 @@ export const AppContent: React.FC = () => {
           <div className="container">
             <div className="section-header">
               <h2 className="section-title font-subtitle">
-                <Layers color="var(--accent-crimson)" size={28} /> Projeto Principal em Destaque
+                <Layers color="var(--accent-crimson)" size={28} /> Projeto Principal
               </h2>
             </div>
 
