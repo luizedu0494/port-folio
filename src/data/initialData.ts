@@ -109,59 +109,14 @@ export const initialProjects: Project[] = [
     language: 'TypeScript / React',
     featured: true,
     demoUrl: 'https://cronogramabd.vercel.app/',
-    imageUrl: '/assets/gifs/visitante.gif', // GIF do modo visitante do CronoLab 2.0 no card em destaque
-    description: 'Sistema completo de gestão de cronogramas acadêmicos com suporte de IA inteligente para identificação e resolução de conflitos de horário, notificações em tempo real e modo visitante dinâmico.',
+    imageUrl: '/assets/gifs/visitante.gif',
+    description: 'Sistema especialista desenvolvido sob medida para gestão de cronogramas e alocação dinâmica de laboratórios de ensino e pesquisa, com suporte de IA inteligente para identificação e resolução de conflitos de horário, notificações em tempo real e modo visitante dinâmico.',
     stack: ['React 19', 'TypeScript', 'Vite 7', 'Material-UI v7', 'Supabase PostgreSQL', 'LangChain.js', 'Groq API (llama-3.3-70b)'],
     highlights: [
-      'Notificações de atualizações em tempo real via Supabase Realtime',
-      'Modo visitante com controle de acesso dinâmico por perfil',
-      'Assistente de IA para diagnóstico e sugestão de ajustes em conflitos de agenda',
-      'Painel mobile totalmente responsivo com alta usabilidade'
-    ]
-  },
-  {
-    id: 'decifrai',
-    name: 'DecifrAI',
-    repo: 'DecifrAI',
-    language: 'TypeScript / Python',
-    featured: false,
-    demoUrl: 'https://github.com/luizedu0494/DecifrAI',
-    imageUrl: '',
-    description: 'Aplicação de Inteligência Artificial voltada para decifrar, traduzir e explicar conteúdos técnicos complexos e documentos de forma simples e intuitiva.',
-    stack: ['IA Generativa', 'Python', 'TypeScript', 'LLMs'],
-    highlights: [
-      'Análise inteligente e simplificação de texto com IA',
-      'Interface moderna para exploração de termos e conceitos'
-    ]
-  },
-  {
-    id: 'insurebot',
-    name: 'InsureBot',
-    repo: 'insurebot',
-    language: 'Python',
-    featured: false,
-    demoUrl: 'https://github.com/luizedu0494/insurebot',
-    imageUrl: '',
-    description: 'Agente conversacional inteligente focado em suporte técnico, cotações e automação de fluxos de atendimento no setor de seguros.',
-    stack: ['Python', 'LangChain', 'Agentes de IA', 'FastAPI'],
-    highlights: [
-      'Fluxo de atendimento automatizado com IA',
-      'Integração com bases de dados de seguros'
-    ]
-  },
-  {
-    id: 'stech-chatbot-ana',
-    name: 'Stech Chatbot Ana',
-    repo: 'stech-chatbot-ana',
-    language: 'TypeScript / Python',
-    featured: false,
-    demoUrl: 'https://github.com/luizedu0494/stech-chatbot-ana',
-    imageUrl: '',
-    description: 'Assistente virtual inteligente (Ana) desenvolvida para atendimento técnico humanizado e automação de chamados de suporte da Stech.',
-    stack: ['TypeScript', 'Python', 'LLM API', 'React'],
-    highlights: [
-      'Atendimento conversacional humanizado e rápido',
-      'Respostas baseadas em conhecimento técnico'
+      'Plataforma especialista desenhada para otimização e alocação de laboratórios acadêmicos e técnicos',
+      'Assistente de IA para diagnóstico e sugestão de ajustes em conflitos de agenda e espaço físico de laboratórios',
+      'Notificações de atualizações e reservas de laboratórios em tempo real via Supabase Realtime',
+      'Modo visitante com controle de acesso dinâmico por perfil e painel mobile responsivo'
     ]
   }
 ];

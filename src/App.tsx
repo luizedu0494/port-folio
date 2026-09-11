@@ -373,87 +373,89 @@ export const AppContent: React.FC = () => {
         </section>
       )}
 
-      {/* Demais Projetos Grid */}
-      <section className="projects-grid-section">
-        <div className="container">
-          <div className="section-header">
-            <h3 className="font-subtitle" style={{ fontSize: '1.4rem', color: 'var(--text-secondary)' }}>
-              Outras Soluções & Projetos Desenvolvidos
-            </h3>
-          </div>
+      {/* Demais Projetos Grid (Exibido apenas se houverem múltiplos projetos) */}
+      {otherProjects.length > 0 && (
+        <section className="projects-grid-section">
+          <div className="container">
+            <div className="section-header">
+              <h3 className="font-subtitle" style={{ fontSize: '1.4rem', color: 'var(--text-secondary)' }}>
+                Outras Soluções & Projetos Desenvolvidos
+              </h3>
+            </div>
 
-          {/* Filters */}
-          <div className="filter-bar">
-            <button 
-              className={`filter-btn ${activeFilter === 'all' ? 'active' : ''}`}
-              onClick={() => setActiveFilter('all')}
-            >
-              Todos ({otherProjects.length})
-            </button>
-            <button 
-              className={`filter-btn ${activeFilter === 'ai' ? 'active' : ''}`}
-              onClick={() => setActiveFilter('ai')}
-            >
-              <Brain size={14} style={{ display: 'inline', marginRight: 4 }} /> IA & Agentes
-            </button>
-            <button 
-              className={`filter-btn ${activeFilter === 'react' ? 'active' : ''}`}
-              onClick={() => setActiveFilter('react')}
-            >
-              React 19
-            </button>
-            <button 
-              className={`filter-btn ${activeFilter === 'python' ? 'active' : ''}`}
-              onClick={() => setActiveFilter('python')}
-            >
-              Python
-            </button>
-          </div>
+            {/* Filters */}
+            <div className="filter-bar">
+              <button 
+                className={`filter-btn ${activeFilter === 'all' ? 'active' : ''}`}
+                onClick={() => setActiveFilter('all')}
+              >
+                Todos ({otherProjects.length})
+              </button>
+              <button 
+                className={`filter-btn ${activeFilter === 'ai' ? 'active' : ''}`}
+                onClick={() => setActiveFilter('ai')}
+              >
+                <Brain size={14} style={{ display: 'inline', marginRight: 4 }} /> IA & Agentes
+              </button>
+              <button 
+                className={`filter-btn ${activeFilter === 'react' ? 'active' : ''}`}
+                onClick={() => setActiveFilter('react')}
+              >
+                React 19
+              </button>
+              <button 
+                className={`filter-btn ${activeFilter === 'python' ? 'active' : ''}`}
+                onClick={() => setActiveFilter('python')}
+              >
+                Python
+              </button>
+            </div>
 
-          {/* Grid */}
-          <div className="projects-grid">
-            {filteredProjects.map(project => (
-              <div key={project.id} className="project-card">
-                <div>
-                  {project.imageUrl && (
-                    <div className="project-card-image-wrapper">
-                      <img src={project.imageUrl} alt={project.name} className="project-card-image" />
+            {/* Grid */}
+            <div className="projects-grid">
+              {filteredProjects.map(project => (
+                <div key={project.id} className="project-card">
+                  <div>
+                    {project.imageUrl && (
+                      <div className="project-card-image-wrapper">
+                        <img src={project.imageUrl} alt={project.name} className="project-card-image" />
+                      </div>
+                    )}
+
+                    <div className="project-card-header">
+                      <h3 className="project-name font-subtitle">{project.name}</h3>
                     </div>
-                  )}
 
-                  <div className="project-card-header">
-                    <h3 className="project-name font-subtitle">{project.name}</h3>
+                    <p className="project-description">{project.description}</p>
+
+                    <div className="tech-tags" style={{ marginBottom: '16px' }}>
+                      {project.stack.map((t, i) => (
+                        <span key={i} className="tech-tag">{t}</span>
+                      ))}
+                    </div>
                   </div>
 
-                  <p className="project-description">{project.description}</p>
+                  <div className="project-footer">
+                    <span style={{ fontSize: '0.8rem', color: 'var(--accent-soft)' }}>{project.language}</span>
 
-                  <div className="tech-tags" style={{ marginBottom: '16px' }}>
-                    {project.stack.map((t, i) => (
-                      <span key={i} className="tech-tag">{t}</span>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="project-footer">
-                  <span style={{ fontSize: '0.8rem', color: 'var(--accent-soft)' }}>{project.language}</span>
-
-                  <div style={{ display: 'flex', gap: '12px' }}>
-                    <a 
-                      href={`https://github.com/luizedu0494/${project.repo}`} 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      style={{ color: '#fff', display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.85rem' }}
-                      title="Ver GitHub"
-                    >
-                      <GithubIcon size={16} /> Repositório
-                    </a>
+                    <div style={{ display: 'flex', gap: '12px' }}>
+                      <a 
+                        href={`https://github.com/luizedu0494/${project.repo}`} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        style={{ color: '#fff', display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.85rem' }}
+                        title="Ver GitHub"
+                      >
+                        <GithubIcon size={16} /> Repositório
+                      </a>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Seção de Contato (#contato) */}
       <section id="contato" className="reveal-on-scroll" style={{ padding: '80px 0', background: 'var(--bg-secondary)', borderTop: '1px solid var(--border-color)' }}>
