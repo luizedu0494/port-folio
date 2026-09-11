@@ -108,7 +108,7 @@ export const initialProjects: Project[] = [
     language: 'TypeScript / React',
     featured: true,
     demoUrl: 'https://cronogramabd.vercel.app/',
-    imageUrl: '/assets/gifs/visitante.gif', // GIF demonstrativo do modo visitante do CronoLab 2.0
+    imageUrl: '/assets/gifs/visitante.gif', // GIF do modo visitante do CronoLab 2.0
     description: 'Sistema completo de gestão de cronogramas acadêmicos com suporte de IA inteligente para identificação e resolução de conflitos de horário, notificações em tempo real e modo visitante dinâmico.',
     stack: ['React 19', 'TypeScript', 'Vite 7', 'Material-UI v7', 'Supabase PostgreSQL', 'LangChain.js', 'Groq API (llama-3.3-70b)'],
     highlights: [
@@ -125,7 +125,7 @@ export const initialProjects: Project[] = [
     language: 'TypeScript / Python',
     featured: false,
     demoUrl: 'https://github.com/luizedu0494/DecifrAI',
-    imageUrl: '/assets/gifs/ai-futurism.gif',
+    imageUrl: '',
     description: 'Aplicação de Inteligência Artificial voltada para decifrar, traduzir e explicar conteúdos técnicos complexos e documentos de forma simples e intuitiva.',
     stack: ['IA Generativa', 'Python', 'TypeScript', 'LLMs'],
     highlights: [
@@ -140,7 +140,7 @@ export const initialProjects: Project[] = [
     language: 'Python',
     featured: false,
     demoUrl: 'https://github.com/luizedu0494/insurebot',
-    imageUrl: '/assets/gifs/tech-fear.gif',
+    imageUrl: '',
     description: 'Agente conversacional inteligente focado em suporte técnico, cotações e automação de fluxos de atendimento no setor de seguros.',
     stack: ['Python', 'LangChain', 'Agentes de IA', 'FastAPI'],
     highlights: [
@@ -155,7 +155,7 @@ export const initialProjects: Project[] = [
     language: 'TypeScript / Python',
     featured: false,
     demoUrl: 'https://github.com/luizedu0494/stech-chatbot-ana',
-    imageUrl: '/assets/gifs/ai-futurism.gif',
+    imageUrl: '',
     description: 'Assistente virtual inteligente (Ana) desenvolvida para atendimento técnico humanizado e automação de chamados de suporte da Stech.',
     stack: ['TypeScript', 'Python', 'LLM API', 'React'],
     highlights: [

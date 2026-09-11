@@ -6,6 +6,7 @@ import {
 import { DeveloperProfile, Project } from './types/portfolio';
 import { initialProfile, initialProjects } from './data/initialData';
 import { TypewriterText } from './components/TypewriterText';
+import { MatrixDataStreamCard } from './components/MatrixDataStreamCard';
 import { NeuralNetworkBg } from './components/NeuralNetworkBg';
 
 const GithubIcon = ({ size = 18, color = 'currentColor' }: { size?: number; color?: string }) => (
@@ -367,6 +368,7 @@ export const App: React.FC = () => {
           <div className="projects-grid">
             {filteredProjects.map(project => (
               <div key={project.id} className="project-card">
+                <MatrixDataStreamCard />
                 <div>
                   {project.imageUrl && (
                     <div className="project-card-image-wrapper">
