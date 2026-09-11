@@ -103,50 +103,61 @@ export const App: React.FC = () => {
 
       {/* Hero Section (#inicio) */}
       <section id="inicio" className="hero-section reveal-on-scroll">
-        <div className="container">
-          <div className="hero-badge-tag">
-            <Brain size={16} color="#ff4d6d" /> {profile.targetRole}
+        <div className="container hero-container-grid">
+          <div>
+            <div className="hero-badge-tag">
+              <Brain size={16} color="#ff4d6d" /> {profile.targetRole}
+            </div>
+            <h1 className="hero-title font-display">
+              {profile.name}
+            </h1>
+            <p className="hero-headline font-subtitle">
+              Auxiliar Técnico em transição para{' '}
+              <TypewriterText 
+                words={[
+                  'Engenharia de IA & Agentes',
+                  'Desenvolvimento Fullstack React/Python',
+                  'Sistemas Inteligentes & LLMs'
+                ]} 
+              />
+            </p>
+            <p className="hero-bio">
+              {profile.aboutMe.summary}
+            </p>
+
+            <div className="hero-actions">
+              <a href={profile.contacts.github} target="_blank" rel="noopener noreferrer" className="btn-primary">
+                <GithubIcon size={18} /> Ver Perfil no GitHub
+              </a>
+              <a href={profile.contacts.linkedin} target="_blank" rel="noopener noreferrer" className="btn-secondary">
+                <LinkedinIcon size={18} color="#0077b5" /> Conectar no LinkedIn
+              </a>
+            </div>
+
+            {/* Quick Contact Pills */}
+            <div className="contact-pills">
+              <a href={profile.contacts.linkedin} target="_blank" rel="noopener noreferrer" className="contact-pill">
+                <LinkedinIcon size={14} color="#0077b5" /> LinkedIn
+              </a>
+              <a href={profile.contacts.whatsapp} target="_blank" rel="noopener noreferrer" className="contact-pill">
+                <MessageSquare size={14} color="#ff4d6d" /> WhatsApp
+              </a>
+              <a href={profile.contacts.email} className="contact-pill">
+                <Mail size={14} color="#ff4d6d" /> E-mail
+              </a>
+              <span className="contact-pill">
+                📍 {profile.location}
+              </span>
+            </div>
           </div>
-          <h1 className="hero-title font-display">
-            {profile.name}
-          </h1>
-          <p className="hero-headline font-subtitle">
-            Auxiliar Técnico em transição para{' '}
-            <TypewriterText 
-              words={[
-                'Engenharia de IA & Agentes',
-                'Desenvolvimento Fullstack React/Python',
-                'Sistemas Inteligentes & LLMs'
-              ]} 
+
+          {/* Elemento de Cenário Visual ao Lado do Hero */}
+          <div className="hero-scenery-wrapper">
+            <img 
+              src="/assets/gifs/earth-white.gif" 
+              alt="Cenário Global de IA" 
+              className="hero-scenery-gif"
             />
-          </p>
-          <p className="hero-bio">
-            {profile.aboutMe.summary}
-          </p>
-
-          <div className="hero-actions">
-            <a href={profile.contacts.github} target="_blank" rel="noopener noreferrer" className="btn-primary">
-              <GithubIcon size={18} /> Ver Perfil no GitHub
-            </a>
-            <a href={profile.contacts.linkedin} target="_blank" rel="noopener noreferrer" className="btn-secondary">
-              <LinkedinIcon size={18} color="#0077b5" /> Conectar no LinkedIn
-            </a>
-          </div>
-
-          {/* Quick Contact Pills */}
-          <div className="contact-pills">
-            <a href={profile.contacts.linkedin} target="_blank" rel="noopener noreferrer" className="contact-pill">
-              <LinkedinIcon size={14} color="#0077b5" /> LinkedIn
-            </a>
-            <a href={profile.contacts.whatsapp} target="_blank" rel="noopener noreferrer" className="contact-pill">
-              <MessageSquare size={14} color="#ff4d6d" /> WhatsApp
-            </a>
-            <a href={profile.contacts.email} className="contact-pill">
-              <Mail size={14} color="#ff4d6d" /> E-mail
-            </a>
-            <span className="contact-pill">
-              📍 {profile.location}
-            </span>
           </div>
         </div>
       </section>
@@ -368,7 +379,6 @@ export const App: React.FC = () => {
           <div className="projects-grid">
             {filteredProjects.map(project => (
               <div key={project.id} className="project-card">
-                <MatrixDataStreamCard />
                 <div>
                   {project.imageUrl && (
                     <div className="project-card-image-wrapper">

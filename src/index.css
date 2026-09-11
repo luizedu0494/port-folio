@@ -234,6 +234,47 @@ button {
   padding-bottom: 70px;
 }
 
+.hero-container-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+@media (min-width: 992px) {
+  .hero-container-grid {
+    grid-template-columns: 1.25fr 0.9fr;
+  }
+}
+
+.hero-scenery-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border-crimson);
+  background: rgba(12, 12, 29, 0.4);
+  box-shadow: 0 12px 45px rgba(220, 20, 60, 0.25);
+  backdrop-filter: blur(12px);
+}
+
+.hero-scenery-gif {
+  width: 100%;
+  max-width: 480px;
+  height: auto;
+  max-height: 380px;
+  object-fit: contain;
+  mix-blend-mode: screen;
+  filter: drop-shadow(0 0 20px rgba(220, 20, 60, 0.4));
+  transition: transform var(--transition-normal);
+}
+
+.hero-scenery-wrapper:hover .hero-scenery-gif {
+  transform: scale(1.04);
+}
+
 .hero-badge-tag {
   display: inline-flex;
   align-items: center;
