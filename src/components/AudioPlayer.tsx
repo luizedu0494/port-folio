@@ -40,7 +40,7 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({ variant = 'navbar' }) 
           className="audio-pill-toggle"
           title={isPlaying ? 'Pausar Músicas Dev' : 'Tocar Trilha Sonora Dev'}
         >
-          {isPlaying ? <Pause size={14} color="#ff4d6d" /> : <Play size={14} color="#dc143c" />}
+          {isPlaying ? <Pause size={14} color="var(--accent-soft)" /> : <Play size={14} color="var(--accent-crimson)" />}
           
           <span className="audio-pill-track">
             {currentTrack.title}
@@ -65,7 +65,7 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({ variant = 'navbar' }) 
     <div className="expanded-audio-player">
       <div className="player-header">
         <div className="player-badge font-display">
-          <Music size={16} color="#dc143c" /> Dev Focus & Study Vibe
+          <Music size={16} color="var(--accent-crimson)" /> Dev Focus & Study Vibe
         </div>
         <span className="track-genre-tag">{currentTrack.genre}</span>
       </div>
@@ -106,7 +106,7 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({ variant = 'navbar' }) 
 
           <div className="volume-control">
             <button onClick={() => setIsMuted(!isMuted)} className="ctrl-btn">
-              {isMuted || volume === 0 ? <VolumeX size={16} color="#ff4d6d" /> : <Volume2 size={16} />}
+              {isMuted || volume === 0 ? <VolumeX size={16} color="var(--accent-soft)" /> : <Volume2 size={16} />}
             </button>
             <input 
               type="range" 

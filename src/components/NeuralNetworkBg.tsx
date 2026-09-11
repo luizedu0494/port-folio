@@ -52,8 +52,8 @@ export const NeuralNetworkBg: React.FC = () => {
     const render = () => {
       ctx.clearRect(0, 0, width, height);
 
-      // Fundo escuro profundo equilibrado
-      ctx.fillStyle = '#050510';
+      // Fundo escuro profundo Purple Haze
+      ctx.fillStyle = '#06040c';
       ctx.fillRect(0, 0, width, height);
 
       for (let i = 0; i < particles.length; i++) {
@@ -69,15 +69,15 @@ export const NeuralNetworkBg: React.FC = () => {
         if (p.x < 0 || p.x > width) p.vx *= -1;
         if (p.y < 0 || p.y > height) p.vy *= -1;
 
-        // Nós vibrantes com halo de luz suave
+        // Nós vibrantes em névoa violeta com halo de luz roxa
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 77, 109, ${p.alpha})`;
+        ctx.fillStyle = `rgba(199, 125, 255, ${p.alpha})`;
         ctx.shadowBlur = 8;
-        ctx.shadowColor = 'rgba(220, 20, 60, 0.6)';
+        ctx.shadowColor = 'rgba(157, 78, 221, 0.7)';
         ctx.fill();
 
-        // Linhas de sinapse visíveis e marcantes
+        // Linhas de sinapse visíveis em tom roxo elétrico
         for (let j = i + 1; j < particles.length; j++) {
           const p2 = particles[j];
           const dx = p.x - p2.x;
@@ -89,7 +89,7 @@ export const NeuralNetworkBg: React.FC = () => {
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(220, 20, 60, ${lineAlpha})`;
+            ctx.strokeStyle = `rgba(157, 78, 221, ${lineAlpha})`;
             ctx.lineWidth = 1.1;
             ctx.shadowBlur = 0;
             ctx.stroke();

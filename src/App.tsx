@@ -82,7 +82,7 @@ export const AppContent: React.FC = () => {
       <header className="navbar">
         <div className="container nav-container">
           <a href="#inicio" className="brand-logo font-display">
-            <Sparkles size={20} color="#dc143c" />
+            <Sparkles size={20} color="var(--accent-crimson)" />
             LUIZ EDUARDO
           </a>
 
@@ -127,13 +127,13 @@ export const AppContent: React.FC = () => {
         <div className="container hero-container-grid">
           <div>
             <div className="hero-badge-tag">
-              <Brain size={16} color="#ff4d6d" /> {profile.targetRole}
+              <Brain size={16} color="var(--accent-soft)" /> {profile.targetRole}
             </div>
             <h1 className="hero-title font-display">
               {profile.name}
             </h1>
             <p className="hero-headline font-subtitle">
-              Auxiliar Técnico em transição para{' '}
+              Desenvolvedor de Software focado em{' '}
               <TypewriterText 
                 words={[
                   'Engenharia de IA & Agentes',
@@ -151,20 +151,20 @@ export const AppContent: React.FC = () => {
                 <GithubIcon size={18} /> Ver Perfil no GitHub
               </a>
               <a href={profile.contacts.linkedin} target="_blank" rel="noopener noreferrer" className="btn-secondary">
-                <LinkedinIcon size={18} color="#ff4d6d" /> Conectar no LinkedIn
+                <LinkedinIcon size={18} color="var(--accent-soft)" /> Conectar no LinkedIn
               </a>
             </div>
 
             {/* Quick Contact Pills */}
             <div className="contact-pills">
               <a href={profile.contacts.linkedin} target="_blank" rel="noopener noreferrer" className="contact-pill">
-                <LinkedinIcon size={14} color="#ff4d6d" /> LinkedIn
+                <LinkedinIcon size={14} color="var(--accent-soft)" /> LinkedIn
               </a>
               <a href={profile.contacts.whatsapp} target="_blank" rel="noopener noreferrer" className="contact-pill">
-                <MessageSquare size={14} color="#ff4d6d" /> WhatsApp
+                <MessageSquare size={14} color="var(--accent-soft)" /> WhatsApp
               </a>
               <a href={profile.contacts.email} className="contact-pill">
-                <Mail size={14} color="#ff4d6d" /> E-mail
+                <Mail size={14} color="var(--accent-soft)" /> E-mail
               </a>
               <span className="contact-pill">
                 📍 {profile.location}
@@ -188,7 +188,7 @@ export const AppContent: React.FC = () => {
         <div className="container">
           <div className="section-header" style={{ marginBottom: '32px' }}>
             <h2 className="section-title font-subtitle">
-              <User color="#dc143c" size={28} /> Sobre Mim & Transição Profissional
+              <User color="var(--accent-crimson)" size={28} /> Sobre Mim & Foco Profissional
             </h2>
           </div>
 
@@ -212,13 +212,13 @@ export const AppContent: React.FC = () => {
               </div>
 
               <div style={{ marginTop: '28px', paddingTop: '24px', borderTop: '1px solid var(--border-color)' }}>
-                <h4 className="font-subtitle" style={{ fontSize: '1.05rem', color: '#ff4d6d', marginBottom: '16px' }}>
+                <h4 className="font-subtitle" style={{ fontSize: '1.05rem', color: 'var(--accent-soft)', marginBottom: '16px' }}>
                   Pontos Chave da Minha Trajetória:
                 </h4>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '12px' }}>
                   {profile.aboutMe.highlights.map((highlight, idx) => (
                     <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '10px', background: 'rgba(5, 5, 16, 0.5)', padding: '12px 16px', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.05)' }}>
-                      <CheckCircle2 size={18} color="#dc143c" style={{ flexShrink: 0 }} />
+                      <CheckCircle2 size={18} color="var(--accent-crimson)" style={{ flexShrink: 0 }} />
                       <span style={{ fontSize: '0.9rem', color: '#fff' }}>{highlight}</span>
                     </div>
                   ))}
@@ -239,20 +239,20 @@ export const AppContent: React.FC = () => {
         <div className="container">
           <div className="section-header" style={{ marginBottom: '32px' }}>
             <h2 className="section-title font-subtitle">
-              <Wrench color="#dc143c" size={28} /> Habilidades & Competências Técnicas
+              <Wrench color="var(--accent-crimson)" size={28} /> Habilidades & Competências Técnicas
             </h2>
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '24px' }}>
             {profile.skillCategories.map((category, idx) => (
               <div key={idx} style={{ background: 'var(--bg-card)', padding: '28px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
-                <h3 className="font-subtitle" style={{ fontSize: '1.2rem', color: '#ff4d6d', marginBottom: '18px' }}>
+                <h3 className="font-subtitle" style={{ fontSize: '1.2rem', color: 'var(--accent-soft)', marginBottom: '18px' }}>
                   {category.title}
                 </h3>
                 <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px' }}>
                   {category.skills.map((skill, sIdx) => (
                     <li key={sIdx} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.95rem', color: 'var(--text-secondary)' }}>
-                      <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#dc143c' }}></span>
+                      <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--accent-crimson)' }}></span>
                       {skill.name}
                     </li>
                   ))}
@@ -268,7 +268,7 @@ export const AppContent: React.FC = () => {
         <div className="container">
           <div className="section-header" style={{ marginBottom: '32px' }}>
             <h2 className="section-title font-subtitle">
-              <Medal color="#dc143c" size={28} /> Cursos & Certificações
+              <Medal color="var(--accent-crimson)" size={28} /> Cursos & Certificações
             </h2>
           </div>
 
@@ -276,7 +276,7 @@ export const AppContent: React.FC = () => {
             {profile.certifications.map((cert, idx) => (
               <div key={idx} style={{ background: 'var(--bg-card)', padding: '24px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                 <div>
-                  <div style={{ fontSize: '0.8rem', color: '#ff4d6d', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '6px', fontWeight: 600 }}>
+                  <div style={{ fontSize: '0.8rem', color: 'var(--accent-soft)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '6px', fontWeight: 600 }}>
                     {cert.issuer}
                   </div>
                   <h3 className="font-subtitle" style={{ fontSize: '1.15rem', color: '#fff', marginBottom: '8px', lineHeight: '1.4' }}>
@@ -308,7 +308,7 @@ export const AppContent: React.FC = () => {
           <div className="container">
             <div className="section-header">
               <h2 className="section-title font-subtitle">
-                <Layers color="#dc143c" size={28} /> Projeto Principal em Destaque
+                <Layers color="var(--accent-crimson)" size={28} /> Projeto Principal em Destaque
               </h2>
             </div>
 
@@ -319,7 +319,7 @@ export const AppContent: React.FC = () => {
                   <p className="featured-description">{featuredProject.description}</p>
                   
                   <div style={{ marginBottom: '20px' }}>
-                    <h4 className="font-subtitle" style={{ fontSize: '0.95rem', color: '#ff4d6d', marginBottom: '10px' }}>
+                    <h4 className="font-subtitle" style={{ fontSize: '0.95rem', color: 'var(--accent-soft)', marginBottom: '10px' }}>
                       Destaques do Projeto:
                     </h4>
                     <ul className="highlights-list">
@@ -435,7 +435,7 @@ export const AppContent: React.FC = () => {
                 </div>
 
                 <div className="project-footer">
-                  <span style={{ fontSize: '0.8rem', color: '#ff4d6d' }}>{project.language}</span>
+                  <span style={{ fontSize: '0.8rem', color: 'var(--accent-soft)' }}>{project.language}</span>
 
                   <div style={{ display: 'flex', gap: '12px' }}>
                     <a 
@@ -476,7 +476,7 @@ export const AppContent: React.FC = () => {
               <GithubIcon size={18} /> Explorar GitHub
             </a>
             <a href={profile.contacts.whatsapp} target="_blank" rel="noopener noreferrer" className="btn-secondary">
-              <MessageSquare size={18} color="#ff4d6d" /> Chamar no WhatsApp
+              <MessageSquare size={18} color="var(--accent-soft)" /> Chamar no WhatsApp
             </a>
           </div>
         </div>
@@ -485,7 +485,7 @@ export const AppContent: React.FC = () => {
       {/* Footer */}
       <footer className="footer">
         <div className="container">
-          <p>© {new Date().getFullYear()} Luiz Eduardo — Desenvolvedor de Software & IA</p>
+          <p>© {new Date().getFullYear()} Luiz Eduardo Lopes — Desenvolvedor de Software & IA</p>
         </div>
       </footer>
     </div>

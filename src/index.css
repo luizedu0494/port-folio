@@ -3,29 +3,29 @@
 /* Webfont Fallbacks & Google Fonts Definitions */
 
 :root {
-  /* Cenário 4 - Crimson Night Color Palette */
-  --bg-primary: #050510;
-  --bg-secondary: #0c0c1d;
-  --bg-card: #161628;
-  --bg-card-hover: #1e1e36;
-  --bg-card-featured: linear-gradient(135deg, rgba(220, 20, 60, 0.16) 0%, rgba(22, 22, 40, 0.98) 100%);
+  /* Purple Haze - Variação 1: Deep Nebula Purple Color Palette */
+  --bg-primary: #06040c;
+  --bg-secondary: #0d081a;
+  --bg-card: #150d28;
+  --bg-card-hover: #1e1338;
+  --bg-card-featured: linear-gradient(135deg, rgba(157, 78, 221, 0.22) 0%, rgba(21, 13, 40, 0.98) 100%);
   
-  --accent-crimson: #dc143c;
-  --accent-glow: rgba(220, 20, 60, 0.45);
-  --accent-soft: #ff4d6d;
-  --accent-dark: #8b0000;
+  --accent-crimson: #9d4edd;
+  --accent-glow: rgba(157, 78, 221, 0.5);
+  --accent-soft: #c77dff;
+  --accent-dark: #5a189a;
+  --accent-magenta: #ff007f;
 
   --text-primary: #ffffff;
-  --text-secondary: #c0c0d8;
-  --text-muted: #8080a0;
+  --text-secondary: #d4c7ed;
+  --text-muted: #8d7baf;
 
   --border-color: rgba(255, 255, 255, 0.08);
-  --border-crimson: rgba(220, 20, 60, 0.5);
+  --border-crimson: rgba(157, 78, 221, 0.55);
 
-  /* Tipografias Exatas do Cenário 4 */
-  --font-display: 'Panic', 'Orbitron', sans-serif;
-  --font-subtitle: 'Retroica', 'Space Grotesk', 'Outfit', sans-serif;
-  --font-body: 'Nexa', 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-display: 'Orbitron', sans-serif;
+  --font-subtitle: 'Space Grotesk', 'Outfit', sans-serif;
+  --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
 
   --radius-sm: 8px;
   --radius-md: 14px;
@@ -62,7 +62,7 @@ body {
   position: relative;
 }
 
-/* Dynamic Ambient Glow & Mesh Background Animation (Sensação de Pensamento/IA Vivo) */
+/* Dynamic Ambient Glow & Purple Haze Mesh Background Animation */
 body::before {
   content: '';
   position: fixed;
@@ -71,9 +71,9 @@ body::before {
   width: 100vw;
   height: 100vh;
   background: 
-    radial-gradient(circle at 20% 20%, rgba(220, 20, 60, 0.12) 0%, transparent 40%),
-    radial-gradient(circle at 80% 80%, rgba(255, 77, 109, 0.08) 0%, transparent 45%),
-    radial-gradient(circle at 50% 50%, rgba(139, 0, 0, 0.06) 0%, transparent 60%);
+    radial-gradient(circle at 20% 20%, rgba(157, 78, 221, 0.18) 0%, transparent 42%),
+    radial-gradient(circle at 80% 80%, rgba(199, 125, 255, 0.14) 0%, transparent 48%),
+    radial-gradient(circle at 50% 50%, rgba(255, 0, 127, 0.08) 0%, transparent 60%);
   z-index: -2;
   animation: ambientPulse 12s ease-in-out infinite alternate;
   pointer-events: none;
@@ -334,7 +334,7 @@ button {
   object-fit: contain;
   mix-blend-mode: multiply;
   border-radius: var(--radius-md);
-  filter: drop-shadow(0 0 25px rgba(220, 20, 60, 0.45)) contrast(1.1);
+  filter: drop-shadow(0 0 25px rgba(157, 78, 221, 0.5)) contrast(1.1);
   transition: transform var(--transition-normal);
 }
 
@@ -346,14 +346,14 @@ button {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: rgba(220, 20, 60, 0.12);
+  background: rgba(157, 78, 221, 0.14);
   border: 1px solid var(--border-crimson);
   color: var(--accent-soft);
   padding: 6px 16px;
   border-radius: var(--radius-pill);
   font-size: 0.85rem;
   margin-bottom: 20px;
-  box-shadow: 0 0 15px rgba(220, 20, 60, 0.2);
+  box-shadow: 0 0 15px rgba(157, 78, 221, 0.25);
 }
 
 /* Efeito de Pulsar no Badge de IA */
@@ -377,7 +377,7 @@ button {
   font-weight: 900;
   line-height: 1.1;
   margin-bottom: 16px;
-  background: linear-gradient(90deg, #ffffff 0%, #ffffff 40%, rgba(255, 255, 255, 0.95) 55%, #ff4d6d 75%, #ffffff 90%, #ffffff 100%);
+  background: linear-gradient(90deg, #ffffff 0%, #ffffff 40%, rgba(255, 255, 255, 0.95) 55%, #c77dff 75%, #ffffff 90%, #ffffff 100%);
   background-size: 250% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -452,12 +452,12 @@ button {
 .btn-primary:hover {
   background: var(--accent-soft);
   transform: translateY(-3px);
-  box-shadow: 0 8px 28px rgba(255, 77, 109, 0.6);
+  box-shadow: 0 8px 28px rgba(199, 125, 255, 0.6);
 }
 
 /* Secondary Button */
 .btn-secondary {
-  background: rgba(26, 26, 46, 0.6);
+  background: rgba(21, 13, 40, 0.6);
   color: var(--text-primary);
   border: 1px solid var(--border-crimson);
   font-weight: 600;
@@ -471,7 +471,7 @@ button {
 }
 
 .btn-secondary:hover {
-  background: rgba(220, 20, 60, 0.15);
+  background: rgba(157, 78, 221, 0.15);
   border-color: var(--accent-soft);
   color: var(--accent-soft);
   transform: translateY(-3px);
@@ -501,7 +501,7 @@ button {
 .contact-pill:hover {
   border-color: var(--accent-crimson);
   color: #fff;
-  background: rgba(26, 26, 46, 0.9);
+  background: rgba(21, 13, 40, 0.9);
   transform: translateY(-2px);
 }
 
@@ -530,13 +530,13 @@ button {
   border: 2px solid var(--accent-crimson);
   border-radius: var(--radius-lg);
   padding: 36px;
-  box-shadow: 0 10px 40px rgba(220, 20, 60, 0.25);
+  box-shadow: 0 10px 40px rgba(157, 78, 221, 0.25);
   overflow: hidden;
   transition: transform var(--transition-normal), box-shadow var(--transition-normal);
 }
 
 .featured-card:hover {
-  box-shadow: 0 15px 50px rgba(220, 20, 60, 0.4);
+  box-shadow: 0 15px 50px rgba(157, 78, 221, 0.4);
   transform: translateY(-4px);
 }
 
@@ -637,7 +637,7 @@ button {
 }
 
 .tech-tag.highlight {
-  background: rgba(220, 20, 60, 0.2);
+  background: rgba(157, 78, 221, 0.2);
   border-color: var(--border-crimson);
   color: #fff;
 }
@@ -727,7 +727,7 @@ button {
   max-height: 350px;
   object-fit: contain;
   mix-blend-mode: screen;
-  filter: drop-shadow(0 0 18px rgba(220, 20, 60, 0.35));
+  filter: drop-shadow(0 0 18px rgba(157, 78, 221, 0.35));
   transition: transform var(--transition-normal);
 }
 
@@ -777,7 +777,7 @@ button {
   left: -100%;
   width: 50%;
   height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(220, 20, 60, 0.8), transparent);
+  background: linear-gradient(90deg, transparent, rgba(157, 78, 221, 0.8), transparent);
   animation: cardScanLine 5s linear infinite;
   pointer-events: none;
   opacity: 0.6;
@@ -789,11 +789,11 @@ button {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
   }
   50% {
-    border-color: rgba(220, 20, 60, 0.35);
-    box-shadow: 0 6px 25px rgba(220, 20, 60, 0.15);
+    border-color: rgba(157, 78, 221, 0.35);
+    box-shadow: 0 6px 25px rgba(157, 78, 221, 0.15);
   }
   100% {
-    border-color: rgba(255, 77, 109, 0.25);
+    border-color: rgba(199, 125, 255, 0.25);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
   }
 }
@@ -810,7 +810,7 @@ button {
   animation-play-state: paused;
   transform: translateY(-6px);
   border-color: var(--accent-crimson);
-  box-shadow: 0 12px 40px rgba(220, 20, 60, 0.3);
+  box-shadow: 0 12px 40px rgba(157, 78, 221, 0.3);
   background: var(--bg-card-hover);
 }
 
@@ -894,19 +894,19 @@ button {
   display: flex;
   align-items: center;
   gap: 4px;
-  background: rgba(22, 22, 40, 0.85);
+  background: rgba(13, 8, 26, 0.85);
   border: 1px solid var(--border-crimson);
   border-radius: var(--radius-pill);
   padding: 4px 10px;
   margin: 0 4px;
   backdrop-filter: blur(8px);
-  box-shadow: 0 0 15px rgba(220, 20, 60, 0.15);
+  box-shadow: 0 0 15px rgba(157, 78, 221, 0.15);
   transition: all var(--transition-fast);
 }
 
 .nav-audio-pill:hover {
   border-color: var(--accent-soft);
-  box-shadow: 0 0 20px rgba(255, 77, 109, 0.3);
+  box-shadow: 0 0 20px rgba(199, 125, 255, 0.3);
 }
 
 .audio-pill-toggle {
@@ -975,7 +975,7 @@ button {
 
 /* Expanded Audio Player Card */
 .expanded-audio-player {
-  background: rgba(12, 12, 29, 0.7);
+  background: rgba(13, 8, 26, 0.85);
   border: 1px solid var(--border-crimson);
   border-radius: var(--radius-md);
   padding: 20px;
@@ -1002,9 +1002,9 @@ button {
 
 .track-genre-tag {
   font-size: 0.75rem;
-  background: rgba(220, 20, 60, 0.15);
+  background: rgba(157, 78, 221, 0.15);
   color: var(--accent-soft);
-  border: 1px solid rgba(220, 20, 60, 0.3);
+  border: 1px solid rgba(157, 78, 221, 0.3);
   padding: 2px 10px;
   border-radius: var(--radius-pill);
 }
@@ -1130,13 +1130,13 @@ button {
 }
 
 .track-item-row:hover {
-  background: rgba(220, 20, 60, 0.1);
-  border-color: rgba(220, 20, 60, 0.3);
+  background: rgba(157, 78, 221, 0.1);
+  border-color: rgba(157, 78, 221, 0.3);
   color: #fff;
 }
 
 .track-item-row.active {
-  background: rgba(220, 20, 60, 0.18);
+  background: rgba(157, 78, 221, 0.18);
   border-color: var(--accent-crimson);
   color: #fff;
 }
@@ -1165,11 +1165,11 @@ button {
   z-index: 9999;
   width: 90%;
   max-width: 580px;
-  background: rgba(12, 12, 29, 0.96);
+  background: rgba(13, 8, 26, 0.96);
   border: 1px solid var(--accent-crimson);
   border-radius: var(--radius-lg);
   padding: 12px 18px;
-  box-shadow: 0 10px 40px rgba(220, 20, 60, 0.5);
+  box-shadow: 0 10px 40px rgba(157, 78, 221, 0.5);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   animation: slideUpBanner 0.5s cubic-bezier(0.16, 1, 0.3, 1);
@@ -1193,7 +1193,7 @@ button {
   justify-content: center;
   width: 36px;
   height: 36px;
-  background: rgba(220, 20, 60, 0.18);
+  background: rgba(157, 78, 221, 0.18);
   border-radius: 50%;
   flex-shrink: 0;
 }

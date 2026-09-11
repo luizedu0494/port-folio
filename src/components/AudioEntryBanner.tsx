@@ -20,7 +20,7 @@ export const AudioEntryBanner: React.FC = () => {
     <div className="audio-entry-banner">
       <div className="audio-entry-content">
         <div className="audio-entry-icon">
-          <Volume2 size={20} color="#ff4d6d" />
+          <Volume2 size={20} color="var(--accent-soft)" />
         </div>
         <div className="audio-entry-text">
           <span className="audio-entry-title">Trilha Sonora Dev Focus (15%)</span>

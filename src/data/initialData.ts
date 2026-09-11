@@ -1,8 +1,8 @@
 import { DeveloperProfile, Project } from '../types/portfolio';
 
 export const initialProfile: DeveloperProfile = {
-  name: 'Luiz Eduardo',
-  headline: 'Auxiliar Técnico em transição para Desenvolvedor de Software e Engenharia de IA',
+  name: 'Luiz Eduardo Lopes',
+  headline: 'Desenvolvedor de Software com foco em Engenharia de IA & Agentes Inteligentes',
   targetRole: 'Desenvolvedor de Agentes & Inteligência Artificial',
   location: 'Maceió, Alagoas',
   mainStack: ['React 19', 'TypeScript', 'Python', 'Supabase (PostgreSQL)', 'LangChain', 'Groq API', 'OpenAI'],
@@ -13,16 +13,16 @@ export const initialProfile: DeveloperProfile = {
     whatsapp: 'https://wa.me/5582999931035'
   },
   aboutMe: {
-    summary: 'Profissional com sólida bagagem como Auxiliar Técnico, em transição ativa de carreira para o desenvolvimento de software com foco em Engenharia de IA e Agentes Inteligentes.',
+    summary: 'Desenvolvedor de Software focado no projeto e construção de soluções com Engenharia de IA, LLMs e Agentes Autônomos.',
     paragraphs: [
-      'Minha trajetória no suporte e auxílio técnico me deu uma visão prática aguçada sobre resolução de problemas reais, diagnóstico de falhas e usabilidade de sistemas. Essa experiência fundamenta minha atuação no desenvolvimento de software.',
-      'Hoje dedico minha evolução à criação de soluções com Inteligência Artificial Generativa, integração de LLMs (LangChain, Groq API, OpenAI), arquiteturas Web modernas com React 19 / TypeScript e bancos de dados orientados a evento como Supabase (PostgreSQL).'
+      'Profissional focado em desenvolvimento de software e inteligência artificial, trazendo uma visão prática aguçada sobre resolução de problemas reais, arquitetura de sistemas e usabilidade.',
+      'Hoje dedico minha atuação à criação de soluções inovadoras com Inteligência Artificial Generativa, integração de LLMs (LangChain, Groq API, OpenAI), arquiteturas Web modernas com React 19 / TypeScript e bancos de dados de alta performance como Supabase (PostgreSQL).'
     ],
     highlights: [
-      'Transição focada em Engenharia de IA & Desenvolvimento Fullstack',
-      'Experiência prática em resolução de problemas e suporte técnico',
-      'Construção de ecossistemas com LLMs (LangChain, Groq API, OpenAI)',
-      'Aplicações Web com React 19, TypeScript e Supabase'
+      'Engenharia de IA & Desenvolvimento de Agentes Inteligentes',
+      'Arquitetura de Software & Resolução de Problemas Complexos',
+      'Integração de LLMs (LangChain, Groq API, OpenAI)',
+      'Aplicações Web Modernas com React 19, TypeScript e Supabase'
     ]
   },
   skillCategories: [

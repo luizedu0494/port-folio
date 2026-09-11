@@ -25,10 +25,10 @@ export const MatrixDataStreamCard: React.FC = () => {
 
     const render = () => {
       // Fundo semi-transparente para criar o rastro da chuva de dados Matrix
-      ctx.fillStyle = 'rgba(26, 26, 46, 0.25)';
+      ctx.fillStyle = 'rgba(21, 13, 40, 0.25)';
       ctx.fillRect(0, 0, width, height);
 
-      ctx.fillStyle = 'rgba(220, 20, 60, 0.75)'; // Vermelho Crimson estilo Matrix futurista
+      ctx.fillStyle = 'rgba(157, 78, 221, 0.75)'; // Electric Purple estilo Matrix futurista
       ctx.font = `${fontSize}px monospace`;
 
       for (let i = 0; i < drops.length; i++) {
