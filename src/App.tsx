@@ -32,6 +32,7 @@ export const AppContent: React.FC = () => {
   const [projects] = useState<Project[]>(initialProjects);
   const [activeFilter, setActiveFilter] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -77,32 +78,44 @@ export const AppContent: React.FC = () => {
       {/* Banner Topo Fixo para Ativação da Trilha Sonora */}
       <AudioEntryBanner />
 
-      {/* Glassmorphism Header com Navegação Limpa */}
+      {/* Glassmorphism Header com Navegação Limpa & Menu Hambúrguer Mobile */}
       <header className="navbar">
         <div className="container nav-container">
           <a href="#inicio" className="brand-logo font-display">
-            <Sparkles size={22} color="#dc143c" />
+            <Sparkles size={20} color="#dc143c" />
             LUIZ EDUARDO
           </a>
 
-          <nav className="nav-links">
-            <a href="#sobre" className="nav-link">
+          {/* Player de Áudio & Menu Toggle visíveis no Header no Mobile */}
+          <div className="mobile-header-actions">
+            <AudioPlayer variant="navbar" />
+            
+            <button 
+              className="mobile-menu-btn"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label="Alternar Menu"
+            >
+              <span className={`hamburger-bar ${isMobileMenuOpen ? 'open' : ''}`}></span>
+              <span className={`hamburger-bar ${isMobileMenuOpen ? 'open' : ''}`}></span>
+              <span className={`hamburger-bar ${isMobileMenuOpen ? 'open' : ''}`}></span>
+            </button>
+          </div>
+
+          <nav className={`nav-links ${isMobileMenuOpen ? 'mobile-open' : ''}`}>
+            <a href="#sobre" className="nav-link" onClick={() => setIsMobileMenuOpen(false)}>
               <User size={15} /> Sobre
             </a>
-            <a href="#habilidades" className="nav-link">
+            <a href="#habilidades" className="nav-link" onClick={() => setIsMobileMenuOpen(false)}>
               <Wrench size={15} /> Habilidades
             </a>
-            <a href="#certificacoes" className="nav-link">
+            <a href="#certificacoes" className="nav-link" onClick={() => setIsMobileMenuOpen(false)}>
               <Medal size={15} /> Certificados
             </a>
-            <a href="#projetos" className="nav-link">
+            <a href="#projetos" className="nav-link" onClick={() => setIsMobileMenuOpen(false)}>
               <Layers size={15} /> Projetos
             </a>
             
-            {/* Audio Player Integrado no Navbar */}
-            <AudioPlayer variant="navbar" />
-
-            <a href="#contato" className="btn-primary" style={{ padding: '6px 16px', fontSize: '0.85rem' }}>
+            <a href="#contato" className="btn-primary nav-contact-btn" onClick={() => setIsMobileMenuOpen(false)}>
               <Send size={14} /> Contato
             </a>
           </nav>
