@@ -13,7 +13,7 @@ export const initialProfile: DeveloperProfile = {
     whatsapp: 'https://wa.me/5582999931035'
   },
   aboutMe: {
-    summary: 'Desenvolvedor de Software focado em Engenharia de IA, movido pelo propósito de transformar e otimizar o dia a dia das pessoas através de sistemas inteligentes e escuta ativa dos usuários.',
+    summary: 'Desenvolvedor de Software especializado em Engenharia de IA, com foco na otimização de processos e tarefas cotidianas através de sistemas inteligentes centrados na experiência do usuário.',
     paragraphs: [
       'Minha principal motivação na engenharia de software é conceber sistemas e agentes autônomos que simplifiquem, potenciem e elevem a rotina diária dos usuários. Acredito que a inteligência artificial só atinge seu propósito máximo quando alivia fricções operacionais e otimiza fluxos de trabalho no mundo concreto.',
       'Adoto uma filosofia de desenvolvimento fundamentada no aprendizado contínuo através do feedback direto das pessoas. Para mim, cada interação observada, métrica de uso ou sugestão construtiva é um insumo fundamental para lapidar o código, otimizar fluxos de agentes e entregar valor constante.',
