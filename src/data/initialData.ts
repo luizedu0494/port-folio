@@ -15,7 +15,7 @@ export const initialProfile: DeveloperProfile = {
   aboutMe: {
     summary: 'Desenvolvedor de Software focado em Engenharia de IA, movido pelo propósito de transformar e otimizar o dia a dia das pessoas através de sistemas inteligentes e escuta ativa dos usuários.',
     paragraphs: [
-      'Minha principal motivação na engenharia de software é conceber sistemas e agentes autônomos que simplifiquem, potenciem e elevem a rotina diária dos usuários. Acredito que a inteligência artificial só atinge seu propósito máximo quando resolve dores reais e elimina fricções operacionais no mundo concreto.',
+      'Minha principal motivação na engenharia de software é conceber sistemas e agentes autônomos que simplifiquem, potenciem e elevem a rotina diária dos usuários. Acredito que a inteligência artificial só atinge seu propósito máximo quando alivia fricções operacionais e otimiza fluxos de trabalho no mundo concreto.',
       'Adoto uma filosofia de desenvolvimento fundamentada no aprendizado contínuo através do feedback direto das pessoas. Para mim, cada interação observada, métrica de uso ou sugestão construtiva é um insumo fundamental para lapidar o código, otimizar fluxos de agentes e entregar valor constante.',
       'Tecnicamente, aplico essa visão combinando arquiteturas Web modernas em React 19 / TypeScript, pipelines em Python, orquestração de LLMs (LangChain, Groq API, OpenAI) e bancos de dados de alta performance como Supabase (PostgreSQL).'
     ],
@@ -110,13 +110,13 @@ export const initialProjects: Project[] = [
     featured: true,
     demoUrl: 'https://cronogramabd.vercel.app/',
     imageUrl: '/assets/gifs/visitante.gif',
-    description: 'Sistema especialista desenvolvido sob medida para gestão de cronogramas e alocação dinâmica de laboratórios de ensino e pesquisa, com suporte de IA inteligente para identificação e resolução de conflitos de horário, notificações em tempo real e modo visitante dinâmico.',
+    description: 'Sistema especialista voltado para a gestão de cronogramas e alocação dinâmica de laboratórios de ensino e pesquisa, contando com assistente de IA para suporte no diagnóstico de conflitos de horário, notificações em tempo real e modo visitante por perfil.',
     stack: ['React 19', 'TypeScript', 'Vite 7', 'Material-UI v7', 'Supabase PostgreSQL', 'LangChain.js', 'Groq API (llama-3.3-70b)'],
     highlights: [
-      'Plataforma especialista desenhada para otimização e alocação de laboratórios acadêmicos e técnicos',
-      'Assistente de IA para diagnóstico e sugestão de ajustes em conflitos de agenda e espaço físico de laboratórios',
-      'Notificações de atualizações e reservas de laboratórios em tempo real via Supabase Realtime',
-      'Modo visitante com controle de acesso dinâmico por perfil e painel mobile responsivo'
+      'Plataforma especialista voltada para otimização e alocação de laboratórios acadêmicos e técnicos',
+      'Assistente de IA para suporte ao diagnóstico e mapeamento de conflitos em agendas de laboratórios',
+      'Notificações de atualizações e reservas em tempo real via Supabase Realtime',
+      'Painel mobile responsivo, com foco em usabilidade'
     ]
   }
 ];
