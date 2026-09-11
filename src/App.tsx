@@ -132,14 +132,14 @@ export const App: React.FC = () => {
                 <GithubIcon size={18} /> Ver Perfil no GitHub
               </a>
               <a href={profile.contacts.linkedin} target="_blank" rel="noopener noreferrer" className="btn-secondary">
-                <LinkedinIcon size={18} color="#0077b5" /> Conectar no LinkedIn
+                <LinkedinIcon size={18} color="#ff4d6d" /> Conectar no LinkedIn
               </a>
             </div>
 
             {/* Quick Contact Pills */}
             <div className="contact-pills">
               <a href={profile.contacts.linkedin} target="_blank" rel="noopener noreferrer" className="contact-pill">
-                <LinkedinIcon size={14} color="#0077b5" /> LinkedIn
+                <LinkedinIcon size={14} color="#ff4d6d" /> LinkedIn
               </a>
               <a href={profile.contacts.whatsapp} target="_blank" rel="noopener noreferrer" className="contact-pill">
                 <MessageSquare size={14} color="#ff4d6d" /> WhatsApp
