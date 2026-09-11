@@ -108,7 +108,7 @@ export const initialProjects: Project[] = [
     language: 'TypeScript / React',
     featured: true,
     demoUrl: 'https://cronogramabd.vercel.app/',
-    imageUrl: '/assets/gifs/visitante.gif', // GIF do modo visitante do CronoLab 2.0
+    imageUrl: '', // Mantendo layout limpo conforme solicitado pelo usuário
     description: 'Sistema completo de gestão de cronogramas acadêmicos com suporte de IA inteligente para identificação e resolução de conflitos de horário, notificações em tempo real e modo visitante dinâmico.',
     stack: ['React 19', 'TypeScript', 'Vite 7', 'Material-UI v7', 'Supabase PostgreSQL', 'LangChain.js', 'Groq API (llama-3.3-70b)'],
     highlights: [

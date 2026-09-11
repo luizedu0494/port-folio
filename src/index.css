@@ -310,11 +310,11 @@ button {
   font-weight: 900;
   line-height: 1.1;
   margin-bottom: 16px;
-  background: linear-gradient(90deg, #ffffff 0%, #ff4d6d 35%, #ffffff 70%, #dc143c 100%);
-  background-size: 200% auto;
+  background: linear-gradient(90deg, #ffffff 0%, #ffffff 40%, rgba(255, 255, 255, 0.95) 55%, #ff4d6d 75%, #ffffff 90%, #ffffff 100%);
+  background-size: 250% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: textGlowShift 6s ease infinite;
+  animation: textGlowShift 7s ease infinite;
 }
 
 @keyframes textGlowShift {
@@ -620,6 +620,39 @@ button {
   border-color: var(--accent-crimson);
 }
 
+@media (min-width: 992px) {
+  .sobre-grid {
+    grid-template-columns: 1.2fr 0.8fr !important;
+  }
+}
+
+.sobre-scenery-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border-crimson);
+  background: rgba(12, 12, 29, 0.4);
+  box-shadow: 0 10px 35px rgba(220, 20, 60, 0.2);
+  backdrop-filter: blur(12px);
+}
+
+.sobre-scenery-gif {
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  max-height: 350px;
+  object-fit: contain;
+  mix-blend-mode: screen;
+  filter: drop-shadow(0 0 18px rgba(220, 20, 60, 0.35));
+  transition: transform var(--transition-normal);
+}
+
+.sobre-scenery-wrapper:hover .sobre-scenery-gif {
+  transform: scale(1.04);
+}
+
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
@@ -638,6 +671,7 @@ button {
   }
 }
 
+/* Dynamic subtle card ambient tech border/glow animation */
 .project-card {
   position: relative;
   overflow: hidden;
@@ -648,32 +682,59 @@ button {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  height: 100%;
   transition: all var(--transition-fast);
+  animation: cardTechPulse 6s ease-in-out infinite alternate;
 }
 
-.matrix-card-stream {
+/* Subtle laser scan line on card background */
+.project-card::before {
+  content: '';
   position: absolute;
-  top: 8px;
-  right: 8px;
-  width: 110px;
-  height: 65px;
-  border-radius: 6px;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(220, 20, 60, 0.8), transparent);
+  animation: cardScanLine 5s linear infinite;
   pointer-events: none;
-  opacity: 0.55;
-  transition: opacity 0.4s ease, transform 0.4s ease;
-  mix-blend-mode: screen;
+  opacity: 0.6;
 }
 
-.project-card:hover .matrix-card-stream {
-  opacity: 0.08;
-  transform: translateY(-4px);
+@keyframes cardTechPulse {
+  0% {
+    border-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  }
+  50% {
+    border-color: rgba(220, 20, 60, 0.35);
+    box-shadow: 0 6px 25px rgba(220, 20, 60, 0.15);
+  }
+  100% {
+    border-color: rgba(255, 77, 109, 0.25);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  }
 }
 
+@keyframes cardScanLine {
+  0% { left: -50%; opacity: 0; }
+  20% { opacity: 0.8; }
+  80% { opacity: 0.8; }
+  100% { left: 120%; opacity: 0; }
+}
+
+/* Pause animations smoothly on hover so user experience is clean and non-distracting */
 .project-card:hover {
+  animation-play-state: paused;
   transform: translateY(-6px);
-  border-color: var(--border-crimson);
-  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.6);
+  border-color: var(--accent-crimson);
+  box-shadow: 0 12px 40px rgba(220, 20, 60, 0.3);
   background: var(--bg-card-hover);
+}
+
+.project-card:hover::before {
+  animation-play-state: paused;
+  opacity: 0;
 }
 
 .project-card-image-wrapper {

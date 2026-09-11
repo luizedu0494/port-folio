@@ -154,8 +154,8 @@ export const App: React.FC = () => {
           {/* Elemento de Cenário Visual ao Lado do Hero */}
           <div className="hero-scenery-wrapper">
             <img 
-              src="/assets/gifs/earth-white.gif" 
-              alt="Cenário Global de IA" 
+              src="/assets/gifs/tech-fear.gif" 
+              alt="Cenário de Alta Tecnologia & IA" 
               className="hero-scenery-gif"
             />
           </div>
@@ -171,7 +171,7 @@ export const App: React.FC = () => {
             </h2>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '32px' }}>
+          <div className="sobre-grid" style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '32px', alignItems: 'center' }}>
             <div style={{ background: 'var(--bg-card)', padding: '32px', borderRadius: 'var(--radius-lg)', border: '1px solid var(--border-color)' }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', fontSize: '1.05rem', color: 'var(--text-secondary)' }}>
                 {profile.aboutMe.paragraphs.map((paragraph, index) => (
@@ -194,6 +194,15 @@ export const App: React.FC = () => {
                   ))}
                 </div>
               </div>
+            </div>
+
+            {/* Cenário Visual AGP / Earth Space GIF */}
+            <div className="sobre-scenery-wrapper">
+              <img 
+                src="/assets/gifs/earth-space.gif" 
+                alt="Planeta Espacial & Agente IA" 
+                className="sobre-scenery-gif"
+              />
             </div>
           </div>
         </div>
@@ -326,12 +335,6 @@ export const App: React.FC = () => {
                     </a>
                   </div>
                 </div>
-
-                {featuredProject.imageUrl && (
-                  <div className="featured-image-container">
-                    <img src={featuredProject.imageUrl} alt={featuredProject.name} className="featured-gif-preview" />
-                  </div>
-                )}
               </div>
             </div>
           </div>
