@@ -50,7 +50,9 @@ export const App: React.FC = () => {
 
   const featuredProject = projects.find(p => p.featured) || projects[0];
 
-  const filteredProjects = projects.filter(project => {
+  const otherProjects = projects.filter(p => !p.featured);
+
+  const filteredProjects = otherProjects.filter(project => {
     const matchesSearch = project.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
                           project.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           project.stack.some(s => s.toLowerCase().includes(searchQuery.toLowerCase()));
@@ -335,6 +337,12 @@ export const App: React.FC = () => {
                     </a>
                   </div>
                 </div>
+
+                {featuredProject.imageUrl && (
+                  <div className="featured-image-container">
+                    <img src={featuredProject.imageUrl} alt={featuredProject.name} className="featured-gif-preview" />
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -356,7 +364,7 @@ export const App: React.FC = () => {
               className={`filter-btn ${activeFilter === 'all' ? 'active' : ''}`}
               onClick={() => setActiveFilter('all')}
             >
-              Todos ({projects.length})
+              Todos ({otherProjects.length})
             </button>
             <button 
               className={`filter-btn ${activeFilter === 'ai' ? 'active' : ''}`}
