@@ -50,10 +50,10 @@ export const playlist: Track[] = [
     genre: 'Chill / Study'
   },
   {
-    id: 'among-the-sef',
-    title: 'Among The Sef',
-    artist: 'Colin Stetson',
-    src: '/assets/audio/Among The Sef - Colin Stetson (youtube).mp3',
-    genre: 'Atmospheric'
+    id: 'echo-sax-end',
+    title: 'Echo Sax End',
+    artist: 'Caleb Arredondo',
+    src: '/assets/audio/Echo Sax End - [Original] - by Caleb Arredondo - Caleb Arredondo (youtube).mp3',
+    genre: 'Sax Atmospheric'
   }
 ];
