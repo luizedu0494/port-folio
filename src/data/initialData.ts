@@ -13,17 +13,17 @@ export const initialProfile: DeveloperProfile = {
     whatsapp: 'https://wa.me/5582999931035'
   },
   aboutMe: {
-    summary: 'Desenvolvedor de Software especializado em Engenharia de IA, com foco na otimização de processos e tarefas cotidianas através de sistemas inteligentes centrados na experiência do usuário.',
+    summary: 'Desenvolvedor de Software especializado em Engenharia de IA, focado em simplificar processos e otimizar rotinas por meio de sistemas inteligentes centrados na experiência do usuário.',
     paragraphs: [
-      'Minha principal motivação na engenharia de software é conceber sistemas e agentes autônomos que simplifiquem, potenciem e elevem a rotina diária dos usuários. Acredito que a inteligência artificial só atinge seu propósito máximo quando alivia fricções operacionais e otimiza fluxos de trabalho no mundo concreto.',
-      'Adoto uma filosofia de desenvolvimento fundamentada no aprendizado contínuo através do feedback direto das pessoas. Para mim, cada interação observada, métrica de uso ou sugestão construtiva é um insumo fundamental para lapidar o código, otimizar fluxos de agentes e entregar valor constante.',
-      'Tecnicamente, aplico essa visão combinando arquiteturas Web modernas em React 19 / TypeScript, pipelines em Python, orquestração de LLMs (LangChain, Groq API, OpenAI) e bancos de dados de alta performance como Supabase (PostgreSQL).'
+      'Trabalho no desenvolvimento de sistemas e agentes autônomos com foco em simplificar processos e otimizar a rotina de quem usa. Cursando Análise e Desenvolvimento de Sistemas (CESMAC EAD), acredito que a IA entrega valor real quando reduz fricções operacionais no dia a dia.',
+      'Minha abordagem é guiada por feedback contínuo: métricas de uso, comportamento observado e retorno direto dos usuários orientam decisões de código e ajustes nos fluxos dos agentes — como no sistema CronoLab 2.0 de gestão e alocação de laboratórios, que apresento em destaque abaixo.',
+      'Tecnicamente, atuo com React 19 / TypeScript no front-end, pipelines em Python, orquestração de LLMs (LangChain, Groq API, OpenAI) e bancos de dados como Supabase (PostgreSQL).'
     ],
     highlights: [
-      'Propósito: Agentes e Softwares para Impactar e Facilitar o Dia a Dia',
-      'Evolução Contínua Baseada na Escuta e Feedback Ativo do Usuário',
-      'Engenharia de IA & Orquestração de Agentes Autônomos (LangChain/LLMs)',
-      'Construção de Aplicações Fullstack Modernas (React 19, Python & Supabase)'
+      'Graduação: Análise e Desenvolvimento de Sistemas (CESMAC EAD - Cursando)',
+      'Foco em Agentes Autônomos & Redução de Fricções Operacionais',
+      'Abordagem Guiada por Feedback Contínuo e Métricas de Uso',
+      'Stack: React 19, TypeScript, Python, LLMs (LangChain) & Supabase'
     ]
   },
   skillCategories: [
@@ -66,6 +66,12 @@ export const initialProfile: DeveloperProfile = {
     }
   ],
   certifications: [
+    {
+      title: 'Análise e Desenvolvimento de Sistemas (Graduação Superior)',
+      issuer: 'CESMAC EAD',
+      issueDate: 'Em andamento (Cursando)',
+      skills: ['Engenharia de Software', 'Análise de Sistemas', 'Desenvolvimento Web & IA']
+    },
     {
       title: 'InsurMinds - Certificação da 1ª Fase',
       issuer: 'I2A2 - Institut d\'Intelligence Artificielle Appliquée',
