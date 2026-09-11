@@ -9,6 +9,7 @@ import { TypewriterText } from './components/TypewriterText';
 import { MatrixDataStreamCard } from './components/MatrixDataStreamCard';
 import { NeuralNetworkBg } from './components/NeuralNetworkBg';
 import { AudioPlayer } from './components/AudioPlayer';
+import { AudioProvider } from './context/AudioContext';
 
 const GithubIcon = ({ size = 18, color = 'currentColor' }: { size?: number; color?: string }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -25,7 +26,7 @@ const LinkedinIcon = ({ size = 18, color = 'currentColor' }: { size?: number; co
   </svg>
 );
 
-export const App: React.FC = () => {
+export const AppContent: React.FC = () => {
   const [profile] = useState<DeveloperProfile>(initialProfile);
   const [projects] = useState<Project[]>(initialProjects);
   const [activeFilter, setActiveFilter] = useState<string>('all');
@@ -72,32 +73,31 @@ export const App: React.FC = () => {
       {/* Background de Rede Neural Interativa em Movimento */}
       <NeuralNetworkBg />
 
-      {/* Glassmorphism Header com Navegação Suave */}
+      {/* Glassmorphism Header com Navegação Limpa */}
       <header className="navbar">
         <div className="container nav-container">
           <a href="#inicio" className="brand-logo font-display">
             <Sparkles size={22} color="#dc143c" />
             LUIZ EDUARDO
-            <span className="brand-badge">IA & Software</span>
           </a>
 
           <nav className="nav-links">
-            <a href="#inicio" className="nav-link">
-              <Code2 size={16} /> Início
-            </a>
             <a href="#sobre" className="nav-link">
-              <User size={16} /> Sobre Mim
+              <User size={15} /> Sobre
             </a>
             <a href="#habilidades" className="nav-link">
-              <Wrench size={16} /> Habilidades
+              <Wrench size={15} /> Habilidades
             </a>
             <a href="#certificacoes" className="nav-link">
-              <Medal size={16} /> Cursos & Certificados
+              <Medal size={15} /> Certificados
             </a>
             <a href="#projetos" className="nav-link">
-              <Layers size={16} /> Projetos
+              <Layers size={15} /> Projetos
             </a>
+            
+            {/* Audio Player Integrado no Navbar */}
             <AudioPlayer variant="navbar" />
+
             <a href="#contato" className="btn-primary" style={{ padding: '6px 16px', fontSize: '0.85rem' }}>
               <Send size={14} /> Contato
             </a>
@@ -472,5 +472,13 @@ export const App: React.FC = () => {
         </div>
       </footer>
     </div>
+  );
+};
+
+export const App: React.FC = () => {
+  return (
+    <AudioProvider>
+      <AppContent />
+    </AudioProvider>
   );
 };

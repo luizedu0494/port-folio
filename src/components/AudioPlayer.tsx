@@ -1,98 +1,29 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React from 'react';
 import { Play, Pause, SkipForward, SkipBack, Volume2, VolumeX, Music } from 'lucide-react';
-import { playlist, Track } from '../data/playlistData';
+import { playlist } from '../data/playlistData';
+import { useAudio } from '../context/AudioContext';
 
 interface AudioPlayerProps {
   variant?: 'navbar' | 'expanded';
 }
 
 export const AudioPlayer: React.FC<AudioPlayerProps> = ({ variant = 'navbar' }) => {
-  const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
-  const [volume, setVolume] = useState(0.4);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
-
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-  const currentTrack: Track = playlist[currentTrackIndex] || playlist[0];
-
-  useEffect(() => {
-    if (!audioRef.current) {
-      audioRef.current = new Audio(currentTrack.src);
-      audioRef.current.volume = volume;
-    } else {
-      audioRef.current.src = currentTrack.src;
-    }
-
-    const audio = audioRef.current;
-
-    const updateTime = () => setCurrentTime(audio.currentTime);
-    const updateDuration = () => setDuration(audio.duration || 0);
-    const handleEnded = () => handleNext();
-
-    audio.addEventListener('timeupdate', updateTime);
-    audio.addEventListener('loadedmetadata', updateDuration);
-    audio.addEventListener('ended', handleEnded);
-
-    if (isPlaying) {
-      audio.play().catch(err => console.log('Audio autoplay prevented:', err));
-    }
-
-    // Auto-attempt playback on load or first user interaction (browser policy compliant)
-    const enableAutoPlayOnInteraction = () => {
-      if (audioRef.current && !isPlaying) {
-        audioRef.current.play().then(() => {
-          setIsPlaying(true);
-        }).catch(() => {
-          // Autoplay blocked by browser policy until click
-        });
-      }
-    };
-
-    window.addEventListener('click', enableAutoPlayOnInteraction, { once: true });
-    window.addEventListener('scroll', enableAutoPlayOnInteraction, { once: true });
-
-    return () => {
-      audio.removeEventListener('timeupdate', updateTime);
-      audio.removeEventListener('loadedmetadata', updateDuration);
-      audio.removeEventListener('ended', handleEnded);
-      window.removeEventListener('click', enableAutoPlayOnInteraction);
-      window.removeEventListener('scroll', enableAutoPlayOnInteraction);
-    };
-  }, [currentTrackIndex]);
-
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.volume = isMuted ? 0 : volume;
-    }
-  }, [volume, isMuted]);
-
-  const togglePlay = () => {
-    if (!audioRef.current) return;
-    if (isPlaying) {
-      audioRef.current.pause();
-      setIsPlaying(false);
-    } else {
-      audioRef.current.play().then(() => setIsPlaying(true)).catch(err => console.log(err));
-    }
-  };
-
-  const handleNext = () => {
-    setCurrentTrackIndex((prev) => (prev + 1) % playlist.length);
-  };
-
-  const handlePrev = () => {
-    setCurrentTrackIndex((prev) => (prev - 1 + playlist.length) % playlist.length);
-  };
-
-  const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const time = Number(e.target.value);
-    if (audioRef.current) {
-      audioRef.current.currentTime = time;
-      setCurrentTime(time);
-    }
-  };
+  const {
+    currentTrackIndex,
+    currentTrack,
+    isPlaying,
+    isMuted,
+    volume,
+    currentTime,
+    duration,
+    togglePlay,
+    handleNext,
+    handlePrev,
+    handleSeek,
+    setVolume,
+    setIsMuted,
+    selectTrack
+  } = useAudio();
 
   const formatTime = (secs: number) => {
     if (isNaN(secs) || secs === 0) return '0:00';
@@ -153,7 +84,7 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({ variant = 'navbar' }) 
             min="0" 
             max={duration || 100} 
             value={currentTime} 
-            onChange={handleSeek}
+            onChange={(e) => handleSeek(Number(e.target.value))}
             className="audio-scrubber"
           />
           <span className="time-text">{formatTime(duration)}</span>
@@ -183,7 +114,7 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({ variant = 'navbar' }) 
               max="1" 
               step="0.05" 
               value={isMuted ? 0 : volume} 
-              onChange={(e) => { setVolume(Number(e.target.value)); setIsMuted(false); }}
+              onChange={(e) => setVolume(Number(e.target.value))}
               className="volume-slider"
             />
           </div>
@@ -194,10 +125,7 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({ variant = 'navbar' }) 
           {playlist.map((track, idx) => (
             <button
               key={track.id}
-              onClick={() => {
-                setCurrentTrackIndex(idx);
-                setIsPlaying(true);
-              }}
+              onClick={() => selectTrack(idx)}
               className={`track-item-row ${idx === currentTrackIndex ? 'active' : ''}`}
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
