@@ -118,5 +118,50 @@ export const initialProjects: Project[] = [
       'Notificações de atualizações e reservas em tempo real via Supabase Realtime',
       'Painel mobile responsivo, com foco em usabilidade'
     ]
+  },
+  {
+    id: 'decifrai',
+    name: 'DecifrAI',
+    repo: 'DecifrAI',
+    language: 'TypeScript / Python',
+    featured: false,
+    demoUrl: 'https://github.com/luizedu0494/DecifrAI',
+    imageUrl: '',
+    description: 'Aplicação de Inteligência Artificial voltada para decifrar, traduzir e explicar conteúdos técnicos complexos e documentos de forma simples e intuitiva.',
+    stack: ['IA Generativa', 'Python', 'TypeScript', 'LLMs'],
+    highlights: [
+      'Análise inteligente e simplificação de texto com IA',
+      'Interface moderna para exploração de termos e conceitos'
+    ]
+  },
+  {
+    id: 'insurebot',
+    name: 'InsureBot',
+    repo: 'insurebot',
+    language: 'Python',
+    featured: false,
+    demoUrl: 'https://github.com/luizedu0494/insurebot',
+    imageUrl: '',
+    description: 'Agente conversacional inteligente focado em suporte técnico, cotações e automação de fluxos de atendimento no setor de seguros.',
+    stack: ['Python', 'LangChain', 'Agentes de IA', 'FastAPI'],
+    highlights: [
+      'Fluxo de atendimento automatizado com IA',
+      'Integração com bases de dados de seguros'
+    ]
+  },
+  {
+    id: 'stech-chatbot-ana',
+    name: 'Stech Chatbot Ana',
+    repo: 'stech-chatbot-ana',
+    language: 'TypeScript / Python',
+    featured: false,
+    demoUrl: 'https://github.com/luizedu0494/stech-chatbot-ana',
+    imageUrl: '',
+    description: 'Assistente virtual inteligente (Ana) desenvolvida para atendimento técnico humanizado e automação de chamados de suporte da Stech.',
+    stack: ['TypeScript', 'Python', 'LLM API', 'React'],
+    highlights: [
+      'Atendimento conversacional humanizado e rápido',
+      'Respostas baseadas em conhecimento técnico'
+    ]
   }
 ];

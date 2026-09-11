@@ -379,7 +379,7 @@ export const AppContent: React.FC = () => {
           <div className="container">
             <div className="section-header">
               <h3 className="font-subtitle" style={{ fontSize: '1.4rem', color: 'var(--text-secondary)' }}>
-                Outras Soluções & Projetos Desenvolvidos
+                Outros projetos desenvolvidos
               </h3>
             </div>
 
