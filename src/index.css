@@ -1095,23 +1095,24 @@ button {
 /* Audio Entry Floating Banner */
 .audio-entry-banner {
   position: fixed;
-  top: 76px;
+  bottom: 24px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 99;
+  z-index: 9999;
   width: 90%;
-  max-width: 620px;
-  background: rgba(12, 12, 29, 0.95);
+  max-width: 580px;
+  background: rgba(12, 12, 29, 0.96);
   border: 1px solid var(--accent-crimson);
-  border-radius: var(--radius-pill);
-  padding: 8px 16px;
-  box-shadow: 0 8px 32px rgba(220, 20, 60, 0.35);
+  border-radius: var(--radius-lg);
+  padding: 12px 18px;
+  box-shadow: 0 10px 40px rgba(220, 20, 60, 0.5);
   backdrop-filter: blur(16px);
-  animation: slideDownBanner 0.5s ease-out;
+  -webkit-backdrop-filter: blur(16px);
+  animation: slideUpBanner 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@keyframes slideDownBanner {
-  from { transform: translate(-50%, -20px); opacity: 0; }
+@keyframes slideUpBanner {
+  from { transform: translate(-50%, 40px); opacity: 0; }
   to { transform: translate(-50%, 0); opacity: 1; }
 }
 
@@ -1126,9 +1127,9 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
-  background: rgba(220, 20, 60, 0.15);
+  width: 36px;
+  height: 36px;
+  background: rgba(220, 20, 60, 0.18);
   border-radius: 50%;
   flex-shrink: 0;
 }
@@ -1151,8 +1152,8 @@ button {
 }
 
 .audio-entry-btn {
-  padding: 6px 14px !important;
-  font-size: 0.8rem !important;
+  padding: 8px 16px !important;
+  font-size: 0.82rem !important;
   white-space: nowrap;
   flex-shrink: 0;
 }
@@ -1162,13 +1163,30 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 4px;
+  padding: 6px;
   border-radius: 50%;
   transition: color var(--transition-fast);
   flex-shrink: 0;
+  cursor: pointer;
 }
 
 .audio-entry-close:hover {
   color: var(--accent-soft);
+}
+
+@media (max-width: 640px) {
+  .audio-entry-banner {
+    bottom: 16px;
+    width: 94%;
+    padding: 10px 14px;
+    border-radius: 16px;
+  }
+  .audio-entry-content {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .audio-entry-desc {
+    display: none;
+  }
 }
 
