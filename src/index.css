@@ -499,22 +499,61 @@ button {
   backdrop-filter: blur(8px);
 }
 
+.btn-primary::before,
+.btn-secondary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 75%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.18) 50%,
+    transparent 100%
+  );
+  transform: skewX(-25deg);
+  animation: btnShimmer 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes btnShimmer {
+  0% {
+    left: -120%;
+  }
+  22% {
+    left: 140%;
+  }
+  100% {
+    left: 140%;
+  }
+}
+
 .btn-primary svg {
   color: #e2e8f0 !important;
   stroke: #e2e8f0 !important;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .btn-primary:hover {
   background: linear-gradient(135deg, rgba(241, 245, 249, 0.32) 0%, rgba(148, 163, 184, 0.26) 100%);
   border-color: rgba(226, 232, 240, 0.65);
   color: #ffffff !important;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 24px rgba(226, 232, 240, 0.16);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 25px rgba(226, 232, 240, 0.18);
 }
 
 .btn-primary:hover svg {
   color: #ffffff !important;
   stroke: #ffffff !important;
+  transform: scale(1.18) rotate(-6deg);
+}
+
+.btn-primary:active,
+.btn-secondary:active,
+.contact-pill:active {
+  transform: translateY(1px) scale(0.97) !important;
 }
 
 /* Secondary Button (Obsidian Silver) */
@@ -530,23 +569,28 @@ button {
   gap: 10px;
   transition: all var(--transition-fast);
   backdrop-filter: blur(8px);
+  position: relative;
+  overflow: hidden;
 }
 
 .btn-secondary svg {
   color: var(--accent-soft) !important;
   stroke: var(--accent-soft) !important;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .btn-secondary:hover {
   background: rgba(35, 38, 48, 0.95);
-  border-color: #f1f5f9;
+  border-color: rgba(226, 232, 240, 0.55);
   color: #ffffff !important;
-  transform: translateY(-3px);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 25px rgba(226, 232, 240, 0.12);
 }
 
 .btn-secondary:hover svg {
   color: #ffffff !important;
   stroke: #ffffff !important;
+  transform: scale(1.18) rotate(-6deg);
 }
 
 /* Contact Pills */
@@ -568,6 +612,12 @@ button {
   font-size: 0.85rem;
   color: var(--text-secondary);
   transition: all var(--transition-fast);
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-pill svg {
+  transition: transform 0.25s ease;
 }
 
 .contact-pill:hover {
@@ -575,6 +625,10 @@ button {
   color: #ffffff;
   background: #1e2028;
   transform: translateY(-2px);
+}
+
+.contact-pill:hover svg {
+  transform: scale(1.2);
 }
 
 /* Featured Hero Project Card (CronoLab 2.0) */
