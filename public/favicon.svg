@@ -1,17 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none">
-  <!-- Fundo escuro elegante Purple Haze -->
-  <rect width="32" height="32" rx="8" fill="#06040c"/>
+  <!-- Fundo escuro profundo Onyx com borda perolizada -->
+  <rect width="32" height="32" rx="8" fill="#070709" stroke="rgba(226, 232, 240, 0.2)" stroke-width="1"/>
   
-  <!-- Ícone Sparkle em Roxo/Violeta Elétrico Puro (#c084fc & #7e22ce) -->
-  <path d="M16 4L18.2 11.8L26 14L18.2 16.2L16 24L13.8 16.2L6 14L13.8 11.8L16 4Z" fill="url(#purpleGlow)"/>
-  <circle cx="24" cy="8" r="2.5" fill="#e9d5ff"/>
-  <circle cx="8" cy="22" r="2" fill="#a855f7"/>
+  <!-- Ícone Sparkle em Prata Perolizado & Platina Metalizado (#ffffff & #cbd5e1) -->
+  <path d="M16 4L18.2 11.8L26 14L18.2 16.2L16 24L13.8 16.2L6 14L13.8 11.8L16 4Z" fill="url(#pearlGlow)"/>
+  <circle cx="24" cy="8" r="2.2" fill="#ffffff"/>
+  <circle cx="8" cy="22" r="1.8" fill="#cbd5e1"/>
   
-  <!-- Gradiente Violeta Elétrico Sem Tons Vermelhos -->
+  <!-- Gradiente Prata Perolizado -->
   <defs>
-    <linearGradient id="purpleGlow" x1="6" y1="4" x2="26" y2="24" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#c084fc"/>
-      <stop offset="100%" stop-color="#7e22ce"/>
+    <linearGradient id="pearlGlow" x1="6" y1="4" x2="26" y2="24" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#cbd5e1"/>
     </linearGradient>
   </defs>
 </svg>
