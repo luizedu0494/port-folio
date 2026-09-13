@@ -163,14 +163,14 @@ export const AppContent: React.FC = () => {
             <a href="#sobre" className="nav-link" onClick={() => setIsMobileMenuOpen(false)}>
               <User size={15} /> Sobre
             </a>
+            <a href="#projetos" className="nav-link" onClick={() => setIsMobileMenuOpen(false)}>
+              <Layers size={15} /> Projetos
+            </a>
             <a href="#habilidades" className="nav-link" onClick={() => setIsMobileMenuOpen(false)}>
               <Wrench size={15} /> Habilidades
             </a>
             <a href="#certificacoes" className="nav-link" onClick={() => setIsMobileMenuOpen(false)}>
               <Medal size={15} /> Certificados
-            </a>
-            <a href="#projetos" className="nav-link" onClick={() => setIsMobileMenuOpen(false)}>
-              <Layers size={15} /> Projetos
             </a>
             
             <a href="#contato" className="btn-primary nav-contact-btn" onClick={() => setIsMobileMenuOpen(false)}>
@@ -292,77 +292,9 @@ export const AppContent: React.FC = () => {
         </div>
       </section>
 
-      {/* Habilidades Section (#habilidades) */}
-      <section id="habilidades" className="reveal-on-scroll" style={{ padding: '80px 0' }}>
-        <div className="container">
-          <div className="section-header" style={{ marginBottom: '32px' }}>
-            <h2 className="section-title font-subtitle">
-              <Wrench color="var(--accent-crimson)" size={28} /> Habilidades & Competências Técnicas
-            </h2>
-          </div>
-
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '24px' }}>
-            {profile.skillCategories.map((category, idx) => (
-              <div key={idx} style={{ background: 'var(--bg-card)', padding: '28px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
-                <h3 className="font-subtitle" style={{ fontSize: '1.2rem', color: 'var(--accent-soft)', marginBottom: '18px' }}>
-                  {category.title}
-                </h3>
-                <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                  {category.skills.map((skill, sIdx) => (
-                    <li key={sIdx} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.95rem', color: 'var(--text-secondary)' }}>
-                      <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--accent-crimson)' }}></span>
-                      {skill.name}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Cursos & Certificações (#certificacoes) */}
-      <section id="certificacoes" className="reveal-on-scroll" style={{ padding: '80px 0', background: 'var(--bg-secondary)', borderTop: '1px solid var(--border-color)', borderBottom: '1px solid var(--border-color)' }}>
-        <div className="container">
-          <div className="section-header" style={{ marginBottom: '32px' }}>
-            <h2 className="section-title font-subtitle">
-              <Medal color="var(--accent-crimson)" size={28} /> Cursos & Certificações
-            </h2>
-          </div>
-
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px' }}>
-            {profile.certifications.map((cert, idx) => (
-              <div key={idx} style={{ background: 'var(--bg-card)', padding: '24px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                <div>
-                  <div style={{ fontSize: '0.8rem', color: 'var(--accent-soft)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '6px', fontWeight: 600 }}>
-                    {cert.issuer}
-                  </div>
-                  <h3 className="font-subtitle" style={{ fontSize: '1.15rem', color: '#fff', marginBottom: '8px', lineHeight: '1.4' }}>
-                    {cert.title}
-                  </h3>
-                  <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '16px' }}>
-                    {cert.issueDate} {cert.credentialId ? `• Credencial: ${cert.credentialId}` : ''}
-                  </div>
-                </div>
-
-                {cert.skills && (
-                  <div className="tech-tags" style={{ marginTop: 'auto' }}>
-                    {cert.skills.map((skill, sIdx) => (
-                      <span key={sIdx} className="tech-tag" style={{ fontSize: '0.75rem' }}>
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Hero Featured Project (CronoLab 2.0) (#projetos) */}
       {featuredProject && (
-        <section id="projetos" className="featured-section reveal-on-scroll" style={{ paddingTop: '40px' }}>
+        <section id="projetos" className="featured-section reveal-on-scroll" style={{ paddingTop: '60px' }}>
           <div className="container">
             <div className="section-header">
               <h2 className="section-title font-subtitle">
@@ -541,6 +473,74 @@ export const AppContent: React.FC = () => {
           </div>
         </section>
       )}
+
+      {/* Habilidades Section (#habilidades) */}
+      <section id="habilidades" className="reveal-on-scroll" style={{ padding: '80px 0', background: 'var(--bg-secondary)', borderTop: '1px solid var(--border-color)', borderBottom: '1px solid var(--border-color)' }}>
+        <div className="container">
+          <div className="section-header" style={{ marginBottom: '32px' }}>
+            <h2 className="section-title font-subtitle">
+              <Wrench color="var(--accent-crimson)" size={28} /> Habilidades & Competências Técnicas
+            </h2>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '24px' }}>
+            {profile.skillCategories.map((category, idx) => (
+              <div key={idx} style={{ background: 'var(--bg-card)', padding: '28px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
+                <h3 className="font-subtitle" style={{ fontSize: '1.2rem', color: 'var(--accent-soft)', marginBottom: '18px' }}>
+                  {category.title}
+                </h3>
+                <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                  {category.skills.map((skill, sIdx) => (
+                    <li key={sIdx} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.95rem', color: 'var(--text-secondary)' }}>
+                      <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--accent-crimson)' }}></span>
+                      {skill.name}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Cursos & Certificações (#certificacoes) */}
+      <section id="certificacoes" className="reveal-on-scroll" style={{ padding: '80px 0' }}>
+        <div className="container">
+          <div className="section-header" style={{ marginBottom: '32px' }}>
+            <h2 className="section-title font-subtitle">
+              <Medal color="var(--accent-crimson)" size={28} /> Cursos & Certificações
+            </h2>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px' }}>
+            {profile.certifications.map((cert, idx) => (
+              <div key={idx} style={{ background: 'var(--bg-card)', padding: '24px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                <div>
+                  <div style={{ fontSize: '0.8rem', color: 'var(--accent-soft)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '6px', fontWeight: 600 }}>
+                    {cert.issuer}
+                  </div>
+                  <h3 className="font-subtitle" style={{ fontSize: '1.15rem', color: '#fff', marginBottom: '8px', lineHeight: '1.4' }}>
+                    {cert.title}
+                  </h3>
+                  <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '16px' }}>
+                    {cert.issueDate} {cert.credentialId ? `• Credencial: ${cert.credentialId}` : ''}
+                  </div>
+                </div>
+
+                {cert.skills && (
+                  <div className="tech-tags" style={{ marginTop: 'auto' }}>
+                    {cert.skills.map((skill, sIdx) => (
+                      <span key={sIdx} className="tech-tag" style={{ fontSize: '0.75rem' }}>
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* Contato Section (#contato) */}
       <section id="contato" className="reveal-on-scroll" style={{ padding: '80px 0' }}>
