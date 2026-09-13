@@ -7,11 +7,11 @@
 ## 🛠️ Tecnologias & Arquitetura
 
 - **Core Frontend:** React 19, TypeScript, Vite 8
-- **Estilização & Design System:** Vanilla CSS com tokens de cor **Pearl Platinum & Onyx Dark** (`#070709`, `#0d0e12`, `#14151a`, `#f1f5f9`, `#cbd5e1`, `#94a3b8`) e botões acetinados anti-ofuscamento (Anti-Glare Glassmorphic).
-- **Tipografia Personalizada:**
-  - **Display / Títulos Tech:** `Orbitron` & `Retroica`
-  - **Subtítulos & Seções:** `Retroica` & `Space Grotesk`
-  - **Corpo & Parágrafos:** `Nexa` (ExtraLight / Heavy) & `Plus Jakarta Sans`
+- **Estilização & Design System:** Vanilla CSS com tokens de cor **Pearl Platinum & Onyx Dark** (`#070709`, `#0d0e12`, `#14151a`, `#f1f5f9`, `#cbd5e1`, `#94a3b8`) e botões acetinados com movimento contínuo (Continuous Fluid Glassmorphic).
+- **Tipografia com Suporte 100% Nativo a Acentuação (Latin-Ext):**
+  - **Display / Títulos Tech:** `Orbitron` (Futurista & Cibernética)
+  - **Subtítulos & Seções:** `Space Grotesk` & `Outfit` (Suporte nativo completo a acentos do Português: `ã`, `ç`, `ê`, `é`, `á`, `1ª`)
+  - **Corpo & Parágrafos:** `Plus Jakarta Sans` (Design UI moderno de altíssima legibilidade)
 - **Background Interativo:** Animação de Canvas HTML5 2D simulando partículas de Rede Neural / Agentes de IA em tom prata perolizado
 - **Gerenciamento de Estado de Áudio:** React `AudioContext` para sincronização global do player entre o menu e as seções
 - **Ícones & Elementos Gráficos:** Lucide React, ícones customizados de Gmail, Outlook e WhatsApp com cores sincronizadas ao tema, e Favicon SVG de brilho perolizado
@@ -26,14 +26,14 @@
    - **Player Expandido na Seção Sobre Mim:** Painel completo com lista de reprodução (faixas MP3 selecionadas de Lofi/Ambient), controle de volume suave, barra de progresso (scrubber) e seleção de faixas.
    - **Banner Flutuante "Entrar com Som":** Notificação toast com 1 clique para autorização direta de áudio sem bloquear no Chrome/Edge/Mobile.
 
-2. **🎨 Identidade Visual Pearl Platinum & Ônix Dark (Anti-Glare Design):**
-   - **Conforto Visual & Sem Ofuscamento:** Botões de ação principal (`.btn-primary`) remodelados para vidro acetinado metalizado (`rgba(241, 245, 249, 0.22)`), eliminando botões brancos sólidos que causavam cansaço visual.
+2. **🎨 Identidade Visual Pearl Platinum & Animações Contínuas (Neural Flow):**
+   - **Animações Fluidas & Contínuas:** Os botões principais (`.btn-primary` e `.btn-secondary`) possuem um movimento de gradiente metálico contínuo (`btnGradientFlow`) e respiração de borda (`btnBorderPulse`), perfeitamente desacelerados e sincronizados com a vibração da rede neural de fundo.
+   - **Conforto Visual & Sem Ofuscamento:** Estilo vidro acetinado metalizado (`rgba(241, 245, 249, 0.24)`), eliminando botões brancos sólidos que causavam cansaço visual.
    - **Mesclagem de Cenários (`mix-blend-mode`):** Remoção de caixas e fundos brancos em GIFs de cenário (`tech-fear.gif` e `earth-space.gif`), integrando as animações 100% sobre o fundo escuro da malha neural.
-   - **Hero Section:** Gradiente de título com destaque em prata perolizado (`linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%)`), efeito Typewriter sem deslocamento de texto (`min-height` fixado).
 
-3. **📁 Projetos em Destaque, Lightbox Modal & Responsividade:**
-   - **CronoLab 2.0:** Projeto Principal em Destaque no topo com demonstração em GIF do Modo Visitante, lista de destaques técnicos e links diretos para a aplicação web e repositório.
-   - **Grade Secundária Padronizada:** Miniaturas de projetos com altura uniforme de **200px** (`object-fit: cover`), alinhando perfeitamente capturas verticais (mobile) e horizontais (web).
+3. **📁 Estrutura de Seções Focada em Projetos, Lightbox Modal & Responsividade:**
+   - **Posicionamento de Destaque para Projetos:** Seção de Projetos posicionada logo após o *Sobre Mim*, priorizando a demonstração de código e soluções de IA para recrutadores e gestores técnicos.
+   - **CronoLab 2.0 & Grade Secundária:** Projeto Principal em Destaque no topo + miniaturas da grade padronizadas com altura uniforme de **200px** (`object-fit: cover`).
    - **Modal Lightbox de Expansão:** Ao clicar em qualquer prévia, o modal exibe a imagem inteira sem cortes (`object-fit: contain`) perfeitamente centralizada e ajustada à proporção natural.
    - **Responsividade Mobile:** Navbar adaptável para telas menores, badges inteligentes "Toque para Expandir" em dispositivos touch e posicionamento do banner de áudio fixado no rodapé.
 
@@ -41,12 +41,12 @@
 
 ## 🚀 Estrutura do Site
 
-1. **Header / Navbar:** Marca, links de navegação suave (`#sobre`, `#habilidades`, `#certificacoes`, `#projetos`), Mini Audio Player e botão de contato.
+1. **Header / Navbar:** Marca, links de navegação suave (`#sobre`, `#projetos`, `#habilidades`, `#certificacoes`), Mini Audio Player e botão de contato.
 2. **Início (Hero):** Apresentação profissional, headline animada (Typewriter), links diretos do GitHub/LinkedIn/WhatsApp/E-mails e cenário de IA.
 3. **Sobre Mim:** Trajetória em transição para Engenharia de IA, pontos chave da carreira, cenário do globo espacial e o Player Dev Focus expandido.
-4. **Habilidades:** Competências separadas por Inteligência Artificial & Agentes, Frontend, Backend & Banco de Dados e Ferramentas.
-5. **Cursos & Certificações:** Certificados I2A2 (InsurMinds & Agentes Inteligentes), Databricks (Generative AI Fundamentals), Cisco e Learn Prompting.
-6. **Projetos:** Card do CronoLab 2.0 em Destaque e grade de soluções secundárias.
+4. **Projetos:** Card do CronoLab 2.0 em Destaque e grade de soluções secundárias (DecifrAI, InsureBot, Stech Chatbot Ana).
+5. **Habilidades:** Competências separadas por Inteligência Artificial & Agentes, Frontend, Backend & Banco de Dados e Ferramentas.
+6. **Cursos & Certificações:** Certificados I2A2 (InsurMinds & Agentes Inteligentes), Databricks (Generative AI Fundamentals), Cisco e Learn Prompting.
 7. **Contato & Rodapé:** Formas de contato via LinkedIn, GitHub, WhatsApp, Gmail e Outlook.
 
 ---
