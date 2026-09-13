@@ -9,7 +9,6 @@ import { TypewriterText } from './components/TypewriterText';
 import { MatrixDataStreamCard } from './components/MatrixDataStreamCard';
 import { NeuralNetworkBg } from './components/NeuralNetworkBg';
 import { AudioPlayer } from './components/AudioPlayer';
-import { AudioEntryBanner } from './components/AudioEntryBanner';
 import { WelcomeModal } from './components/WelcomeModal';
 import { AudioProvider } from './context/AudioContext';
 
@@ -79,9 +78,6 @@ export const AppContent: React.FC = () => {
 
       {/* Background de Rede Neural Interativa em Movimento */}
       <NeuralNetworkBg />
-
-      {/* Banner Topo Fixo para Ativação da Trilha Sonora */}
-      <AudioEntryBanner />
 
       {/* Glassmorphism Header com Navegação Limpa & Menu Hambúrguer Mobile */}
       <header className="navbar">
