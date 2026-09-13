@@ -164,8 +164,8 @@ export const AppContent: React.FC = () => {
               <a href={profile.contacts.whatsapp} target="_blank" rel="noopener noreferrer" className="contact-pill">
                 <MessageSquare size={14} color="var(--accent-soft)" /> WhatsApp
               </a>
-              <a href={profile.contacts.email} className="contact-pill">
-                <Mail size={14} color="var(--accent-soft)" /> E-mail
+              <a href={profile.contacts.institutionalEmail || 'mailto:luis.lopes@cesmac.edu.br'} className="contact-pill" title="E-mail Institucional: luis.lopes@cesmac.edu.br">
+                <Mail size={14} color="var(--accent-soft)" /> E-mail Institucional
               </a>
               <span className="contact-pill">
                 📍 {profile.location}

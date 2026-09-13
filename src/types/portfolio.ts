@@ -2,6 +2,7 @@ export interface Contacts {
   linkedin: string;
   github: string;
   email: string;
+  institutionalEmail?: string;
   whatsapp: string;
 }
 

@@ -10,6 +10,7 @@ export const initialProfile: DeveloperProfile = {
     linkedin: 'https://www.linkedin.com/in/luiz-eduardo-052385291/',
     github: 'https://github.com/luizedu0494',
     email: 'mailto:luizcurriculoct@gmail.com',
+    institutionalEmail: 'mailto:luis.lopes@cesmac.edu.br',
     whatsapp: 'https://wa.me/5582999931035'
   },
   aboutMe: {
