@@ -158,8 +158,8 @@ export const AppContent: React.FC = () => {
 
             {/* Quick Contact Pills */}
             <div className="contact-pills">
-              <a href={profile.contacts.linkedin} target="_blank" rel="noopener noreferrer" className="contact-pill">
-                <LinkedinIcon size={14} color="var(--accent-soft)" /> LinkedIn
+              <a href={profile.contacts.email} target="_blank" rel="noopener noreferrer" className="contact-pill">
+                <Mail size={14} color="var(--accent-soft)" /> Gmail
               </a>
               <a href={profile.contacts.whatsapp} target="_blank" rel="noopener noreferrer" className="contact-pill">
                 <MessageSquare size={14} color="var(--accent-soft)" /> WhatsApp

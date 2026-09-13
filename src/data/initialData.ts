@@ -9,7 +9,7 @@ export const initialProfile: DeveloperProfile = {
   contacts: {
     linkedin: 'https://www.linkedin.com/in/luiz-eduardo-052385291/',
     github: 'https://github.com/luizedu0494',
-    email: 'mailto:luizeduardo@example.com',
+    email: 'mailto:luizcurriculoct@gmail.com',
     whatsapp: 'https://wa.me/5582999931035'
   },
   aboutMe: {
