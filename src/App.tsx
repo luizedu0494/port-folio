@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  Sparkles, ExternalLink, Mail, MessageSquare, 
+  Sparkles, ExternalLink, Mail, MessageSquare, MapPin,
   Brain, Code2, Layers, CheckCircle2, User, Wrench, Send, Medal, ZoomIn, X
 } from 'lucide-react';
 import { DeveloperProfile, Project } from './types/portfolio';
@@ -225,7 +225,7 @@ export const AppContent: React.FC = () => {
                 <OutlookIcon size={16} color="var(--accent-soft)" /> E-mail Institucional
               </a>
               <span className="contact-pill">
-                📍 {profile.location}
+                <MapPin size={16} color="var(--accent-soft)" /> {profile.location}
               </span>
             </div>
           </div>
