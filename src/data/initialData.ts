@@ -87,7 +87,7 @@ export const initialProfile: DeveloperProfile = {
     {
       title: 'Academy Accreditation - Generative AI Fundamentals',
       issuer: 'Databricks',
-      issueDate: 'Emitida em mar de 2025 • Expira em mar de 2027',
+      issueDate: 'Emitida em mar de 2025',
       credentialId: '136963095',
       skills: ['Generative AI', 'LLMs']
     },
@@ -100,7 +100,7 @@ export const initialProfile: DeveloperProfile = {
     {
       title: 'ChatGPT for Everyone',
       issuer: 'Learn Prompting',
-      issueDate: 'Emitida em mar de 2025 • Expirou em mar de 2026',
+      issueDate: 'Emitida em mar de 2025',
       credentialId: 'sxdf1omfhd',
       skills: ['Prompt Engineering', 'ChatGPT']
     }
