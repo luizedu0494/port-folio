@@ -16,7 +16,7 @@ export const initialProfile: DeveloperProfile = {
     summary: 'Desenvolvedor de Software especializado em Engenharia de IA, focado em simplificar processos e otimizar rotinas por meio de sistemas inteligentes centrados na experiência do usuário.',
     paragraphs: [
       'Trabalho no desenvolvimento de sistemas e agentes autônomos com foco em simplificar processos e otimizar a rotina de quem usa. Cursando Análise e Desenvolvimento de Sistemas (CESMAC EAD), acredito que a IA entrega valor real quando reduz fricções operacionais no dia a dia.',
-      'Minha abordagem é guiada por feedback contínuo: métricas de uso, comportamento observado e retorno direto dos usuários orientam decisões de código e ajustes nos fluxos dos agentes — como no sistema CronoLab 2.0 de gestão e alocação de laboratórios, que apresento em destaque abaixo.',
+      'Minha abordagem é guiada por feedback contínuo: métricas de uso, comportamento observado e retorno direto dos usuários orientam decisões de código e otimizações de sistemas — como no CronoLab 2.0, plataforma de gestão e alocação de laboratórios que apresento em destaque abaixo.',
       'Tecnicamente, atuo com React 19, React Native e TypeScript, orquestração de LLMs (LangChain.js, Groq API, OpenAI) e bancos de dados como Supabase (PostgreSQL).'
     ],
     highlights: [
@@ -116,11 +116,11 @@ export const initialProjects: Project[] = [
     featured: true,
     demoUrl: 'https://cronogramabd.vercel.app/',
     imageUrl: '/assets/gifs/visitante.gif',
-    description: 'Sistema especialista voltado para a gestão de cronogramas e alocação dinâmica de laboratórios de ensino e pesquisa, contando com assistente de IA para suporte no diagnóstico de conflitos de horário, notificações em tempo real e modo visitante por perfil.',
-    stack: ['React 19', 'TypeScript', 'Vite 7', 'Material-UI v7', 'Supabase PostgreSQL', 'LangChain.js', 'Groq API (llama-3.3-70b)'],
+    description: 'Sistema especialista voltado para a gestão de cronogramas e alocação dinâmica de laboratórios de ensino e pesquisa, contando com suporte no diagnóstico de conflitos de horário, notificações em tempo real e modo visitante por perfil.',
+    stack: ['React 19', 'TypeScript', 'Vite 7', 'Material-UI v7', 'Supabase PostgreSQL'],
     highlights: [
       'Plataforma especialista voltada para otimização e alocação de laboratórios acadêmicos e técnicos',
-      'Assistente de IA para suporte ao diagnóstico e mapeamento de conflitos em agendas de laboratórios',
+      'Suporte ao diagnóstico e mapeamento automático de conflitos em agendas de laboratórios',
       'Notificações de atualizações e reservas em tempo real via Supabase Realtime',
       'Painel mobile responsivo, com foco em usabilidade'
     ]
