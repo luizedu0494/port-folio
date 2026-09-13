@@ -132,12 +132,12 @@ export const initialProjects: Project[] = [
     language: 'TypeScript / Python',
     featured: false,
     demoUrl: 'https://github.com/luizedu0494/DecifrAI',
-    imageUrl: '',
-    description: 'Aplicação de Inteligência Artificial voltada para decifrar, traduzir e explicar conteúdos técnicos complexos e documentos de forma simples e intuitiva.',
-    stack: ['IA Generativa', 'Python', 'TypeScript', 'LLMs'],
+    imageUrl: '/images/decifrai_preview.png',
+    description: 'Jogo interativo inspirado no conceito clássico do Akinator, porém reimaginado utilizando Inteligência Artificial e LLMs para conduzir as perguntas e adivinhar personalidades, jogadores e figuras públicas.',
+    stack: ['IA Generativa', 'Python', 'TypeScript', 'LLMs', 'Prompt Engineering'],
     highlights: [
-      'Análise inteligente e simplificação de texto com IA',
-      'Interface moderna para exploração de termos e conceitos'
+      'Reinterpretação do conceito Akinator alimentada por LLMs modernas',
+      'Geração de perguntas dinâmicas por IA e acompanhamento de pontuação'
     ]
   },
   {
@@ -147,7 +147,7 @@ export const initialProjects: Project[] = [
     language: 'Python',
     featured: false,
     demoUrl: 'https://github.com/luizedu0494/insurebot',
-    imageUrl: '',
+    imageUrl: '/images/insurebot_preview.png',
     description: 'Agente conversacional inteligente focado em suporte técnico, cotações e automação de fluxos de atendimento no setor de seguros.',
     stack: ['Python', 'LangChain', 'Agentes de IA', 'FastAPI'],
     highlights: [
@@ -162,7 +162,7 @@ export const initialProjects: Project[] = [
     language: 'TypeScript / Python',
     featured: false,
     demoUrl: 'https://github.com/luizedu0494/stech-chatbot-ana',
-    imageUrl: '',
+    imageUrl: '/images/stech_ana_preview.png',
     description: 'Assistente virtual inteligente (Ana) desenvolvida para atendimento técnico humanizado e automação de chamados de suporte da Stech.',
     stack: ['TypeScript', 'Python', 'LLM API', 'React'],
     highlights: [

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { 
   Sparkles, ExternalLink, Mail, MessageSquare, 
-  Brain, Code2, Layers, CheckCircle2, User, Wrench, Send, Medal
+  Brain, Code2, Layers, CheckCircle2, User, Wrench, Send, Medal, ZoomIn, X
 } from 'lucide-react';
 import { DeveloperProfile, Project } from './types/portfolio';
 import { initialProfile, initialProjects } from './data/initialData';
@@ -10,6 +10,7 @@ import { MatrixDataStreamCard } from './components/MatrixDataStreamCard';
 import { NeuralNetworkBg } from './components/NeuralNetworkBg';
 import { AudioPlayer } from './components/AudioPlayer';
 import { AudioEntryBanner } from './components/AudioEntryBanner';
+import { WelcomeModal } from './components/WelcomeModal';
 import { AudioProvider } from './context/AudioContext';
 
 const GithubIcon = ({ size = 18, color = 'currentColor' }: { size?: number; color?: string }) => (
@@ -33,6 +34,7 @@ export const AppContent: React.FC = () => {
   const [activeFilter, setActiveFilter] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
+  const [previewModalImage, setPreviewModalImage] = useState<{ src: string; alt: string } | null>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -72,6 +74,9 @@ export const AppContent: React.FC = () => {
 
   return (
     <div className="portfolio-app">
+      {/* Modal de Boas-Vindas & Autorização do Player de Áudio */}
+      <WelcomeModal />
+
       {/* Background de Rede Neural Interativa em Movimento */}
       <NeuralNetworkBg />
 
@@ -363,8 +368,22 @@ export const AppContent: React.FC = () => {
                 </div>
 
                 {featuredProject.imageUrl && (
-                  <div className="featured-image-container">
+                  <div 
+                    className="featured-image-container expandable-preview-container"
+                    onClick={() => setPreviewModalImage({ src: featuredProject.imageUrl!, alt: featuredProject.name })}
+                    title="Clique para expandir em tela cheia"
+                  >
                     <img src={featuredProject.imageUrl} alt={featuredProject.name} className="featured-gif-preview" />
+                    
+                    <div className="mobile-expand-hint">
+                      <ZoomIn size={12} />
+                      <span>Toque para Expandir</span>
+                    </div>
+
+                    <div className="expand-overlay-badge">
+                      <ZoomIn size={18} color="#fff" />
+                      <span>Clique para Expandir</span>
+                    </div>
                   </div>
                 )}
               </div>
@@ -417,8 +436,22 @@ export const AppContent: React.FC = () => {
                 <div key={project.id} className="project-card">
                   <div>
                     {project.imageUrl && (
-                      <div className="project-card-image-wrapper">
+                      <div 
+                        className="project-card-image-wrapper expandable-preview-container"
+                        onClick={() => setPreviewModalImage({ src: project.imageUrl!, alt: project.name })}
+                        title="Clique para expandir em tela cheia"
+                      >
                         <img src={project.imageUrl} alt={project.name} className="project-card-image" />
+                        
+                        <div className="mobile-expand-hint">
+                          <ZoomIn size={11} />
+                          <span>Expandir</span>
+                        </div>
+
+                        <div className="expand-overlay-badge">
+                          <ZoomIn size={16} color="#fff" />
+                          <span>Expandir</span>
+                        </div>
                       </div>
                     )}
 
@@ -444,9 +477,8 @@ export const AppContent: React.FC = () => {
                         target="_blank" 
                         rel="noopener noreferrer" 
                         style={{ color: '#fff', display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.85rem' }}
-                        title="Ver GitHub"
                       >
-                        <GithubIcon size={16} /> Repositório
+                        <GithubIcon size={16} /> GitHub
                       </a>
                     </div>
                   </div>
@@ -457,12 +489,9 @@ export const AppContent: React.FC = () => {
         </section>
       )}
 
-      {/* Seção de Contato (#contato) */}
-      <section id="contato" className="reveal-on-scroll" style={{ padding: '80px 0', background: 'var(--bg-secondary)', borderTop: '1px solid var(--border-color)' }}>
+      {/* Contato Section (#contato) */}
+      <section id="contato" className="reveal-on-scroll" style={{ padding: '80px 0' }}>
         <div className="container" style={{ textAlign: 'center', maxWidth: '700px' }}>
-          <div className="hero-badge-tag" style={{ margin: '0 auto 16px auto' }}>
-            <Send size={14} /> Vamos Conversar
-          </div>
           <h2 className="section-title font-subtitle" style={{ justifyContent: 'center', fontSize: '2.2rem', marginBottom: '16px' }}>
             Entre em Contato
           </h2>
@@ -484,10 +513,31 @@ export const AppContent: React.FC = () => {
         </div>
       </section>
 
+      {/* Modal Lightbox de Expansão de Imagem / GIF */}
+      {previewModalImage && (
+        <div className="image-lightbox-overlay" onClick={() => setPreviewModalImage(null)}>
+          <div className="image-lightbox-card" onClick={(e) => e.stopPropagation()}>
+            <div className="image-lightbox-header">
+              <span className="image-lightbox-title font-subtitle">{previewModalImage.alt}</span>
+              <button 
+                className="image-lightbox-close" 
+                onClick={() => setPreviewModalImage(null)}
+                title="Fechar"
+              >
+                <X size={20} />
+              </button>
+            </div>
+            <div className="image-lightbox-body">
+              <img src={previewModalImage.src} alt={previewModalImage.alt} className="image-lightbox-img" />
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Footer */}
       <footer className="footer">
         <div className="container">
-          <p>© {new Date().getFullYear()} Luiz Eduardo Lopes — Desenvolvedor de Software & IA</p>
+          <p>© Luiz Eduardo Lopes — Desenvolvedor de Software & IA - {new Date().getFullYear()}</p>
         </div>
       </footer>
     </div>

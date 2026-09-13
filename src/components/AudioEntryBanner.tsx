@@ -24,7 +24,7 @@ export const AudioEntryBanner: React.FC = () => {
         </div>
         <div className="audio-entry-text">
           <span className="audio-entry-title">Trilha Sonora Dev Focus (15%)</span>
-          <span className="audio-entry-desc">Deseja navegar ouvindo a playlist de estudo/código?</span>
+          <span className="audio-entry-desc">Deseja navegar ouvindo a playlist de músicas para foco e estudo?</span>
         </div>
         <button onClick={handleStart} className="btn-primary audio-entry-btn">
           <Sparkles size={16} /> Entrar com Som
