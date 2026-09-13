@@ -481,9 +481,16 @@ button {
   align-items: center;
 }
 
-/* Primary Button (Soft Metallic Platinum Glass) */
+/* Primary Button (Soft Metallic Platinum Glass with Continuous Neural Flow) */
 .btn-primary {
-  background: linear-gradient(135deg, rgba(241, 245, 249, 0.22) 0%, rgba(148, 163, 184, 0.16) 100%);
+  background: linear-gradient(
+    120deg,
+    rgba(241, 245, 249, 0.24) 0%,
+    rgba(148, 163, 184, 0.14) 50%,
+    rgba(226, 232, 240, 0.28) 100%
+  );
+  background-size: 220% 220%;
+  animation: btnGradientFlow 8s ease-in-out infinite alternate, btnBorderPulse 6s ease-in-out infinite alternate;
   color: #f1f5f9 !important;
   border: 1px solid rgba(226, 232, 240, 0.35);
   font-weight: 600;
@@ -504,29 +511,59 @@ button {
   content: '';
   position: absolute;
   top: 0;
-  left: -120%;
-  width: 75%;
+  left: -130%;
+  width: 80%;
   height: 100%;
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(255, 255, 255, 0.18) 50%,
+    rgba(255, 255, 255, 0.14) 50%,
     transparent 100%
   );
   transform: skewX(-25deg);
-  animation: btnShimmer 4s ease-in-out infinite;
+  animation: btnSheenPulse 7s ease-in-out infinite;
   pointer-events: none;
 }
 
-@keyframes btnShimmer {
+@keyframes btnGradientFlow {
   0% {
-    left: -120%;
+    background-position: 0% 50%;
   }
-  22% {
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes btnBorderPulse {
+  0% {
+    border-color: rgba(226, 232, 240, 0.25);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4), 0 0 10px rgba(226, 232, 240, 0.05);
+  }
+  50% {
+    border-color: rgba(226, 232, 240, 0.48);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 18px rgba(226, 232, 240, 0.12);
+  }
+  100% {
+    border-color: rgba(226, 232, 240, 0.3);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4), 0 0 10px rgba(226, 232, 240, 0.06);
+  }
+}
+
+@keyframes btnSheenPulse {
+  0% {
+    left: -130%;
+    opacity: 0.2;
+  }
+  50% {
     left: 140%;
+    opacity: 0.8;
   }
   100% {
     left: 140%;
+    opacity: 0;
   }
 }
 
@@ -537,11 +574,11 @@ button {
 }
 
 .btn-primary:hover {
-  background: linear-gradient(135deg, rgba(241, 245, 249, 0.32) 0%, rgba(148, 163, 184, 0.26) 100%);
+  background: linear-gradient(135deg, rgba(241, 245, 249, 0.34) 0%, rgba(148, 163, 184, 0.28) 100%);
   border-color: rgba(226, 232, 240, 0.65);
   color: #ffffff !important;
   transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 8px 25px rgba(226, 232, 240, 0.18);
+  box-shadow: 0 8px 25px rgba(226, 232, 240, 0.2);
 }
 
 .btn-primary:hover svg {
@@ -556,9 +593,16 @@ button {
   transform: translateY(1px) scale(0.97) !important;
 }
 
-/* Secondary Button (Obsidian Silver) */
+/* Secondary Button (Obsidian Silver with Continuous Flow) */
 .btn-secondary {
-  background: rgba(22, 23, 29, 0.85);
+  background: linear-gradient(
+    120deg,
+    rgba(22, 23, 29, 0.9) 0%,
+    rgba(35, 38, 48, 0.85) 50%,
+    rgba(18, 19, 24, 0.95) 100%
+  );
+  background-size: 220% 220%;
+  animation: btnGradientFlow 10s ease-in-out infinite alternate, btnBorderPulse 6s ease-in-out infinite alternate;
   color: #f1f5f9 !important;
   border: 1px solid var(--border-crimson);
   font-weight: 600;
