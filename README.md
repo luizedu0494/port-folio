@@ -7,8 +7,11 @@
 ## 🛠️ Tecnologias & Arquitetura
 
 - **Core Frontend:** React 19, TypeScript, Vite 8
-- **Estilização & Design System:** Vanilla CSS com tokens de cor **Pearl Platinum & Onyx Dark** (`#070709`, `#0d0e12`, `#14151a`, `#f1f5f9`, `#cbd5e1`, `#94a3b8`)
-- **Tipografia:** Google Fonts (`Orbitron` para Display/Títulos Tech, `Space Grotesk` para Subtítulos, `Outfit`, `Plus Jakarta Sans` para Corpo)
+- **Estilização & Design System:** Vanilla CSS com tokens de cor **Pearl Platinum & Onyx Dark** (`#070709`, `#0d0e12`, `#14151a`, `#f1f5f9`, `#cbd5e1`, `#94a3b8`) e botões acetinados anti-ofuscamento (Anti-Glare Glassmorphic).
+- **Tipografia Personalizada:**
+  - **Display / Títulos Tech:** `Orbitron` & `Retroica`
+  - **Subtítulos & Seções:** `Retroica` & `Space Grotesk`
+  - **Corpo & Parágrafos:** `Nexa` (ExtraLight / Heavy) & `Plus Jakarta Sans`
 - **Background Interativo:** Animação de Canvas HTML5 2D simulando partículas de Rede Neural / Agentes de IA em tom prata perolizado
 - **Gerenciamento de Estado de Áudio:** React `AudioContext` para sincronização global do player entre o menu e as seções
 - **Ícones & Elementos Gráficos:** Lucide React, ícones customizados de Gmail, Outlook e WhatsApp com cores sincronizadas ao tema, e Favicon SVG de brilho perolizado
@@ -23,10 +26,10 @@
    - **Player Expandido na Seção Sobre Mim:** Painel completo com lista de reprodução (faixas MP3 selecionadas de Lofi/Ambient), controle de volume suave, barra de progresso (scrubber) e seleção de faixas.
    - **Banner Flutuante "Entrar com Som":** Notificação toast com 1 clique para autorização direta de áudio sem bloquear no Chrome/Edge/Mobile.
 
-2. **🎨 Identidade Visual Pearl Platinum & Ônix Dark:**
-   - **Hero Section:** Gradiente de título com destaque em prata perolizado (`linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%)`), efeito Typewriter sem deslocamento de texto (`min-height` fixado) e elemento visual do cenário de alta tecnologia.
-   - **Seção Sobre Mim com Layout Zig-Zag:** Inclusão do GIF de globo/rede espacial (`earth-space.gif`) posicionado à esquerda para alternância visual dinâmica com a seção Hero.
-   - **Gradientes & Glows:** Iluminação perolizada acetinada em botões e bordas com transparência mineral, sem brilhos brancos estridentes.
+2. **🎨 Identidade Visual Pearl Platinum & Ônix Dark (Anti-Glare Design):**
+   - **Conforto Visual & Sem Ofuscamento:** Botões de ação principal (`.btn-primary`) remodelados para vidro acetinado metalizado (`rgba(241, 245, 249, 0.22)`), eliminando botões brancos sólidos que causavam cansaço visual.
+   - **Mesclagem de Cenários (`mix-blend-mode`):** Remoção de caixas e fundos brancos em GIFs de cenário (`tech-fear.gif` e `earth-space.gif`), integrando as animações 100% sobre o fundo escuro da malha neural.
+   - **Hero Section:** Gradiente de título com destaque em prata perolizado (`linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%)`), efeito Typewriter sem deslocamento de texto (`min-height` fixado).
 
 3. **📁 Projetos em Destaque, Lightbox Modal & Responsividade:**
    - **CronoLab 2.0:** Projeto Principal em Destaque no topo com demonstração em GIF do Modo Visitante, lista de destaques técnicos e links diretos para a aplicação web e repositório.
@@ -57,12 +60,15 @@ public/
 │   │   ├── daniel.mp3 - green to blue (432hz).mp3
 │   │   ├── Decaying Duet - Dorian Concept.mp3
 │   │   ├── Echo Sax End - by Caleb Arredondo.mp3
-│   │   ├── Dorian Concept - Space II.mp3
 │   │   └── ...
 │   └── gifs/               # Elementos de cenário visual
 │       ├── tech-fear.gif
 │       ├── earth-space.gif
 │       └── visitante.gif
+├── fonts/                  # Fontes personalizadas TTF
+│   ├── nexa/               # Nexa-ExtraLight & Nexa-Heavy
+│   ├── retroica/           # Retroica
+│   └── panic/              # Panic
 ├── favicon.svg             # Ícone SVG personalizado em Prata Perolizado
 ```
 
