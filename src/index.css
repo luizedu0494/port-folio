@@ -481,37 +481,40 @@ button {
   align-items: center;
 }
 
-/* Primary Button (Pearlescent Platinum) */
+/* Primary Button (Soft Metallic Platinum Glass) */
 .btn-primary {
-  background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
-  color: #070709 !important;
-  font-weight: 700;
-  padding: 12px 26px;
+  background: linear-gradient(135deg, rgba(241, 245, 249, 0.22) 0%, rgba(148, 163, 184, 0.16) 100%);
+  color: #f1f5f9 !important;
+  border: 1px solid rgba(226, 232, 240, 0.35);
+  font-weight: 600;
+  padding: 12px 24px;
   border-radius: var(--radius-md);
   display: inline-flex;
   align-items: center;
   gap: 10px;
   transition: all var(--transition-fast);
-  box-shadow: 0 4px 20px rgba(226, 232, 240, 0.22);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
   position: relative;
   overflow: hidden;
+  backdrop-filter: blur(8px);
 }
 
 .btn-primary svg {
-  color: #070709 !important;
-  stroke: #070709 !important;
+  color: #e2e8f0 !important;
+  stroke: #e2e8f0 !important;
 }
 
 .btn-primary:hover {
-  background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
-  color: #000000 !important;
-  transform: translateY(-3px);
-  box-shadow: 0 8px 28px rgba(226, 232, 240, 0.38);
+  background: linear-gradient(135deg, rgba(241, 245, 249, 0.32) 0%, rgba(148, 163, 184, 0.26) 100%);
+  border-color: rgba(226, 232, 240, 0.65);
+  color: #ffffff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(226, 232, 240, 0.16);
 }
 
 .btn-primary:hover svg {
-  color: #000000 !important;
-  stroke: #000000 !important;
+  color: #ffffff !important;
+  stroke: #ffffff !important;
 }
 
 /* Secondary Button (Obsidian Silver) */
@@ -793,6 +796,33 @@ button {
 }
 
 .sobre-scenery-wrapper:hover .sobre-scenery-gif {
+  transform: scale(1.04);
+}
+
+/* Hero Scenery GIF Seamless Dark Blend */
+.hero-scenery-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+}
+
+.hero-scenery-gif {
+  width: 100%;
+  max-width: 440px;
+  height: auto;
+  max-height: 380px;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+  filter: invert(1) hue-rotate(180deg) brightness(0.92);
+  transition: transform var(--transition-normal);
+}
+
+.hero-scenery-wrapper:hover .hero-scenery-gif {
   transform: scale(1.04);
 }
 
