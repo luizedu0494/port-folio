@@ -129,15 +129,17 @@ export const initialProjects: Project[] = [
     id: 'decifrai',
     name: 'DecifrAI',
     repo: 'DecifrAI',
-    language: 'TypeScript / Python',
+    language: 'TypeScript / React Native',
     featured: false,
     demoUrl: 'https://github.com/luizedu0494/DecifrAI',
     imageUrl: '/images/decifrai_preview.png',
-    description: 'Jogo interativo inspirado no conceito clássico do Akinator, porém reimaginado utilizando Inteligência Artificial e LLMs para conduzir as perguntas e adivinhar personalidades, jogadores e figuras públicas.',
-    stack: ['IA Generativa', 'Python', 'TypeScript', 'LLMs', 'Prompt Engineering'],
+    description: 'Jogo interativo mobile inspirado no conceito clássico do Akinator, porém reimaginado utilizando Inteligência Artificial e LLMs para conduzir as perguntas e adivinhar personalidades, jogadores e figuras públicas.',
+    stack: ['React Native', 'TypeScript', 'Formik + Yup', 'IA Generativa', 'React Navigation'],
     highlights: [
-      'Reinterpretação do conceito Akinator alimentada por LLMs modernas',
-      'Geração de perguntas dinâmicas por IA e acompanhamento de pontuação'
+      'Desenvolvimento mobile multiplataforma com React Native & TypeScript',
+      'Gerenciamento e validação de formulários com Formik + Yup',
+      'Navegação por telas com fluxo completo de autenticação e jogo',
+      'Reinterpretação da mecânica do Akinator alimentada por IA'
     ]
   },
   {
