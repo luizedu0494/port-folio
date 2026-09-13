@@ -27,21 +27,35 @@ const LinkedinIcon = ({ size = 18, color = 'currentColor' }: { size?: number; co
   </svg>
 );
 
-const GmailIcon = ({ size = 18, color = 'currentColor' }: { size?: number; color?: string }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-    <rect x="2" y="4" width="20" height="16" rx="2" />
-    <polyline points="22,6 12,13 2,6" />
-    <path d="M4 18l7.5-7.5" />
-    <path d="M20 18l-7.5-7.5" />
+const GmailIcon = ({ size = 16, color = 'var(--accent-soft)' }: { size?: number; color?: string }) => (
+  <svg 
+    width={size} 
+    height={size} 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    xmlns="http://www.w3.org/2000/svg"
+    style={{ display: 'inline-block', verticalAlign: 'middle', flexShrink: 0 }}
+  >
+    <rect x="2" y="4" width="20" height="16" rx="2" stroke={color} strokeWidth="2" strokeLinejoin="round" />
+    <path d="M2 6l10 7 10-7" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M4 18l6.5-6.5" stroke={color} strokeWidth="2" strokeLinecap="round" />
+    <path d="M20 18l-6.5-6.5" stroke={color} strokeWidth="2" strokeLinecap="round" />
   </svg>
 );
 
-const OutlookIcon = ({ size = 18, color = 'currentColor' }: { size?: number; color?: string }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M12 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H12" />
-    <path d="M22 6L15 11.5L22 17" />
-    <rect x="2" y="5" width="10" height="14" rx="2" />
-    <circle cx="7" cy="12" r="2.5" />
+const OutlookIcon = ({ size = 16, color = 'var(--accent-soft)' }: { size?: number; color?: string }) => (
+  <svg 
+    width={size} 
+    height={size} 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    xmlns="http://www.w3.org/2000/svg"
+    style={{ display: 'inline-block', verticalAlign: 'middle', flexShrink: 0 }}
+  >
+    <path d="M12 4.5H20.5C21.6 4.5 22.5 5.4 22.5 6.5V17.5C22.5 18.6 21.6 19.5 20.5 19.5H12" stroke={color} strokeWidth="2" strokeLinejoin="round" />
+    <path d="M22.5 6.5L15.5 12L22.5 17.5" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    <rect x="1.5" y="5.5" width="10.5" height="13" rx="2" stroke={color} strokeWidth="2" />
+    <circle cx="6.75" cy="12" r="2.25" stroke={color} strokeWidth="2" />
   </svg>
 );
 
@@ -177,13 +191,13 @@ export const AppContent: React.FC = () => {
             {/* Quick Contact Pills */}
             <div className="contact-pills">
               <a href={profile.contacts.email} target="_blank" rel="noopener noreferrer" className="contact-pill">
-                <GmailIcon size={14} color="var(--accent-soft)" /> Gmail
+                <GmailIcon size={16} color="var(--accent-soft)" /> Gmail
               </a>
               <a href={profile.contacts.whatsapp} target="_blank" rel="noopener noreferrer" className="contact-pill">
                 <MessageSquare size={14} color="var(--accent-soft)" /> WhatsApp
               </a>
               <a href={profile.contacts.institutionalEmail || 'mailto:luis.lopes@cesmac.edu.br'} className="contact-pill" title="E-mail Institucional: luis.lopes@cesmac.edu.br">
-                <OutlookIcon size={14} color="var(--accent-soft)" /> E-mail Institucional
+                <OutlookIcon size={16} color="var(--accent-soft)" /> E-mail Institucional
               </a>
               <span className="contact-pill">
                 📍 {profile.location}
