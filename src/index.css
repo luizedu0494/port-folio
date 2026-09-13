@@ -1,6 +1,45 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Outfit:wght@500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap');
 
-/* Webfont Fallbacks & Google Fonts Definitions */
+/* Custom Fonts @font-face Declarations */
+@font-face {
+  font-family: 'Panic';
+  src: url('/fonts/panic/Panic.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Retroica';
+  src: url('/fonts/retroica/Retroica.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Nexa';
+  src: url('/fonts/nexa/Nexa-Heavy.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Nexa';
+  src: url('/fonts/nexa/Nexa-ExtraLight.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Nexa';
+  src: url('/fonts/nexa/Nexa-ExtraLight.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 
 :root {
   /* Pearl Platinum & Onyx Dark Palette */
@@ -23,9 +62,9 @@
   --border-color: rgba(226, 232, 240, 0.12);
   --border-crimson: rgba(226, 232, 240, 0.3);
 
-  --font-display: 'Orbitron', sans-serif;
-  --font-subtitle: 'Space Grotesk', 'Outfit', sans-serif;
-  --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-display: 'Panic', 'Orbitron', sans-serif;
+  --font-subtitle: 'Retroica', 'Space Grotesk', sans-serif;
+  --font-body: 'Nexa', 'Plus Jakarta Sans', system-ui, sans-serif;
 
   --radius-sm: 8px;
   --radius-md: 14px;
