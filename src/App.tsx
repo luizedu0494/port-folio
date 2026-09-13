@@ -27,6 +27,24 @@ const LinkedinIcon = ({ size = 18, color = 'currentColor' }: { size?: number; co
   </svg>
 );
 
+const GmailIcon = ({ size = 18, color = 'currentColor' }: { size?: number; color?: string }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="2" y="4" width="20" height="16" rx="2" />
+    <polyline points="22,6 12,13 2,6" />
+    <path d="M4 18l7.5-7.5" />
+    <path d="M20 18l-7.5-7.5" />
+  </svg>
+);
+
+const OutlookIcon = ({ size = 18, color = 'currentColor' }: { size?: number; color?: string }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H12" />
+    <path d="M22 6L15 11.5L22 17" />
+    <rect x="2" y="5" width="10" height="14" rx="2" />
+    <circle cx="7" cy="12" r="2.5" />
+  </svg>
+);
+
 export const AppContent: React.FC = () => {
   const [profile] = useState<DeveloperProfile>(initialProfile);
   const [projects] = useState<Project[]>(initialProjects);
@@ -159,13 +177,13 @@ export const AppContent: React.FC = () => {
             {/* Quick Contact Pills */}
             <div className="contact-pills">
               <a href={profile.contacts.email} target="_blank" rel="noopener noreferrer" className="contact-pill">
-                <Mail size={14} color="var(--accent-soft)" /> Gmail
+                <GmailIcon size={14} color="var(--accent-soft)" /> Gmail
               </a>
               <a href={profile.contacts.whatsapp} target="_blank" rel="noopener noreferrer" className="contact-pill">
                 <MessageSquare size={14} color="var(--accent-soft)" /> WhatsApp
               </a>
               <a href={profile.contacts.institutionalEmail || 'mailto:luis.lopes@cesmac.edu.br'} className="contact-pill" title="E-mail Institucional: luis.lopes@cesmac.edu.br">
-                <Mail size={14} color="var(--accent-soft)" /> E-mail Institucional
+                <OutlookIcon size={14} color="var(--accent-soft)" /> E-mail Institucional
               </a>
               <span className="contact-pill">
                 📍 {profile.location}
