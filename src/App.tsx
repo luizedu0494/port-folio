@@ -66,9 +66,9 @@ export const AppContent: React.FC = () => {
     if (!matchesSearch) return false;
 
     if (activeFilter === 'all') return true;
-    if (activeFilter === 'ai') return project.stack.some(s => s.toLowerCase().includes('langchain') || s.toLowerCase().includes('groq') || s.toLowerCase().includes('openai') || project.name.toLowerCase().includes('agent') || project.name.toLowerCase().includes('decifra') || project.name.toLowerCase().includes('bot'));
+    if (activeFilter === 'ai') return project.stack.some(s => s.toLowerCase().includes('langchain') || s.toLowerCase().includes('groq') || s.toLowerCase().includes('openai') || s.toLowerCase().includes('ia') || project.name.toLowerCase().includes('agent') || project.name.toLowerCase().includes('decifra') || project.name.toLowerCase().includes('bot'));
     if (activeFilter === 'react') return project.stack.some(s => s.toLowerCase().includes('react'));
-    if (activeFilter === 'python') return project.language.toLowerCase().includes('python') || project.stack.some(s => s.toLowerCase().includes('python'));
+    if (activeFilter === 'mobile') return project.language.toLowerCase().includes('native') || project.stack.some(s => s.toLowerCase().includes('native') || s.toLowerCase().includes('mobile'));
     return true;
   });
 
@@ -423,10 +423,10 @@ export const AppContent: React.FC = () => {
                 React 19
               </button>
               <button 
-                className={`filter-btn ${activeFilter === 'python' ? 'active' : ''}`}
-                onClick={() => setActiveFilter('python')}
+                className={`filter-btn ${activeFilter === 'mobile' ? 'active' : ''}`}
+                onClick={() => setActiveFilter('mobile')}
               >
-                Python
+                React Native
               </button>
             </div>
 

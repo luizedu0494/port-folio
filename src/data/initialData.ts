@@ -5,7 +5,7 @@ export const initialProfile: DeveloperProfile = {
   headline: 'Desenvolvedor de Software com foco em Engenharia de IA & Agentes Inteligentes',
   targetRole: 'Desenvolvedor de Agentes & Inteligência Artificial',
   location: 'Maceió, Alagoas',
-  mainStack: ['React 19', 'TypeScript', 'Python', 'Supabase (PostgreSQL)', 'LangChain', 'Groq API', 'OpenAI'],
+  mainStack: ['React 19', 'TypeScript', 'React Native', 'Supabase (PostgreSQL)', 'LangChain.js', 'Groq API', 'OpenAI'],
   contacts: {
     linkedin: 'https://www.linkedin.com/in/luiz-eduardo-052385291/',
     github: 'https://github.com/luizedu0494',
@@ -17,13 +17,13 @@ export const initialProfile: DeveloperProfile = {
     paragraphs: [
       'Trabalho no desenvolvimento de sistemas e agentes autônomos com foco em simplificar processos e otimizar a rotina de quem usa. Cursando Análise e Desenvolvimento de Sistemas (CESMAC EAD), acredito que a IA entrega valor real quando reduz fricções operacionais no dia a dia.',
       'Minha abordagem é guiada por feedback contínuo: métricas de uso, comportamento observado e retorno direto dos usuários orientam decisões de código e ajustes nos fluxos dos agentes — como no sistema CronoLab 2.0 de gestão e alocação de laboratórios, que apresento em destaque abaixo.',
-      'Tecnicamente, atuo com React 19 / TypeScript no front-end, pipelines em Python, orquestração de LLMs (LangChain, Groq API, OpenAI) e bancos de dados como Supabase (PostgreSQL).'
+      'Tecnicamente, atuo com React 19, React Native e TypeScript, orquestração de LLMs (LangChain.js, Groq API, OpenAI) e bancos de dados como Supabase (PostgreSQL).'
     ],
     highlights: [
       'Graduação: Análise e Desenvolvimento de Sistemas (CESMAC EAD - Cursando)',
       'Foco em Agentes Autônomos & Redução de Fricções Operacionais',
       'Abordagem Guiada por Feedback Contínuo e Métricas de Uso',
-      'Stack: React 19, TypeScript, Python, LLMs (LangChain) & Supabase'
+      'Stack: React 19, React Native, TypeScript, LLMs (LangChain.js) & Supabase'
     ]
   },
   skillCategories: [
@@ -146,30 +146,30 @@ export const initialProjects: Project[] = [
     id: 'insurebot',
     name: 'InsureBot',
     repo: 'insurebot',
-    language: 'Python',
+    language: 'TypeScript / React',
     featured: false,
     demoUrl: 'https://github.com/luizedu0494/insurebot',
     imageUrl: '/images/insurebot_preview.png',
     description: 'Agente conversacional inteligente focado em suporte técnico, cotações e automação de fluxos de atendimento no setor de seguros.',
-    stack: ['Python', 'LangChain', 'Agentes de IA', 'FastAPI'],
+    stack: ['TypeScript', 'React', 'LangChain.js', 'IA Generativa', 'LLM API'],
     highlights: [
       'Fluxo de atendimento automatizado com IA',
-      'Integração com bases de dados de seguros'
+      'Integração com bases de dados e apólices de seguros'
     ]
   },
   {
     id: 'stech-chatbot-ana',
     name: 'Stech Chatbot Ana',
     repo: 'stech-chatbot-ana',
-    language: 'TypeScript / Python',
+    language: 'TypeScript / React',
     featured: false,
     demoUrl: 'https://github.com/luizedu0494/stech-chatbot-ana',
     imageUrl: '/images/stech_ana_preview.png',
     description: 'Assistente virtual inteligente (Ana) desenvolvida para atendimento técnico humanizado e automação de chamados de suporte da Stech.',
-    stack: ['TypeScript', 'Python', 'LLM API', 'React'],
+    stack: ['TypeScript', 'React', 'LLM API', 'Tailwind / CSS'],
     highlights: [
-      'Atendimento conversacional humanizado e rápido',
-      'Respostas baseadas em conhecimento técnico'
+      'Atendimento conversacional humanizado e rápido para a Stech',
+      'Respostas inteligentes baseadas em conhecimento técnico'
     ]
   }
 ];
