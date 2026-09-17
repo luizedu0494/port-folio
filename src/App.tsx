@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  Sparkles, ExternalLink, Mail, MessageSquare, MapPin,
-  Brain, Code2, Layers, CheckCircle2, User, Wrench, Medal, ZoomIn, X
+  Sparkles, ExternalLink, MapPin,
+  Brain, Layers, CheckCircle2, User, Wrench, Medal, ZoomIn, X
 } from 'lucide-react';
 import { DeveloperProfile, Project } from './types/portfolio';
 import { initialProfile, initialProjects } from './data/initialData';

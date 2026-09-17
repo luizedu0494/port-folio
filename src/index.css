@@ -347,9 +347,23 @@ button {
   transform: translateY(-1px);
 }
 
+@media (max-width: 768px) {
+  .nav-cta-btn {
+    width: 100%;
+    margin-top: 12px;
+    padding: 12px 0;
+    min-height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+  }
+}
+
 /* Hero Section */
 .hero-section {
-  padding-top: 150px;
+  padding-top: 120px;
   padding-bottom: 70px;
 }
 
@@ -474,7 +488,7 @@ button {
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 12px;
   align-items: center;
 }
 
@@ -915,8 +929,8 @@ button {
   height: auto;
   max-height: 380px;
   object-fit: contain;
-  mix-blend-mode: multiply;
-  filter: invert(1) hue-rotate(180deg) brightness(0.92);
+  mix-blend-mode: screen;
+  filter: drop-shadow(0 0 20px rgba(226, 232, 240, 0.18));
   transition: transform var(--transition-normal);
 }
 
@@ -958,7 +972,7 @@ button {
   animation: cardTechPulse 6s ease-in-out infinite alternate;
 }
 
-/* Subtle laser scan line on card background */
+/* Laser scan line on card background triggered on hover */
 .project-card::before {
   content: '';
   position: absolute;
@@ -966,10 +980,13 @@ button {
   left: -100%;
   width: 50%;
   height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(226, 232, 240, 0.35), transparent);
-  animation: cardScanLine 5s linear infinite;
+  background: linear-gradient(90deg, transparent, rgba(226, 232, 240, 0.45), transparent);
   pointer-events: none;
-  opacity: 0.6;
+  opacity: 0;
+}
+
+.project-card:hover::before {
+  animation: cardScanLineOnce 0.75s ease-in-out forwards;
 }
 
 @keyframes cardTechPulse {
@@ -987,24 +1004,18 @@ button {
   }
 }
 
-@keyframes cardScanLine {
+@keyframes cardScanLineOnce {
   0% { left: -50%; opacity: 0; }
-  20% { opacity: 0.8; }
-  80% { opacity: 0.8; }
-  100% { left: 120%; opacity: 0; }
+  30% { opacity: 0.9; }
+  70% { opacity: 0.9; }
+  100% { left: 130%; opacity: 0; }
 }
 
 .project-card:hover {
-  animation-play-state: paused;
   transform: translateY(-5px);
   border-color: rgba(226, 232, 240, 0.4);
   box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6), 0 0 25px rgba(226, 232, 240, 0.12);
   background: var(--bg-card-hover);
-}
-
-.project-card:hover::before {
-  animation-play-state: paused;
-  opacity: 0;
 }
 
 .project-card-image-wrapper {
