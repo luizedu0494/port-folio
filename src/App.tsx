@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { 
   Sparkles, ExternalLink, MapPin,
   Brain, Layers, CheckCircle2, User, Wrench, Medal, ZoomIn, X
@@ -94,7 +94,8 @@ export const AppContent: React.FC = () => {
   const [activeSection, setActiveSection] = useState<string>('inicio');
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
+    // 1. Observer para revelação suave das seções no scroll
+    const revealObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
@@ -106,18 +107,13 @@ export const AppContent: React.FC = () => {
     );
 
     const elements = document.querySelectorAll('.reveal-on-scroll');
-    elements.forEach((el) => observer.observe(el));
+    elements.forEach((el) => revealObserver.observe(el));
 
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
+    // 2. Observer para rastreamento da seção ativa na navbar
     const sections = ['inicio', 'sobre', 'projetos', 'habilidades', 'certificacoes', 'contato'];
-    const observers: IntersectionObserver[] = [];
-
-    sections.forEach((id) => {
+    const sectionObservers: (IntersectionObserver | null)[] = sections.map((id) => {
       const el = document.getElementById(id);
-      if (!el) return;
+      if (!el) return null;
       const obs = new IntersectionObserver(
         ([entry]) => {
           if (entry.isIntersecting) {
@@ -127,29 +123,34 @@ export const AppContent: React.FC = () => {
         { threshold: 0.3 }
       );
       obs.observe(el);
-      observers.push(obs);
+      return obs;
     });
 
-    return () => observers.forEach((o) => o.disconnect());
+    return () => {
+      revealObserver.disconnect();
+      sectionObservers.forEach((obs) => obs?.disconnect());
+    };
   }, []);
 
-  const featuredProject = projects.find(p => p.featured) || projects[0];
+  const featuredProject = useMemo(() => projects.find(p => p.featured) || projects[0], [projects]);
 
-  const otherProjects = projects.filter(p => !p.featured);
+  const otherProjects = useMemo(() => projects.filter(p => !p.featured), [projects]);
 
-  const filteredProjects = otherProjects.filter(project => {
-    const matchesSearch = project.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          project.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          project.stack.some(s => s.toLowerCase().includes(searchQuery.toLowerCase()));
-    
-    if (!matchesSearch) return false;
+  const filteredProjects = useMemo(() => {
+    return otherProjects.filter(project => {
+      const matchesSearch = project.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                            project.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                            project.stack.some(s => s.toLowerCase().includes(searchQuery.toLowerCase()));
+      
+      if (!matchesSearch) return false;
 
-    if (activeFilter === 'all') return true;
-    if (activeFilter === 'ai') return project.stack.some(s => s.toLowerCase().includes('langchain') || s.toLowerCase().includes('groq') || s.toLowerCase().includes('openai') || s.toLowerCase().includes('ia') || project.name.toLowerCase().includes('agent') || project.name.toLowerCase().includes('decifra') || project.name.toLowerCase().includes('bot'));
-    if (activeFilter === 'react') return project.stack.some(s => s.toLowerCase().includes('react'));
-    if (activeFilter === 'mobile') return project.language.toLowerCase().includes('native') || project.stack.some(s => s.toLowerCase().includes('native') || s.toLowerCase().includes('mobile'));
-    return true;
-  });
+      if (activeFilter === 'all') return true;
+      if (activeFilter === 'ai') return project.stack.some(s => s.toLowerCase().includes('langchain') || s.toLowerCase().includes('groq') || s.toLowerCase().includes('openai') || s.toLowerCase().includes('ia') || project.name.toLowerCase().includes('agent') || project.name.toLowerCase().includes('decifra') || project.name.toLowerCase().includes('bot'));
+      if (activeFilter === 'react') return project.stack.some(s => s.toLowerCase().includes('react'));
+      if (activeFilter === 'mobile') return project.language.toLowerCase().includes('native') || project.stack.some(s => s.toLowerCase().includes('native') || s.toLowerCase().includes('mobile'));
+      return true;
+    });
+  }, [otherProjects, activeFilter, searchQuery]);
 
   return (
     <div className="portfolio-app">
@@ -293,7 +294,7 @@ export const AppContent: React.FC = () => {
       </section>
 
       {/* Sobre Mim Section (#sobre) */}
-      <section id="sobre" className="reveal-on-scroll" style={{ padding: '80px 0', background: 'var(--bg-secondary)', borderTop: '1px solid var(--border-color)', borderBottom: '1px solid var(--border-color)' }}>
+      <section id="sobre" className="reveal-on-scroll section-alt">
         <div className="container">
           <div className="section-header" style={{ marginBottom: '32px' }}>
             <h2 className="section-title font-subtitle">
@@ -308,6 +309,7 @@ export const AppContent: React.FC = () => {
                 src="/assets/gifs/earth-space.gif" 
                 alt="Planeta Espacial & Agente IA" 
                 className="sobre-scenery-gif"
+                loading="lazy"
               />
             </div>
 
@@ -526,7 +528,7 @@ export const AppContent: React.FC = () => {
       )}
 
       {/* Habilidades Section (#habilidades) */}
-      <section id="habilidades" className="reveal-on-scroll" style={{ padding: '80px 0', background: 'var(--bg-secondary)', borderTop: '1px solid var(--border-color)', borderBottom: '1px solid var(--border-color)' }}>
+      <section id="habilidades" className="reveal-on-scroll section-alt">
         <div className="container">
           <div className="section-header" style={{ marginBottom: '32px' }}>
             <h2 className="section-title font-subtitle">
@@ -536,7 +538,7 @@ export const AppContent: React.FC = () => {
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '24px' }}>
             {profile.skillCategories.map((category, idx) => (
-              <div key={idx} style={{ background: 'var(--bg-card)', padding: '28px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)' }}>
+              <div key={idx} className="skill-card">
                 <h3 className="font-subtitle" style={{ fontSize: '1.2rem', color: 'var(--accent-soft)', marginBottom: '18px' }}>
                   {category.title}
                 </h3>
@@ -565,7 +567,7 @@ export const AppContent: React.FC = () => {
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px' }}>
             {profile.certifications.map((cert, idx) => (
-              <div key={idx} style={{ background: 'var(--bg-card)', padding: '24px', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-color)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+              <div key={idx} className="cert-card">
                 <div>
                   <div style={{ fontSize: '0.8rem', color: 'var(--accent-soft)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '6px', fontWeight: 600 }}>
                     {cert.issuer}
@@ -612,6 +614,16 @@ export const AppContent: React.FC = () => {
             </a>
             <a href={profile.contacts.whatsapp} target="_blank" rel="noopener noreferrer" className="btn-secondary">
               <WhatsappIcon size={18} color="var(--accent-soft)" /> Chamar no WhatsApp
+            </a>
+          </div>
+
+          {/* Quick Email Contact Pills no Rodapé */}
+          <div className="contact-pills" style={{ justifyContent: 'center', marginTop: '24px' }}>
+            <a href={profile.contacts.email} target="_blank" rel="noopener noreferrer" className="contact-pill">
+              <GmailIcon size={16} color="var(--accent-soft)" /> Gmail
+            </a>
+            <a href={profile.contacts.institutionalEmail || 'mailto:luis.lopes@cesmac.edu.br'} className="contact-pill" title="E-mail Institucional: luis.lopes@cesmac.edu.br">
+              <OutlookIcon size={16} color="var(--accent-soft)" /> E-mail Institucional
             </a>
           </div>
         </div>

@@ -2,6 +2,7 @@
 
 :root {
   /* Pearl Platinum & Onyx Dark Palette */
+  --navbar-height: 60px;
   --bg-primary: #070709;
   --bg-secondary: #0d0e12;
   --bg-card: #14151a;
@@ -46,7 +47,7 @@ html {
 }
 
 section {
-  scroll-margin-top: 80px;
+  scroll-margin-top: calc(var(--navbar-height) + 12px);
   position: relative;
 }
 
@@ -363,8 +364,49 @@ button {
 
 /* Hero Section */
 .hero-section {
-  padding-top: 120px;
+  padding-top: calc(var(--navbar-height) + 60px);
   padding-bottom: 70px;
+}
+
+/* Utilitário para seções alternadas sem duplicação de style inline */
+.section-alt {
+  padding: 80px 0;
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* Cards de Habilidades com Hover Responsivo */
+.skill-card {
+  background: var(--bg-card);
+  padding: 28px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  transition: border-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.skill-card:hover {
+  border-color: rgba(226, 232, 240, 0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* Cards de Certificações com Hover Responsivo */
+.cert-card {
+  background: var(--bg-card);
+  padding: 24px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: border-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.cert-card:hover {
+  border-color: rgba(226, 232, 240, 0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
 }
 
 .hero-container-grid {
