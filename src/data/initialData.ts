@@ -2,7 +2,7 @@ import { DeveloperProfile, Project } from '../types/portfolio';
 
 export const initialProfile: DeveloperProfile = {
   name: 'Luiz Eduardo Lopes',
-  headline: 'Desenvolvedor de Software com foco em Engenharia de IA & Agentes Inteligentes',
+  headline: 'Desenvolvedor de Software · Agentes de IA · React 19 · TypeScript',
   targetRole: 'Desenvolvedor de Agentes & Inteligência Artificial',
   location: 'Maceió, Alagoas',
   mainStack: ['React 19', 'TypeScript', 'React Native', 'Supabase (PostgreSQL)', 'LangChain.js', 'Groq API', 'OpenAI'],
@@ -14,10 +14,10 @@ export const initialProfile: DeveloperProfile = {
     whatsapp: 'https://wa.me/5582999931035'
   },
   aboutMe: {
-    summary: 'Desenvolvedor de Software especializado em Engenharia de IA, focado em simplificar processos e otimizar rotinas por meio de sistemas inteligentes centrados na experiência do usuário.',
+    summary: 'Construo sistemas e agentes de IA que resolvem problemas reais — sem complexidade desnecessária e com foco na experiência de quem usa.',
     paragraphs: [
-      'Trabalho no desenvolvimento de sistemas e agentes autônomos com foco em simplificar processos e otimizar a rotina de quem usa. Cursando Análise e Desenvolvimento de Sistemas (CESMAC EAD), acredito que a IA entrega valor real quando reduz fricções operacionais no dia a dia.',
-      'Minha abordagem é guiada por feedback contínuo: métricas de uso, comportamento observado e retorno direto dos usuários orientam decisões de código e otimizações de sistemas — como no CronoLab 2.0, plataforma de gestão e alocação de laboratórios que apresento em destaque abaixo.',
+      'Trabalho com desenvolvimento de sistemas e agentes autônomos — ferramentas que executam tarefas repetitivas, integram dados e respondem por conta própria. Cursando Análise e Desenvolvimento de Sistemas no CESMAC, minha convicção é simples: IA de qualidade é aquela que o usuário final nem percebe que está lá, porque o processo simplesmente funciona.',
+      'Minha abordagem é iterativa por natureza: métricas de uso, padrões de comportamento e retorno direto dos usuários guiam cada decisão de código — desde a arquitetura até o detalhe de UX. O CronoLab 2.0 nasceu exatamente assim: de uma dor real do ambiente acadêmico que virou produto.',
       'Tecnicamente, atuo com React 19, React Native e TypeScript, orquestração de LLMs (LangChain.js, Groq API, OpenAI) e bancos de dados como Supabase (PostgreSQL).'
     ],
     highlights: [
@@ -90,6 +90,7 @@ export const initialProfile: DeveloperProfile = {
       issuer: 'Databricks',
       issueDate: 'Emitida em mar de 2025',
       credentialId: '136963095',
+      credentialUrl: 'https://credentials.databricks.com/136963095',
       skills: ['Generative AI', 'LLMs']
     },
     {
@@ -103,6 +104,7 @@ export const initialProfile: DeveloperProfile = {
       issuer: 'Learn Prompting',
       issueDate: 'Emitida em mar de 2025',
       credentialId: 'sxdf1omfhd',
+      credentialUrl: 'https://learnprompting.org/certificates/sxdf1omfhd',
       skills: ['Prompt Engineering', 'ChatGPT']
     }
   ]
@@ -117,7 +119,7 @@ export const initialProjects: Project[] = [
     featured: true,
     demoUrl: 'https://cronogramabd.vercel.app/',
     imageUrl: '/assets/gifs/visitante.gif',
-    description: 'Sistema especialista voltado para a gestão de cronogramas e alocação dinâmica de laboratórios de ensino e pesquisa, contando com suporte no diagnóstico de conflitos de horário, notificações em tempo real e modo visitante por perfil.',
+    description: 'Plataforma web para gestão e alocação de laboratórios acadêmicos — com detecção automática de conflitos de horário, notificações em tempo real via Supabase Realtime e controle de acesso por perfil (visitante / administrador). Construído para substituir planilhas e e-mails no fluxo de reservas do CESMAC.',
     stack: ['React 19', 'TypeScript', 'Vite 7', 'Material-UI v7', 'Supabase PostgreSQL'],
     highlights: [
       'Plataforma especialista voltada para otimização e alocação de laboratórios acadêmicos e técnicos',
@@ -126,6 +128,7 @@ export const initialProjects: Project[] = [
       'Painel mobile responsivo, com foco em usabilidade'
     ]
   },
+
   {
     id: 'decifrai',
     name: 'DecifrAI',
@@ -134,7 +137,7 @@ export const initialProjects: Project[] = [
     featured: false,
     demoUrl: 'https://github.com/luizedu0494/DecifrAI',
     imageUrl: '/images/decifrai_preview.png',
-    description: 'Jogo interativo mobile inspirado no conceito clássico do Akinator, porém reimaginado utilizando Inteligência Artificial e LLMs para conduzir as perguntas e adivinhar personalidades, jogadores e figuras públicas.',
+    description: 'Jogo mobile em React Native onde uma IA conduz perguntas em português e tenta adivinhar a personalidade que você está pensando — jogadores de futebol, figuras públicas, personagens. Uma reimaginação do Akinator com LLMs como motor de raciocínio.',
     stack: ['React Native', 'TypeScript', 'Formik + Yup', 'IA Generativa', 'React Navigation'],
     highlights: [
       'Desenvolvimento mobile multiplataforma com React Native & TypeScript',
@@ -151,7 +154,7 @@ export const initialProjects: Project[] = [
     featured: false,
     demoUrl: 'https://github.com/luizedu0494/insurebot',
     imageUrl: '/images/insurebot_preview.png',
-    description: 'Agente conversacional inteligente focado em suporte técnico, cotações e automação de fluxos de atendimento no setor de seguros.',
+    description: 'Agente conversacional para o setor de seguros — automatiza triagem de clientes, consulta de apólices e geração de cotações sem intervenção humana. Integrado com LangChain.js e LLM API para respostas contextuais em linguagem natural.',
     stack: ['TypeScript', 'React', 'LangChain.js', 'IA Generativa', 'LLM API'],
     highlights: [
       'Fluxo de atendimento automatizado com IA',
@@ -166,7 +169,7 @@ export const initialProjects: Project[] = [
     featured: false,
     demoUrl: 'https://github.com/luizedu0494/stech-chatbot-ana',
     imageUrl: '/images/stech_ana_preview.png',
-    description: 'Assistente virtual inteligente (Ana) desenvolvida para atendimento técnico humanizado e automação de chamados de suporte da Stech.',
+    description: 'Ana é a assistente virtual da Stech: responde chamados de suporte técnico em linguagem natural, redireciona para o setor correto e reduz o tempo de espera do atendimento. Interface conversacional construída em React com base em LLM API.',
     stack: ['TypeScript', 'React', 'LLM API', 'Tailwind / CSS'],
     highlights: [
       'Atendimento conversacional humanizado e rápido para a Stech',

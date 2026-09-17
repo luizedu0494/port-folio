@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { 
-  Sparkles, ExternalLink, MapPin,
+  Sparkles, ExternalLink, MapPin, Download,
   Brain, Layers, CheckCircle2, User, Wrench, Medal, ZoomIn, X
 } from 'lucide-react';
 import { DeveloperProfile, Project } from './types/portfolio';
@@ -262,6 +262,9 @@ export const AppContent: React.FC = () => {
               </a>
               <a href={profile.contacts.linkedin} target="_blank" rel="noopener noreferrer" className="btn-secondary">
                 <LinkedinIcon size={18} color="var(--accent-soft)" /> Conectar no LinkedIn
+              </a>
+              <a href="/assets/cv-luiz-eduardo.pdf" download className="btn-secondary" title="Baixar Currículo em PDF">
+                <Download size={16} /> Baixar CV
               </a>
             </div>
 
@@ -569,8 +572,21 @@ export const AppContent: React.FC = () => {
             {profile.certifications.map((cert, idx) => (
               <div key={idx} className="cert-card">
                 <div>
-                  <div style={{ fontSize: '0.8rem', color: 'var(--accent-soft)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '6px', fontWeight: 600 }}>
-                    {cert.issuer}
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '10px' }}>
+                    <div style={{ fontSize: '0.8rem', color: 'var(--accent-soft)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '6px', fontWeight: 600 }}>
+                      {cert.issuer}
+                    </div>
+                    {cert.credentialUrl && (
+                      <a 
+                        href={cert.credentialUrl} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        style={{ fontSize: '0.78rem', color: 'var(--accent-soft)', display: 'inline-flex', alignItems: 'center', gap: '4px', textDecoration: 'underline' }}
+                        title="Verificar credencial oficial"
+                      >
+                        Verificar <ExternalLink size={12} />
+                      </a>
+                    )}
                   </div>
                   <h3 className="font-subtitle" style={{ fontSize: '1.15rem', color: '#fff', marginBottom: '8px', lineHeight: '1.4' }}>
                     {cert.title}
@@ -602,7 +618,7 @@ export const AppContent: React.FC = () => {
             Entre em Contato
           </h2>
           <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', marginBottom: '32px' }}>
-            Estou aberto a oportunidades profissionais, colaborações em projetos de IA & Software e conexões na área de tecnologia.
+            Aberto a projetos, posições CLT/PJ e colaborações na área de IA & Software. Se você tem um problema interessante para resolver, quer conversar sobre uma ideia ou está formando um time — pode me chamar.
           </p>
 
           <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', flexWrap: 'wrap' }}>
