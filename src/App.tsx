@@ -162,7 +162,11 @@ export const AppContent: React.FC = () => {
         project.stack.some(s => 
           ['langchain', 'groq', 'openai', 'ia generativa', 'llm api', 'langchain.js', 'streamlit', 'pandas'].includes(s.toLowerCase())
         ) ||
-        ['cortex', 'decifrai', 'insurebot', 'stech-chatbot-ana'].includes(project.id)
+        ['decifrai', 'insurebot', 'stech-chatbot-ana'].includes(project.id)
+      );
+      if (activeFilter === 'python') return (
+        project.language.toLowerCase().includes('python') || 
+        project.stack.some(s => ['python', 'streamlit', 'pandas', 'fastapi'].includes(s.toLowerCase()))
       );
       if (activeFilter === 'react') return project.stack.some(s => s.toLowerCase().includes('react'));
       if (activeFilter === 'mobile') return project.language.toLowerCase().includes('native') || project.stack.some(s => s.toLowerCase().includes('native') || s.toLowerCase().includes('mobile'));
@@ -341,7 +345,7 @@ export const AppContent: React.FC = () => {
 
               <div style={{ marginTop: '28px', paddingTop: '24px', borderTop: '1px solid var(--border-color)' }}>
                 <h4 className="font-subtitle" style={{ fontSize: '1.05rem', color: 'var(--accent-soft)', marginBottom: '16px' }}>
-                  Pontos Chave da Minha Trajetória:
+                  Pontos-Chave da Minha Trajetória:
                 </h4>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '12px' }}>
                   {profile.aboutMe.highlights.map((highlight, idx) => (
@@ -464,59 +468,74 @@ export const AppContent: React.FC = () => {
       {otherProjects.length > 0 && (
         <section className="projects-grid-section">
           <div className="container">
-            <div className="section-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
+            <div className="section-header">
               <h3 className="font-subtitle" style={{ fontSize: '1.4rem', color: 'var(--text-secondary)' }}>
                 Outros Projetos Desenvolvidos
               </h3>
-
-              <div style={{ position: 'relative', minWidth: '240px' }}>
-                <input 
-                  type="search"
-                  placeholder="Buscar projetos ou tecnologias..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  style={{
-                    width: '100%',
-                    padding: '8px 14px',
-                    borderRadius: '8px',
-                    background: 'rgba(255, 255, 255, 0.05)',
-                    border: '1px solid var(--border-color)',
-                    color: '#fff',
-                    fontSize: '0.85rem',
-                    outline: 'none'
-                  }}
-                  aria-label="Buscar projetos por nome ou tecnologia"
-                />
-              </div>
             </div>
 
             {/* Filters */}
             <div className="filter-bar">
               <button 
                 className={`filter-btn ${activeFilter === 'all' ? 'active' : ''}`}
-                onClick={() => setActiveFilter('all')}
+                onClick={() => { setActiveFilter('all'); setSearchQuery(''); }}
               >
                 Todos ({otherProjects.length})
               </button>
               <button 
                 className={`filter-btn ${activeFilter === 'ai' ? 'active' : ''}`}
-                onClick={() => setActiveFilter('ai')}
+                onClick={() => { setActiveFilter('ai'); setSearchQuery(''); }}
               >
                 <Brain size={14} style={{ display: 'inline', marginRight: 4 }} /> IA & Agentes
               </button>
               <button 
+                className={`filter-btn ${activeFilter === 'python' ? 'active' : ''}`}
+                onClick={() => { setActiveFilter('python'); setSearchQuery(''); }}
+              >
+                Python / Data
+              </button>
+              <button 
                 className={`filter-btn ${activeFilter === 'react' ? 'active' : ''}`}
-                onClick={() => setActiveFilter('react')}
+                onClick={() => { setActiveFilter('react'); setSearchQuery(''); }}
               >
                 React 19
               </button>
               <button 
                 className={`filter-btn ${activeFilter === 'mobile' ? 'active' : ''}`}
-                onClick={() => setActiveFilter('mobile')}
+                onClick={() => { setActiveFilter('mobile'); setSearchQuery(''); }}
               >
                 React Native
               </button>
             </div>
+
+            {/* Empty Search Feedback */}
+            {filteredProjects.length === 0 && (
+              <div style={{ 
+                textAlign: 'center', 
+                padding: '48px 20px', 
+                background: 'rgba(255,255,255,0.02)',
+                borderRadius: '12px',
+                border: '1px dashed var(--border-color)',
+                margin: '20px 0'
+              }}>
+                <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', marginBottom: '8px' }}>
+                  Nenhum projeto encontrado para "<strong>{searchQuery}</strong>"
+                </p>
+                <button 
+                  onClick={() => { setSearchQuery(''); setActiveFilter('all'); }}
+                  style={{
+                    background: 'transparent',
+                    border: 'none',
+                    color: 'var(--accent-soft)',
+                    fontSize: '0.85rem',
+                    textDecoration: 'underline',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Limpar busca e exibir todos os projetos
+                </button>
+              </div>
+            )}
 
             {/* Grid */}
             <div className="projects-grid">

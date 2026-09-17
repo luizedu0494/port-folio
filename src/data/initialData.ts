@@ -21,7 +21,7 @@ export const initialProfile: DeveloperProfile = {
       'Tecnicamente, atuo com React 19, React Native e TypeScript, orquestração de LLMs (LangChain.js, Groq API, OpenAI) e bancos de dados como Supabase (PostgreSQL).'
     ],
     highlights: [
-      'Graduação: Análise e Desenvolvimento de Sistemas (CESMAC EAD - Cursando)',
+      'Graduação em ADS — CESMAC EAD (Em andamento)',
       'Foco em Agentes Autônomos & Eliminação de Gargalos Operacionais',
       'Abordagem Guiada por Feedback Contínuo e Métricas de Uso',
       'Stack: React 19, React Native, TypeScript, LLMs (LangChain.js) & Supabase'
@@ -71,22 +71,24 @@ export const initialProfile: DeveloperProfile = {
       title: 'Análise e Desenvolvimento de Sistemas (Graduação Superior)',
       issuer: 'CESMAC EAD',
       issueDate: 'Em andamento',
-      skills: ['Engenharia de Software', 'Análise de Sistemas', 'Desenvolvimento Web & IA']
+      skills: ['Software Engineering', 'Systems Analysis', 'Web Development', 'AI']
     },
     {
       title: 'InsurMinds · Certificação da 1ª Fase',
       issuer: 'I2A2 - Institut d\'Intelligence Artificielle Appliquée',
       issueDate: 'Emitida em jul de 2026',
+      credentialUrl: '/certificates/i2a2-insurminds-fase1.pdf',
       skills: ['LLM', 'RAG', 'Generative AI']
     },
     {
       title: 'Intelligent Agents with Generative AI Networks',
       issuer: 'I2A2 - Institut d\'Intelligence Artificielle Appliquée',
       issueDate: 'Emitida em dez de 2025',
+      credentialUrl: '/certificates/i2a2-agentes-inteligentes.pdf',
       skills: ['Generative AI', 'Python', 'Prompt Engineering', 'RAG', 'Large Language Models (LLMs)']
     },
     {
-      title: 'Academy Accreditation - Generative AI Fundamentals',
+      title: 'Academy Accreditation · Generative AI Fundamentals',
       issuer: 'Databricks',
       issueDate: 'Emitida em mar de 2025',
       credentialId: '136963095',
@@ -150,23 +152,6 @@ export const initialProjects: Project[] = [
       'Gerenciamento e validação de formulários com Formik + Yup',
       'Navegação por telas com fluxo completo de autenticação e jogo',
       'Reinterpretação da mecânica do Akinator alimentada por IA'
-    ]
-  },
-  {
-    id: 'cortex',
-    name: 'Cortex',
-    repo: 'cortex',
-    language: 'Python / Streamlit',
-    featured: false,
-    demoUrl: 'https://github.com/luizedu0494/cortex',
-    imageUrl: '/images/cortex_preview.png',
-    description: 'Agente conversacional de análise de dados desenvolvido para o desafio I2A2 InsurMinds. Recebe arquivos CSV e responde perguntas em linguagem natural sobre os dados — sem SQL, sem código — usando LangChain e Groq como motor de raciocínio.',
-    stack: ['Python', 'LangChain', 'Groq API', 'Streamlit', 'Pandas'],
-    highlights: [
-      'Análise conversacional de CSVs via linguagem natural',
-      'Pipeline com LangChain e modelo Groq de baixa latência',
-      'Interface Streamlit com upload de arquivo e histórico de chat',
-      'Desenvolvido como solução para o desafio I2A2 InsurMinds (jul/2026)'
     ]
   },
   {
