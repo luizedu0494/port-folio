@@ -22,7 +22,7 @@ export const initialProfile: DeveloperProfile = {
     ],
     highlights: [
       'Graduação: Análise e Desenvolvimento de Sistemas (CESMAC EAD - Cursando)',
-      'Foco em Agentes Autônomos & Redução de Fricções Operacionais',
+      'Foco em Agentes Autônomos & Eliminação de Gargalos Operacionais',
       'Abordagem Guiada por Feedback Contínuo e Métricas de Uso',
       'Stack: React 19, React Native, TypeScript, LLMs (LangChain.js) & Supabase'
     ]

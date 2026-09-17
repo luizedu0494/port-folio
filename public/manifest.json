@@ -1,6 +1,7 @@
 {
   "name": "Luiz Eduardo — IA & Software",
   "short_name": "LE Portfolio",
+  "description": "Portfólio de Luiz Eduardo Lopes — Desenvolvedor de Software & Agentes de IA.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#070709",

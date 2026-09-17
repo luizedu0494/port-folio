@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { 
-  Sparkles, ExternalLink, MapPin, Download,
+  Sparkles, ExternalLink, MapPin,
   Brain, Layers, CheckCircle2, User, Wrench, Medal, ZoomIn, X
 } from 'lucide-react';
 import { DeveloperProfile, Project } from './types/portfolio';
@@ -145,7 +145,12 @@ export const AppContent: React.FC = () => {
       if (!matchesSearch) return false;
 
       if (activeFilter === 'all') return true;
-      if (activeFilter === 'ai') return project.stack.some(s => s.toLowerCase().includes('langchain') || s.toLowerCase().includes('groq') || s.toLowerCase().includes('openai') || s.toLowerCase().includes('ia') || project.name.toLowerCase().includes('agent') || project.name.toLowerCase().includes('decifra') || project.name.toLowerCase().includes('bot'));
+      if (activeFilter === 'ai') return (
+        project.stack.some(s => 
+          ['langchain', 'groq', 'openai', 'ia generativa', 'llm api', 'langchain.js'].includes(s.toLowerCase())
+        ) ||
+        ['decifrai', 'insurebot', 'stech-chatbot-ana'].includes(project.id)
+      );
       if (activeFilter === 'react') return project.stack.some(s => s.toLowerCase().includes('react'));
       if (activeFilter === 'mobile') return project.language.toLowerCase().includes('native') || project.stack.some(s => s.toLowerCase().includes('native') || s.toLowerCase().includes('mobile'));
       return true;
@@ -263,9 +268,6 @@ export const AppContent: React.FC = () => {
               <a href={profile.contacts.linkedin} target="_blank" rel="noopener noreferrer" className="btn-secondary">
                 <LinkedinIcon size={18} color="var(--accent-soft)" /> Conectar no LinkedIn
               </a>
-              <a href="/assets/cv-luiz-eduardo.pdf" download className="btn-secondary" title="Baixar Currículo em PDF">
-                <Download size={16} /> Baixar CV
-              </a>
             </div>
 
             {/* Quick Contact Pills */}
@@ -289,7 +291,8 @@ export const AppContent: React.FC = () => {
           <div className="hero-scenery-wrapper">
             <img 
               src="/assets/gifs/tech-fear.gif" 
-              alt="Cenário de Alta Tecnologia & IA" 
+              alt="" 
+              role="presentation"
               className="hero-scenery-gif"
             />
           </div>
@@ -310,7 +313,8 @@ export const AppContent: React.FC = () => {
             <div className="sobre-scenery-wrapper">
               <img 
                 src="/assets/gifs/earth-space.gif" 
-                alt="Planeta Espacial & Agente IA" 
+                alt="" 
+                role="presentation"
                 className="sobre-scenery-gif"
                 loading="lazy"
               />
@@ -433,7 +437,7 @@ export const AppContent: React.FC = () => {
         </section>
       )}
 
-      {/* Demais Projetos Grid (Exibido apenas se houverem múltiplos projetos) */}
+      {/* Demais Projetos Grid (Exibido apenas se houver múltiplos projetos) */}
       {otherProjects.length > 0 && (
         <section className="projects-grid-section">
           <div className="container">
@@ -669,7 +673,7 @@ export const AppContent: React.FC = () => {
       {/* Footer */}
       <footer className="footer">
         <div className="container">
-          <p>© Luiz Eduardo Lopes — Desenvolvedor de Software & IA - {new Date().getFullYear()}</p>
+          <p>© {new Date().getFullYear()} · Luiz Eduardo Lopes — Desenvolvedor de Software & IA</p>
         </div>
       </footer>
     </div>
