@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { 
   Sparkles, ExternalLink, Mail, MessageSquare, MapPin,
-  Brain, Code2, Layers, CheckCircle2, User, Wrench, Send, Medal, ZoomIn, X
+  Brain, Code2, Layers, CheckCircle2, User, Wrench, Medal, ZoomIn, X
 } from 'lucide-react';
 import { DeveloperProfile, Project } from './types/portfolio';
 import { initialProfile, initialProjects } from './data/initialData';
@@ -91,6 +91,7 @@ export const AppContent: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const [previewModalImage, setPreviewModalImage] = useState<{ src: string; alt: string } | null>(null);
+  const [activeSection, setActiveSection] = useState<string>('inicio');
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -108,6 +109,28 @@ export const AppContent: React.FC = () => {
     elements.forEach((el) => observer.observe(el));
 
     return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const sections = ['inicio', 'sobre', 'projetos', 'habilidades', 'certificacoes', 'contato'];
+    const observers: IntersectionObserver[] = [];
+
+    sections.forEach((id) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const obs = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setActiveSection(id);
+          }
+        },
+        { threshold: 0.3 }
+      );
+      obs.observe(el);
+      observers.push(obs);
+    });
+
+    return () => observers.forEach((o) => o.disconnect());
   }, []);
 
   const featuredProject = projects.find(p => p.featured) || projects[0];
@@ -136,6 +159,14 @@ export const AppContent: React.FC = () => {
       {/* Background de Rede Neural Interativa em Movimento */}
       <NeuralNetworkBg />
 
+      {/* Overlay escuro de fundo ao abrir drawer mobile */}
+      {isMobileMenuOpen && (
+        <div 
+          className="mobile-overlay" 
+          onClick={() => setIsMobileMenuOpen(false)} 
+        />
+      )}
+
       {/* Glassmorphism Header com Navegação Limpa & Menu Hambúrguer Mobile */}
       <header className="navbar">
         <div className="container nav-container">
@@ -159,22 +190,42 @@ export const AppContent: React.FC = () => {
             </button>
           </div>
 
-          <nav className={`nav-links ${isMobileMenuOpen ? 'mobile-open' : ''}`}>
-            <a href="#sobre" className="nav-link" onClick={() => setIsMobileMenuOpen(false)}>
-              <User size={15} /> Sobre
+          <nav className={`nav-links ${isMobileMenuOpen ? 'active' : ''}`}>
+            <a 
+              href="#sobre" 
+              className={`nav-link ${activeSection === 'sobre' ? 'nav-link--active' : ''}`} 
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Sobre
             </a>
-            <a href="#projetos" className="nav-link" onClick={() => setIsMobileMenuOpen(false)}>
-              <Layers size={15} /> Projetos
+            <a 
+              href="#projetos" 
+              className={`nav-link ${activeSection === 'projetos' ? 'nav-link--active' : ''}`} 
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Projetos
             </a>
-            <a href="#habilidades" className="nav-link" onClick={() => setIsMobileMenuOpen(false)}>
-              <Wrench size={15} /> Habilidades
+            <a 
+              href="#habilidades" 
+              className={`nav-link ${activeSection === 'habilidades' ? 'nav-link--active' : ''}`} 
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Habilidades
             </a>
-            <a href="#certificacoes" className="nav-link" onClick={() => setIsMobileMenuOpen(false)}>
-              <Medal size={15} /> Certificados
+            <a 
+              href="#certificacoes" 
+              className={`nav-link ${activeSection === 'certificacoes' ? 'nav-link--active' : ''}`} 
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Certificados
             </a>
             
-            <a href="#contato" className="btn-primary nav-contact-btn" onClick={() => setIsMobileMenuOpen(false)}>
-              <Send size={14} /> Contato
+            <a 
+              href="#contato" 
+              className="nav-cta-btn" 
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Contato
             </a>
           </nav>
         </div>
@@ -224,7 +275,7 @@ export const AppContent: React.FC = () => {
               <a href={profile.contacts.institutionalEmail || 'mailto:luis.lopes@cesmac.edu.br'} className="contact-pill" title="E-mail Institucional: luis.lopes@cesmac.edu.br">
                 <OutlookIcon size={16} color="var(--accent-soft)" /> E-mail Institucional
               </a>
-              <span className="contact-pill">
+              <span className="contact-pill contact-pill--static">
                 <MapPin size={16} color="var(--accent-soft)" /> {profile.location}
               </span>
             </div>

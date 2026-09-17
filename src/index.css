@@ -154,7 +154,7 @@ button {
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border-color);
-  padding: 16px 0;
+  padding: 10px 0;
   transition: all var(--transition-fast);
 }
 
@@ -190,6 +190,21 @@ button {
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+.mobile-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(7, 7, 9, 0.75);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 100;
+  animation: overlayFadeIn 0.25s ease-out;
+}
+
+@keyframes overlayFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .mobile-menu-btn {
@@ -229,16 +244,16 @@ button {
 
 .nav-links {
   display: flex;
-  gap: 20px;
+  gap: 28px;
   align-items: center;
 }
 
 @media (max-width: 991px) {
   .nav-links {
-    gap: 14px;
+    gap: 18px;
   }
   .nav-link {
-    font-size: 0.85rem;
+    font-size: 0.88rem;
   }
 }
 
@@ -265,7 +280,7 @@ button {
     justify-content: center;
     align-items: flex-start;
     padding: 40px;
-    gap: 24px;
+    gap: 16px;
     transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     z-index: 101;
     box-shadow: -10px 0 30px rgba(0, 0, 0, 0.8);
@@ -278,7 +293,10 @@ button {
   .nav-link {
     font-size: 1rem;
     width: 100%;
-    padding: 6px 0;
+    padding: 12px 0;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
   }
 }
 
@@ -290,7 +308,8 @@ button {
   position: relative;
 }
 
-.nav-link:hover {
+.nav-link:hover,
+.nav-link--active {
   color: var(--text-primary);
 }
 
@@ -305,8 +324,27 @@ button {
   transition: width var(--transition-fast);
 }
 
-.nav-link:hover::after {
+.nav-link:hover::after,
+.nav-link--active::after {
   width: 100%;
+}
+
+.nav-cta-btn {
+  padding: 6px 18px;
+  border: 1px solid rgba(226, 232, 240, 0.35);
+  border-radius: var(--radius-pill);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  background: rgba(226, 232, 240, 0.06);
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.nav-cta-btn:hover {
+  background: rgba(226, 232, 240, 0.16);
+  border-color: rgba(226, 232, 240, 0.6);
+  transform: translateY(-1px);
 }
 
 /* Hero Section */
@@ -440,24 +478,23 @@ button {
   align-items: center;
 }
 
-/* Primary Button (Soft Metallic Platinum Glass with Continuous Neural Flow) */
+/* Primary Button (Soft Metallic Platinum Glass) */
 .btn-primary {
   background: linear-gradient(
     120deg,
-    rgba(241, 245, 249, 0.24) 0%,
-    rgba(148, 163, 184, 0.14) 50%,
-    rgba(226, 232, 240, 0.28) 100%
+    rgba(241, 245, 249, 0.22) 0%,
+    rgba(148, 163, 184, 0.12) 50%,
+    rgba(226, 232, 240, 0.26) 100%
   );
-  background-size: 220% 220%;
-  animation: btnGradientFlow 8s ease-in-out infinite alternate, btnBorderPulse 6s ease-in-out infinite alternate;
   color: #f1f5f9 !important;
-  border: 1px solid rgba(226, 232, 240, 0.35);
+  border: 1px solid rgba(226, 232, 240, 0.3);
   font-weight: 600;
-  padding: 12px 24px;
-  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  padding: 10px 20px;
+  border-radius: 10px;
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 7px;
   transition: all var(--transition-fast);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
   position: relative;
@@ -476,48 +513,22 @@ button {
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(255, 255, 255, 0.14) 50%,
+    rgba(255, 255, 255, 0.18) 50%,
     transparent 100%
   );
   transform: skewX(-25deg);
-  animation: btnSheenPulse 7s ease-in-out infinite;
+  opacity: 0;
   pointer-events: none;
 }
 
-@keyframes btnGradientFlow {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+.btn-primary:hover::before,
+.btn-secondary:hover::before {
+  animation: btnSheenOnce 0.6s ease-in-out forwards;
 }
 
-@keyframes btnBorderPulse {
-  0% {
-    border-color: rgba(226, 232, 240, 0.25);
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4), 0 0 10px rgba(226, 232, 240, 0.05);
-  }
-  50% {
-    border-color: rgba(226, 232, 240, 0.48);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 18px rgba(226, 232, 240, 0.12);
-  }
-  100% {
-    border-color: rgba(226, 232, 240, 0.3);
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4), 0 0 10px rgba(226, 232, 240, 0.06);
-  }
-}
-
-@keyframes btnSheenPulse {
+@keyframes btnSheenOnce {
   0% {
     left: -130%;
-    opacity: 0.2;
-  }
-  50% {
-    left: 140%;
     opacity: 0.8;
   }
   100% {
@@ -533,43 +544,37 @@ button {
 }
 
 .btn-primary:hover {
-  background: linear-gradient(135deg, rgba(241, 245, 249, 0.34) 0%, rgba(148, 163, 184, 0.28) 100%);
+  background: linear-gradient(135deg, rgba(241, 245, 249, 0.32) 0%, rgba(148, 163, 184, 0.24) 100%);
   border-color: rgba(226, 232, 240, 0.65);
   color: #ffffff !important;
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 8px 25px rgba(226, 232, 240, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(226, 232, 240, 0.18);
 }
 
 .btn-primary:hover svg {
   color: #ffffff !important;
   stroke: #ffffff !important;
-  transform: scale(1.18) rotate(-6deg);
+  transform: scale(1.12);
 }
 
 .btn-primary:active,
 .btn-secondary:active,
 .contact-pill:active {
-  transform: translateY(1px) scale(0.97) !important;
+  transform: translateY(1px) scale(0.98) !important;
 }
 
-/* Secondary Button (Obsidian Silver with Continuous Flow) */
+/* Secondary Button (Obsidian Silver Outline) */
 .btn-secondary {
-  background: linear-gradient(
-    120deg,
-    rgba(22, 23, 29, 0.9) 0%,
-    rgba(35, 38, 48, 0.85) 50%,
-    rgba(18, 19, 24, 0.95) 100%
-  );
-  background-size: 220% 220%;
-  animation: btnGradientFlow 10s ease-in-out infinite alternate, btnBorderPulse 6s ease-in-out infinite alternate;
-  color: #f1f5f9 !important;
-  border: 1px solid var(--border-crimson);
+  background: transparent;
+  color: var(--text-secondary) !important;
+  border: 1px solid rgba(226, 232, 240, 0.28);
   font-weight: 600;
-  padding: 12px 24px;
-  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  padding: 10px 20px;
+  border-radius: 10px;
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 7px;
   transition: all var(--transition-fast);
   backdrop-filter: blur(8px);
   position: relative;
@@ -583,17 +588,17 @@ button {
 }
 
 .btn-secondary:hover {
-  background: rgba(35, 38, 48, 0.95);
+  background: rgba(226, 232, 240, 0.06);
   border-color: rgba(226, 232, 240, 0.55);
   color: #ffffff !important;
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 8px 25px rgba(226, 232, 240, 0.12);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
 }
 
 .btn-secondary:hover svg {
   color: #ffffff !important;
   stroke: #ffffff !important;
-  transform: scale(1.18) rotate(-6deg);
+  transform: scale(1.12);
 }
 
 /* Contact Pills */
@@ -632,6 +637,22 @@ button {
 
 .contact-pill:hover svg {
   transform: scale(1.2);
+}
+
+.contact-pill--static {
+  cursor: default;
+  opacity: 0.8;
+}
+
+.contact-pill--static:hover {
+  transform: none !important;
+  border-color: var(--border-color);
+  color: var(--text-secondary);
+  background: var(--bg-card);
+}
+
+.contact-pill--static:hover svg {
+  transform: none !important;
 }
 
 /* Featured Hero Project Card (CronoLab 2.0) */
@@ -788,21 +809,29 @@ button {
 }
 
 .filter-btn {
-  padding: 8px 18px;
+  padding: 6px 16px;
   border-radius: var(--radius-pill);
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   color: var(--text-secondary);
-  font-size: 0.85rem;
+  font-size: 0.82rem;
+  font-weight: 500;
   transition: all var(--transition-fast);
+  cursor: pointer;
 }
 
-.filter-btn:hover, .filter-btn.active {
-  background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
-  color: #070709 !important;
-  font-weight: 700;
-  border-color: #ffffff;
-  box-shadow: 0 4px 14px rgba(226, 232, 240, 0.25);
+.filter-btn:hover {
+  background: rgba(226, 232, 240, 0.08);
+  border-color: rgba(226, 232, 240, 0.4);
+  color: var(--text-primary);
+}
+
+.filter-btn.active {
+  background: rgba(226, 232, 240, 0.12);
+  color: #f8fafc;
+  font-weight: 600;
+  border-color: rgba(226, 232, 240, 0.5);
+  box-shadow: 0 0 12px rgba(226, 232, 240, 0.12);
 }
 
 .search-input {
