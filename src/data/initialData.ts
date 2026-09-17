@@ -70,11 +70,11 @@ export const initialProfile: DeveloperProfile = {
     {
       title: 'Análise e Desenvolvimento de Sistemas (Graduação Superior)',
       issuer: 'CESMAC EAD',
-      issueDate: 'Em andamento (Cursando)',
+      issueDate: 'Em andamento',
       skills: ['Engenharia de Software', 'Análise de Sistemas', 'Desenvolvimento Web & IA']
     },
     {
-      title: 'InsurMinds - Certificação da 1ª Fase',
+      title: 'InsurMinds · Certificação da 1ª Fase',
       issuer: 'I2A2 - Institut d\'Intelligence Artificielle Appliquée',
       issueDate: 'Emitida em jul de 2026',
       skills: ['LLM', 'RAG', 'Generative AI']
@@ -107,6 +107,12 @@ export const initialProfile: DeveloperProfile = {
       credentialUrl: 'https://learnprompting.org/certificates/sxdf1omfhd',
       skills: ['Prompt Engineering', 'ChatGPT']
     }
+  ],
+  currentlyLearning: [
+    'Arquiteturas Multi-Agentes (LangGraph / CrewAI)',
+    'FastAPI para endpoints de IA em produção',
+    'RAG Avançado com Reranking Semântico',
+    'Supabase Edge Functions'
   ]
 };
 
@@ -144,6 +150,23 @@ export const initialProjects: Project[] = [
       'Gerenciamento e validação de formulários com Formik + Yup',
       'Navegação por telas com fluxo completo de autenticação e jogo',
       'Reinterpretação da mecânica do Akinator alimentada por IA'
+    ]
+  },
+  {
+    id: 'cortex',
+    name: 'Cortex',
+    repo: 'cortex',
+    language: 'Python / Streamlit',
+    featured: false,
+    demoUrl: 'https://github.com/luizedu0494/cortex',
+    imageUrl: '/images/cortex_preview.png',
+    description: 'Agente conversacional de análise de dados desenvolvido para o desafio I2A2 InsurMinds. Recebe arquivos CSV e responde perguntas em linguagem natural sobre os dados — sem SQL, sem código — usando LangChain e Groq como motor de raciocínio.',
+    stack: ['Python', 'LangChain', 'Groq API', 'Streamlit', 'Pandas'],
+    highlights: [
+      'Análise conversacional de CSVs via linguagem natural',
+      'Pipeline com LangChain e modelo Groq de baixa latência',
+      'Interface Streamlit com upload de arquivo e histórico de chat',
+      'Desenvolvido como solução para o desafio I2A2 InsurMinds (jul/2026)'
     ]
   },
   {

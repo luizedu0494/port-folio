@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { 
   Sparkles, ExternalLink, MapPin,
-  Brain, Layers, CheckCircle2, User, Wrench, Medal, ZoomIn, X
+  Brain, Layers, CheckCircle2, User, Wrench, Medal, ZoomIn, X, Zap
 } from 'lucide-react';
 import { DeveloperProfile, Project } from './types/portfolio';
 import { initialProfile, initialProjects } from './data/initialData';
 import { TypewriterText } from './components/TypewriterText';
-import { MatrixDataStreamCard } from './components/MatrixDataStreamCard';
 import { NeuralNetworkBg } from './components/NeuralNetworkBg';
 import { AudioPlayer } from './components/AudioPlayer';
 import { WelcomeModal } from './components/WelcomeModal';
@@ -132,6 +131,20 @@ export const AppContent: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setPreviewModalImage(null);
+      }
+    };
+    if (previewModalImage) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [previewModalImage]);
+
   const featuredProject = useMemo(() => projects.find(p => p.featured) || projects[0], [projects]);
 
   const otherProjects = useMemo(() => projects.filter(p => !p.featured), [projects]);
@@ -147,9 +160,9 @@ export const AppContent: React.FC = () => {
       if (activeFilter === 'all') return true;
       if (activeFilter === 'ai') return (
         project.stack.some(s => 
-          ['langchain', 'groq', 'openai', 'ia generativa', 'llm api', 'langchain.js'].includes(s.toLowerCase())
+          ['langchain', 'groq', 'openai', 'ia generativa', 'llm api', 'langchain.js', 'streamlit', 'pandas'].includes(s.toLowerCase())
         ) ||
-        ['decifrai', 'insurebot', 'stech-chatbot-ana'].includes(project.id)
+        ['cortex', 'decifrai', 'insurebot', 'stech-chatbot-ana'].includes(project.id)
       );
       if (activeFilter === 'react') return project.stack.some(s => s.toLowerCase().includes('react'));
       if (activeFilter === 'mobile') return project.language.toLowerCase().includes('native') || project.stack.some(s => s.toLowerCase().includes('native') || s.toLowerCase().includes('mobile'));
@@ -241,9 +254,6 @@ export const AppContent: React.FC = () => {
       <section id="inicio" className="hero-section reveal-on-scroll">
         <div className="container hero-container-grid">
           <div>
-            <div className="hero-badge-tag">
-              <Brain size={16} color="var(--accent-soft)" /> {profile.targetRole}
-            </div>
             <h1 className="hero-title font-display">
               {profile.name}
             </h1>
@@ -342,6 +352,19 @@ export const AppContent: React.FC = () => {
                   ))}
                 </div>
               </div>
+
+              {profile.currentlyLearning && (
+                <div style={{ marginTop: '20px' }}>
+                  <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
+                    <Zap size={15} color="var(--accent-crimson)" /> Explorando atualmente:
+                  </span>
+                  <div className="tech-tags">
+                    {profile.currentlyLearning.map((item, i) => (
+                      <span key={i} className="tech-tag" style={{ opacity: 0.85 }}>{item}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 
@@ -441,10 +464,30 @@ export const AppContent: React.FC = () => {
       {otherProjects.length > 0 && (
         <section className="projects-grid-section">
           <div className="container">
-            <div className="section-header">
+            <div className="section-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
               <h3 className="font-subtitle" style={{ fontSize: '1.4rem', color: 'var(--text-secondary)' }}>
-                Outros projetos desenvolvidos
+                Outros Projetos Desenvolvidos
               </h3>
+
+              <div style={{ position: 'relative', minWidth: '240px' }}>
+                <input 
+                  type="search"
+                  placeholder="Buscar projetos ou tecnologias..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  style={{
+                    width: '100%',
+                    padding: '8px 14px',
+                    borderRadius: '8px',
+                    background: 'rgba(255, 255, 255, 0.05)',
+                    border: '1px solid var(--border-color)',
+                    color: '#fff',
+                    fontSize: '0.85rem',
+                    outline: 'none'
+                  }}
+                  aria-label="Buscar projetos por nome ou tecnologia"
+                />
+              </div>
             </div>
 
             {/* Filters */}
@@ -544,8 +587,8 @@ export const AppContent: React.FC = () => {
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '24px' }}>
-            {profile.skillCategories.map((category, idx) => (
-              <div key={idx} className="skill-card">
+            {profile.skillCategories.map((category) => (
+              <div key={category.title} className="skill-card">
                 <h3 className="font-subtitle" style={{ fontSize: '1.2rem', color: 'var(--accent-soft)', marginBottom: '18px' }}>
                   {category.title}
                 </h3>
@@ -573,8 +616,8 @@ export const AppContent: React.FC = () => {
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px' }}>
-            {profile.certifications.map((cert, idx) => (
-              <div key={idx} className="cert-card">
+            {profile.certifications.map((cert) => (
+              <div key={cert.title} className="cert-card">
                 <div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '10px' }}>
                     <div style={{ fontSize: '0.8rem', color: 'var(--accent-soft)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '6px', fontWeight: 600 }}>

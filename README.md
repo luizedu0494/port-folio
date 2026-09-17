@@ -43,8 +43,8 @@
 
 1. **Header / Navbar:** Marca, links de navegação suave (`#sobre`, `#projetos`, `#habilidades`, `#certificacoes`), Mini Audio Player e botão de contato.
 2. **Início (Hero):** Apresentação profissional, headline animada (Typewriter), links diretos do GitHub/LinkedIn/WhatsApp/E-mails e cenário de IA.
-3. **Sobre Mim:** Trajetória em transição para Engenharia de IA, pontos chave da carreira, cenário do globo espacial e o Player Dev Focus expandido.
-4. **Projetos:** Card do CronoLab 2.0 em Destaque e grade de soluções secundárias (DecifrAI, InsureBot, Stech Chatbot Ana).
+3. **Sobre Mim:** Trajetória em transição para Engenharia de IA, pontos-chave da carreira, cenário do globo espacial e o Player Dev Focus expandido.
+4. **Projetos:** Card do CronoLab 2.0 em Destaque e grade de soluções secundárias (Cortex, DecifrAI, InsureBot, Stech Chatbot Ana).
 5. **Habilidades:** Competências separadas por Inteligência Artificial & Agentes, Frontend, Backend & Banco de Dados e Ferramentas.
 6. **Cursos & Certificações:** Certificados I2A2 (InsurMinds & Agentes Inteligentes), Databricks (Generative AI Fundamentals), Cisco e Learn Prompting.
 7. **Contato & Rodapé:** Formas de contato via LinkedIn, GitHub, WhatsApp, Gmail e Outlook.
@@ -61,10 +61,11 @@ public/
 │   │   ├── Decaying Duet - Dorian Concept.mp3
 │   │   ├── Echo Sax End - by Caleb Arredondo.mp3
 │   │   └── ...
-│   └── gifs/               # Elementos de cenário visual
-│       ├── tech-fear.gif
-│       ├── earth-space.gif
-│       └── visitante.gif
+│   ├── gifs/               # Elementos de cenário visual
+│   │   ├── tech-fear.gif
+│   │   ├── earth-space.gif
+│   │   └── visitante.gif
+│   └── og-preview.png      # Imagem Open Graph para compartilhamento em redes sociais
 ├── fonts/                  # Fontes personalizadas TTF
 │   ├── nexa/               # Nexa-ExtraLight & Nexa-Heavy
 │   ├── retroica/           # Retroica
@@ -104,4 +105,4 @@ npm run build
 
 ---
 
-Desenvolvido por **Luiz Eduardo** — Auxiliar Técnico em transição para Engenharia de IA & Desenvolvimento de Software.
+Desenvolvido por **Luiz Eduardo Lopes** — Desenvolvedor de Software & Agentes de IA.

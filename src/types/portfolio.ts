@@ -34,6 +34,7 @@ export interface DeveloperProfile {
   };
   skillCategories: SkillCategory[];
   certifications: Certification[];
+  currentlyLearning?: string[];
 }
 
 export interface Project {
