@@ -1285,14 +1285,21 @@ button {
   100% { height: 12px; background-color: var(--accent-soft); }
 }
 
-/* Mobile Drawer Audio Player Card */
+/* Mobile Drawer Audio Player Card - Oculto no desktop, visível apenas no drawer mobile */
 .mobile-drawer-audio-container {
-  width: 100%;
-  margin-bottom: 8px;
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-drawer-audio-container {
+    display: block;
+    width: 100%;
+    margin-bottom: 12px;
+  }
 }
 
 .drawer-audio-player {
-  background: rgba(20, 21, 26, 0.8);
+  background: rgba(20, 21, 26, 0.9);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
   padding: 12px 14px;
@@ -1368,13 +1375,13 @@ button {
 }
 
 .drawer-ctrl-btn.main-play {
-  background: rgba(20, 21, 26, 0.9);
-  border: 1px solid var(--border-crimson);
-  color: var(--accent-crimson);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  box-shadow: 0 0 14px rgba(225, 29, 72, 0.25);
+  box-shadow: 0 0 12px rgba(226, 232, 240, 0.08);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1382,15 +1389,15 @@ button {
 }
 
 .drawer-ctrl-btn.main-play svg {
-  color: var(--accent-crimson) !important;
-  stroke: var(--accent-crimson) !important;
-  fill: var(--accent-crimson) !important;
+  color: var(--text-primary) !important;
+  stroke: var(--text-primary) !important;
+  fill: var(--text-primary) !important;
 }
 
 .drawer-ctrl-btn.main-play:hover {
-  background: rgba(225, 29, 72, 0.2);
-  border-color: var(--accent-crimson);
-  box-shadow: 0 0 20px rgba(225, 29, 72, 0.4);
+  background: rgba(255, 255, 255, 0.16);
+  border-color: var(--accent-soft);
+  box-shadow: 0 0 16px rgba(226, 232, 240, 0.18);
   transform: scale(1.06);
 }
 
@@ -1497,21 +1504,24 @@ button {
   width: 38px;
   height: 38px;
   border-radius: 50%;
-  background: rgba(20, 21, 26, 0.9);
-  border: 1px solid var(--border-crimson);
-  color: var(--accent-crimson);
-  box-shadow: 0 0 15px rgba(225, 29, 72, 0.25);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  box-shadow: 0 0 12px rgba(226, 232, 240, 0.08);
+  transition: all var(--transition-fast);
 }
 
 .ctrl-btn.main-play svg {
-  color: var(--accent-crimson) !important;
-  stroke: var(--accent-crimson) !important;
-  fill: var(--accent-crimson) !important;
+  color: var(--text-primary) !important;
+  stroke: var(--text-primary) !important;
+  fill: var(--text-primary) !important;
 }
 
 .ctrl-btn.main-play:hover {
-  background: rgba(225, 29, 72, 0.2);
-  box-shadow: 0 0 20px rgba(225, 29, 72, 0.4);
+  background: rgba(255, 255, 255, 0.16);
+  border-color: var(--accent-soft);
+  box-shadow: 0 0 16px rgba(226, 232, 240, 0.18);
+  transform: scale(1.06);
 }
 
 .volume-control {
