@@ -26,18 +26,19 @@ export const NeuralNetworkBg: React.FC = () => {
 
     const isMobile = window.innerWidth <= 768;
 
+    // Número de partículas otimizado para manter movimento fluido sem sobrecarregar telas móveis
     const particleCount = isMobile
-      ? Math.min(Math.floor((width * height) / 16000), 34)
+      ? Math.min(Math.floor((width * height) / 22000), 24)
       : Math.min(Math.floor((width * height) / 7500), 90);
-    const maxDistance = isMobile ? 110 : 140;
+    const maxDistance = isMobile ? 105 : 140;
     const particles: Particle[] = [];
 
     for (let i = 0; i < particleCount; i++) {
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.6,
-        vy: (Math.random() - 0.5) * 0.6,
+        vx: (Math.random() - 0.5) * (isMobile ? 0.35 : 0.6),
+        vy: (Math.random() - 0.5) * (isMobile ? 0.35 : 0.6),
         radius: Math.random() * 2 + 1,
         alpha: Math.random() * 0.4 + 0.35,
         pulseSpeed: (Math.random() * 0.02 + 0.008) * (Math.random() > 0.5 ? 1 : -1)
@@ -55,18 +56,17 @@ export const NeuralNetworkBg: React.FC = () => {
 
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
-        if (!isMobile) {
-          p.x += p.vx;
-          p.y += p.vy;
+        
+        p.x += p.vx;
+        p.y += p.vy;
 
-          p.alpha += p.pulseSpeed;
-          if (p.alpha > 0.85 || p.alpha < 0.3) {
-            p.pulseSpeed *= -1;
-          }
-
-          if (p.x < 0 || p.x > width) p.vx *= -1;
-          if (p.y < 0 || p.y > height) p.vy *= -1;
+        p.alpha += p.pulseSpeed;
+        if (p.alpha > 0.85 || p.alpha < 0.3) {
+          p.pulseSpeed *= -1;
         }
+
+        if (p.x < 0 || p.x > width) p.vx *= -1;
+        if (p.y < 0 || p.y > height) p.vy *= -1;
 
         // Nós vibrantes em névoa prata perolizada
         ctx.beginPath();
@@ -94,17 +94,11 @@ export const NeuralNetworkBg: React.FC = () => {
       }
     };
 
-    if (isMobile) {
-      // No mobile: renderiza uma única vez instantaneamente (0% de CPU/GPU durante o scroll)
+    const render = () => {
       drawFrame();
-    } else {
-      // No desktop: mantém a animação contínua e fluida em 60 FPS
-      const render = () => {
-        drawFrame();
-        animationFrameId = requestAnimationFrame(render);
-      };
-      render();
-    }
+      animationFrameId = requestAnimationFrame(render);
+    };
+    render();
 
     const handleResize = () => {
       if (!canvas) return;

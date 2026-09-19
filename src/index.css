@@ -460,6 +460,7 @@ button {
   mix-blend-mode: multiply;
   border-radius: var(--radius-md);
   filter: drop-shadow(0 0 25px rgba(226, 232, 240, 0.18)) contrast(1.1);
+  transform: translateZ(0);
   transition: transform var(--transition-normal);
 }
 
@@ -989,8 +990,17 @@ button {
   max-height: 380px;
   object-fit: contain;
   mix-blend-mode: screen;
-  filter: drop-shadow(0 0 20px rgba(226, 232, 240, 0.18));
+  filter: none;
+  transform: translateZ(0);
+  will-change: transform;
   transition: transform var(--transition-normal);
+}
+
+.sobre-scenery-gif,
+.featured-gif-preview,
+.project-card-image {
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 .hero-scenery-wrapper:hover .hero-scenery-gif {

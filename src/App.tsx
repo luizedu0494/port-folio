@@ -312,6 +312,8 @@ export const AppContent: React.FC = () => {
               alt="" 
               role="presentation"
               className="hero-scenery-gif"
+              loading="lazy"
+              decoding="async"
             />
           </div>
         </div>
@@ -335,6 +337,7 @@ export const AppContent: React.FC = () => {
                 role="presentation"
                 className="sobre-scenery-gif"
                 loading="lazy"
+                decoding="async"
               />
             </div>
 
@@ -449,7 +452,13 @@ export const AppContent: React.FC = () => {
                     onClick={() => setPreviewModalImage({ src: featuredProject.imageUrl!, alt: featuredProject.name })}
                     title="Clique para expandir em tela cheia"
                   >
-                    <img src={featuredProject.imageUrl} alt={featuredProject.name} className="featured-gif-preview" />
+                    <img 
+                      src={featuredProject.imageUrl} 
+                      alt={featuredProject.name} 
+                      className="featured-gif-preview" 
+                      loading="lazy" 
+                      decoding="async" 
+                    />
                     
                     <div className="mobile-expand-hint">
                       <ZoomIn size={12} />
@@ -552,7 +561,13 @@ export const AppContent: React.FC = () => {
                         onClick={() => setPreviewModalImage({ src: project.imageUrl!, alt: project.name })}
                         title="Clique para expandir em tela cheia"
                       >
-                        <img src={project.imageUrl} alt={project.name} className="project-card-image" />
+                        <img 
+                          src={project.imageUrl} 
+                          alt={project.name} 
+                          className="project-card-image" 
+                          loading="lazy" 
+                          decoding="async" 
+                        />
                         
                         <div className="mobile-expand-hint">
                           <ZoomIn size={11} />
