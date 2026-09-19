@@ -309,6 +309,22 @@ button {
     display: flex;
     align-items: center;
   }
+
+  /* Fix 1 & 3: Desativar animações pesadas no body::before e remover will-change em excesso no mobile */
+  body::before {
+    animation: none !important;
+    mix-blend-mode: normal !important;
+    opacity: 0.4 !important;
+    transform: none !important;
+  }
+
+  .hero-scenery-gif,
+  .sobre-scenery-gif,
+  .featured-gif-preview,
+  .project-card-image,
+  .reveal-on-scroll {
+    will-change: auto !important;
+  }
 }
 
 .nav-link {

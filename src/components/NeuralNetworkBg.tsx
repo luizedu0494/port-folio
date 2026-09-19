@@ -94,11 +94,19 @@ export const NeuralNetworkBg: React.FC = () => {
       }
     };
 
-    const render = () => {
-      drawFrame();
+    // Fix 2: Limitar FPS no mobile para 20 FPS para manter o movimento suave sem travar o scroll
+    const fpsLimit = isMobile ? 20 : 60;
+    const frameInterval = 1000 / fpsLimit;
+    let lastDrawTime = 0;
+
+    const render = (currentTime: number) => {
       animationFrameId = requestAnimationFrame(render);
+      if (currentTime - lastDrawTime >= frameInterval) {
+        lastDrawTime = currentTime - ((currentTime - lastDrawTime) % frameInterval);
+        drawFrame();
+      }
     };
-    render();
+    render(performance.now());
 
     const handleResize = () => {
       if (!canvas) return;

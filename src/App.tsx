@@ -145,6 +145,30 @@ export const AppContent: React.FC = () => {
     };
   }, [previewModalImage]);
 
+  // Fix 4: Intersection Observer para ativar src de GIFs pesadas somente quando entrarem na viewport
+  useEffect(() => {
+    const lazyGifs = document.querySelectorAll<HTMLImageElement>('img.lazy-gif');
+    if (!lazyGifs.length) return;
+
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const img = entry.target as HTMLImageElement;
+            if (img.dataset.src && !img.src) {
+              img.src = img.dataset.src;
+            }
+            obs.unobserve(img);
+          }
+        });
+      },
+      { rootMargin: '200px' }
+    );
+
+    lazyGifs.forEach((img) => obs.observe(img));
+    return () => obs.disconnect();
+  }, []);
+
   const featuredProject = useMemo(() => projects.find(p => p.featured) || projects[0], [projects]);
 
   const otherProjects = useMemo(() => projects.filter(p => !p.featured), [projects]);
@@ -562,9 +586,10 @@ export const AppContent: React.FC = () => {
                         title="Clique para expandir em tela cheia"
                       >
                         <img 
-                          src={project.imageUrl} 
+                          data-src={project.imageUrl} 
+                          src={project.imageUrl}
                           alt={project.name} 
-                          className="project-card-image" 
+                          className="project-card-image lazy-gif" 
                           loading="lazy" 
                           decoding="async" 
                         />
