@@ -24,58 +24,49 @@ export const NeuralNetworkBg: React.FC = () => {
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
 
-    const handleResize = () => {
-      if (!canvas) return;
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    // Detectar mobile para otimizar desempenho de renderização
     const isMobile = window.innerWidth <= 768;
 
-    // Número de partículas e distância máxima otimizados para alta taxa de quadros (60 FPS) no mobile
     const particleCount = isMobile
-      ? Math.min(Math.floor((width * height) / 18000), 32)
+      ? Math.min(Math.floor((width * height) / 16000), 34)
       : Math.min(Math.floor((width * height) / 7500), 90);
-    const maxDistance = isMobile ? 95 : 140;
+    const maxDistance = isMobile ? 110 : 140;
     const particles: Particle[] = [];
 
     for (let i = 0; i < particleCount; i++) {
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * (isMobile ? 0.4 : 0.6),
-        vy: (Math.random() - 0.5) * (isMobile ? 0.4 : 0.6),
+        vx: (Math.random() - 0.5) * 0.6,
+        vy: (Math.random() - 0.5) * 0.6,
         radius: Math.random() * 2 + 1,
         alpha: Math.random() * 0.4 + 0.35,
         pulseSpeed: (Math.random() * 0.02 + 0.008) * (Math.random() > 0.5 ? 1 : -1)
       });
     }
 
-    const render = () => {
+    const drawFrame = () => {
       ctx.clearRect(0, 0, width, height);
 
       // Fundo escuro profundo Onyx
       ctx.fillStyle = '#070709';
       ctx.fillRect(0, 0, width, height);
 
-      // Desativar shadowBlur para evitar lags de GPU em navegadores mobile
       ctx.shadowBlur = 0;
 
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
-        p.x += p.vx;
-        p.y += p.vy;
+        if (!isMobile) {
+          p.x += p.vx;
+          p.y += p.vy;
 
-        p.alpha += p.pulseSpeed;
-        if (p.alpha > 0.85 || p.alpha < 0.3) {
-          p.pulseSpeed *= -1;
+          p.alpha += p.pulseSpeed;
+          if (p.alpha > 0.85 || p.alpha < 0.3) {
+            p.pulseSpeed *= -1;
+          }
+
+          if (p.x < 0 || p.x > width) p.vx *= -1;
+          if (p.y < 0 || p.y > height) p.vy *= -1;
         }
-
-        if (p.x < 0 || p.x > width) p.vx *= -1;
-        if (p.y < 0 || p.y > height) p.vy *= -1;
 
         // Nós vibrantes em névoa prata perolizada
         ctx.beginPath();
@@ -101,15 +92,32 @@ export const NeuralNetworkBg: React.FC = () => {
           }
         }
       }
-
-      animationFrameId = requestAnimationFrame(render);
     };
 
-    render();
+    if (isMobile) {
+      // No mobile: renderiza uma única vez instantaneamente (0% de CPU/GPU durante o scroll)
+      drawFrame();
+    } else {
+      // No desktop: mantém a animação contínua e fluida em 60 FPS
+      const render = () => {
+        drawFrame();
+        animationFrameId = requestAnimationFrame(render);
+      };
+      render();
+    }
+
+    const handleResize = () => {
+      if (!canvas) return;
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      drawFrame();
+    };
+
+    window.addEventListener('resize', handleResize);
 
     return () => {
       window.removeEventListener('resize', handleResize);
-      cancelAnimationFrame(animationFrameId);
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
     };
   }, []);
 
@@ -124,7 +132,8 @@ export const NeuralNetworkBg: React.FC = () => {
         height: '100vh',
         zIndex: -1,
         pointerEvents: 'none',
-        opacity: 0.88
+        opacity: 0.88,
+        transform: 'translateZ(0)'
       }}
     />
   );
