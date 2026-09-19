@@ -32,19 +32,24 @@ export const NeuralNetworkBg: React.FC = () => {
 
     window.addEventListener('resize', handleResize);
 
-    // Ajuste perfeito: nós e conexões neurais visíveis e nítidas sem poluir a leitura
-    const particleCount = Math.min(Math.floor((width * height) / 7500), 110);
-    const maxDistance = 145;
+    // Detectar mobile para otimizar desempenho de renderização
+    const isMobile = window.innerWidth <= 768;
+
+    // Número de partículas e distância máxima otimizados para alta taxa de quadros (60 FPS) no mobile
+    const particleCount = isMobile
+      ? Math.min(Math.floor((width * height) / 18000), 32)
+      : Math.min(Math.floor((width * height) / 7500), 90);
+    const maxDistance = isMobile ? 95 : 140;
     const particles: Particle[] = [];
 
     for (let i = 0; i < particleCount; i++) {
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.6,
-        vy: (Math.random() - 0.5) * 0.6,
-        radius: Math.random() * 2.2 + 1.2,
-        alpha: Math.random() * 0.5 + 0.35,
+        vx: (Math.random() - 0.5) * (isMobile ? 0.4 : 0.6),
+        vy: (Math.random() - 0.5) * (isMobile ? 0.4 : 0.6),
+        radius: Math.random() * 2 + 1,
+        alpha: Math.random() * 0.4 + 0.35,
         pulseSpeed: (Math.random() * 0.02 + 0.008) * (Math.random() > 0.5 ? 1 : -1)
       });
     }
@@ -55,6 +60,9 @@ export const NeuralNetworkBg: React.FC = () => {
       // Fundo escuro profundo Onyx
       ctx.fillStyle = '#070709';
       ctx.fillRect(0, 0, width, height);
+
+      // Desativar shadowBlur para evitar lags de GPU em navegadores mobile
+      ctx.shadowBlur = 0;
 
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
@@ -73,8 +81,6 @@ export const NeuralNetworkBg: React.FC = () => {
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(226, 232, 240, ${p.alpha})`;
-        ctx.shadowBlur = 8;
-        ctx.shadowColor = 'rgba(203, 213, 225, 0.5)';
         ctx.fill();
 
         // Linhas de sinapse visíveis em tom prata/platina
@@ -85,13 +91,12 @@ export const NeuralNetworkBg: React.FC = () => {
           const dist = Math.sqrt(dx * dx + dy * dy);
 
           if (dist < maxDistance) {
-            const lineAlpha = (1 - dist / maxDistance) * 0.28;
+            const lineAlpha = (1 - dist / maxDistance) * 0.25;
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(p2.x, p2.y);
             ctx.strokeStyle = `rgba(203, 213, 225, ${lineAlpha})`;
-            ctx.lineWidth = 1.1;
-            ctx.shadowBlur = 0;
+            ctx.lineWidth = 1;
             ctx.stroke();
           }
         }

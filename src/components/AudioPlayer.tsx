@@ -55,7 +55,7 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({ variant = 'navbar' }) 
             <SkipBack size={16} />
           </button>
           <button onClick={togglePlay} className="drawer-ctrl-btn main-play" title={isPlaying ? 'Pausar' : 'Tocar'} aria-label={isPlaying ? 'Pausar' : 'Tocar'}>
-            {isPlaying ? <Pause size={16} color="#fff" /> : <Play size={16} color="#fff" style={{ marginLeft: 2 }} />}
+            {isPlaying ? <Pause size={16} /> : <Play size={16} style={{ marginLeft: 2 }} />}
           </button>
           <button onClick={handleNext} className="drawer-ctrl-btn" title="Próxima" aria-label="Próxima faixa">
             <SkipForward size={16} />
@@ -132,7 +132,7 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({ variant = 'navbar' }) 
               <SkipBack size={18} />
             </button>
             <button onClick={togglePlay} className="ctrl-btn main-play" title={isPlaying ? 'Pausar' : 'Tocar'} aria-label={isPlaying ? 'Pausar áudio' : 'Tocar áudio'}>
-              {isPlaying ? <Pause size={20} color="#fff" /> : <Play size={20} color="#fff" style={{ marginLeft: 2 }} />}
+              {isPlaying ? <Pause size={18} /> : <Play size={18} style={{ marginLeft: 2 }} />}
             </button>
             <button onClick={handleNext} className="ctrl-btn" title="Próxima" aria-label="Próxima faixa">
               <SkipForward size={18} />
