@@ -4,7 +4,7 @@ import { playlist } from '../data/playlistData';
 import { useAudio } from '../context/AudioContext';
 
 interface AudioPlayerProps {
-  variant?: 'navbar' | 'expanded';
+  variant?: 'navbar' | 'expanded' | 'drawer';
 }
 
 export const AudioPlayer: React.FC<AudioPlayerProps> = ({ variant = 'navbar' }) => {
@@ -31,6 +31,39 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({ variant = 'navbar' }) 
     const s = Math.floor(secs % 60);
     return `${m}:${s < 10 ? '0' : ''}${s}`;
   };
+
+  if (variant === 'drawer') {
+    return (
+      <div className="drawer-audio-player">
+        <div className="drawer-audio-header">
+          <div className="drawer-audio-info">
+            <span className="drawer-audio-badge font-display">
+              <Music size={13} color="var(--accent-crimson)" /> Dev Focus
+            </span>
+            <span className="drawer-audio-track-title font-subtitle">{currentTrack.title}</span>
+            <span className="drawer-audio-artist">{currentTrack.artist}</span>
+          </div>
+          <div className={`equalizer-bars ${isPlaying ? 'playing' : ''}`}>
+            <span className="bar"></span>
+            <span className="bar"></span>
+            <span className="bar"></span>
+          </div>
+        </div>
+
+        <div className="drawer-audio-controls">
+          <button onClick={handlePrev} className="drawer-ctrl-btn" title="Anterior" aria-label="Faixa anterior">
+            <SkipBack size={16} />
+          </button>
+          <button onClick={togglePlay} className="drawer-ctrl-btn main-play" title={isPlaying ? 'Pausar' : 'Tocar'} aria-label={isPlaying ? 'Pausar' : 'Tocar'}>
+            {isPlaying ? <Pause size={16} color="#fff" /> : <Play size={16} color="#fff" style={{ marginLeft: 2 }} />}
+          </button>
+          <button onClick={handleNext} className="drawer-ctrl-btn" title="Próxima" aria-label="Próxima faixa">
+            <SkipForward size={16} />
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   if (variant === 'navbar') {
     return (

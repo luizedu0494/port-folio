@@ -214,6 +214,10 @@ export const AppContent: React.FC = () => {
           </div>
 
           <nav className={`nav-links ${isMobileMenuOpen ? 'active' : ''}`}>
+            <div className="mobile-drawer-audio-container">
+              <AudioPlayer variant="drawer" />
+            </div>
+
             <a 
               href="#sobre" 
               className={`nav-link ${activeSection === 'sobre' ? 'nav-link--active' : ''}`} 
