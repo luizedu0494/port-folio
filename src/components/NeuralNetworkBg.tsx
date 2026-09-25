@@ -56,7 +56,7 @@ export const NeuralNetworkBg: React.FC = () => {
 
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
-        
+
         p.x += p.vx;
         p.y += p.vy;
 
@@ -95,11 +95,17 @@ export const NeuralNetworkBg: React.FC = () => {
     };
 
     // Fix 2: Limitar FPS no mobile para 20 FPS para manter o movimento suave sem travar o scroll
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const fpsLimit = isMobile ? 20 : 60;
     const frameInterval = 1000 / fpsLimit;
     let lastDrawTime = 0;
 
     const render = (currentTime: number) => {
+      // Com movimento reduzido, renderiza um único frame estático
+      if (prefersReducedMotion) {
+        drawFrame();
+        return;
+      }
       animationFrameId = requestAnimationFrame(render);
       if (currentTime - lastDrawTime >= frameInterval) {
         lastDrawTime = currentTime - ((currentTime - lastDrawTime) % frameInterval);

@@ -45,6 +45,8 @@ export interface Project {
   featured?: boolean;
   demoUrl?: string;
   imageUrl?: string;
+  videoUrl?: string;
+  posterUrl?: string;
   description: string;
   stack: string[];
   highlights?: string[];

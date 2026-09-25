@@ -5,7 +5,15 @@ export const initialProfile: DeveloperProfile = {
   headline: 'Desenvolvedor de Software · Agentes de IA · React 19 · TypeScript',
   targetRole: 'Desenvolvedor de Agentes & Inteligência Artificial',
   location: 'Maceió, Alagoas',
-  mainStack: ['React 19', 'TypeScript', 'React Native', 'Supabase (PostgreSQL)', 'LangChain.js', 'Groq API', 'OpenAI'],
+  mainStack: [
+    'React 19',
+    'TypeScript',
+    'React Native',
+    'Supabase (PostgreSQL)',
+    'LangChain.js',
+    'Groq API',
+    'OpenAI'
+  ],
   contacts: {
     linkedin: 'https://www.linkedin.com/in/luiz-eduardo-052385291/',
     github: 'https://github.com/luizedu0494',
@@ -14,7 +22,8 @@ export const initialProfile: DeveloperProfile = {
     whatsapp: 'https://wa.me/5582999931035'
   },
   aboutMe: {
-    summary: 'Construo sistemas e agentes de IA que resolvem problemas reais — sem complexidade desnecessária e com foco na experiência de quem usa.',
+    summary:
+      'Construo sistemas e agentes de IA que resolvem problemas reais — sem complexidade desnecessária e com foco na experiência de quem usa.',
     paragraphs: [
       'Trabalho com desenvolvimento de sistemas e agentes autônomos — ferramentas que executam tarefas repetitivas, integram dados e respondem por conta própria. Cursando Análise e Desenvolvimento de Sistemas no CESMAC, minha convicção é simples: IA de qualidade é aquela que o usuário final nem percebe que está lá, porque o processo simplesmente funciona.',
       'Minha abordagem é iterativa por natureza: métricas de uso, padrões de comportamento e retorno direto dos usuários guiam cada decisão de código — desde a arquitetura até o detalhe de UX. O CronoLab 2.0 nasceu exatamente assim: de uma dor real do ambiente acadêmico que virou produto.',
@@ -75,14 +84,14 @@ export const initialProfile: DeveloperProfile = {
     },
     {
       title: 'InsurMinds · Certificação da 1ª Fase',
-      issuer: 'I2A2 - Institut d\'Intelligence Artificielle Appliquée',
+      issuer: "I2A2 - Institut d'Intelligence Artificielle Appliquée",
       issueDate: 'Emitida em jul de 2026',
       credentialUrl: '/certificates/i2a2-insurminds-fase1.pdf',
       skills: ['LLM', 'RAG', 'Generative AI']
     },
     {
       title: 'Intelligent Agents with Generative AI Networks',
-      issuer: 'I2A2 - Institut d\'Intelligence Artificielle Appliquée',
+      issuer: "I2A2 - Institut d'Intelligence Artificielle Appliquée",
       issueDate: 'Emitida em dez de 2025',
       credentialUrl: '/certificates/i2a2-agentes-inteligentes.pdf',
       skills: ['Generative AI', 'Python', 'Prompt Engineering', 'RAG', 'Large Language Models (LLMs)']
@@ -126,8 +135,11 @@ export const initialProjects: Project[] = [
     language: 'TypeScript / React',
     featured: true,
     demoUrl: 'https://cronogramabd.vercel.app/',
-    imageUrl: '/assets/gifs/visitante.gif',
-    description: 'Plataforma web para gestão e alocação de laboratórios acadêmicos — com detecção automática de conflitos de horário, notificações em tempo real via Supabase Realtime e controle de acesso por perfil (visitante / administrador). Construído para substituir planilhas e e-mails no fluxo de reservas do CESMAC.',
+    imageUrl: '/assets/videos/visitante-poster.webp',
+    videoUrl: '/assets/videos/visitante.mp4',
+    posterUrl: '/assets/videos/visitante-poster.webp',
+    description:
+      'Plataforma web para gestão e alocação de laboratórios acadêmicos — com detecção automática de conflitos de horário, notificações em tempo real via Supabase Realtime e controle de acesso por perfil (visitante / administrador). Construído para substituir planilhas e e-mails no fluxo de reservas do CESMAC.',
     stack: ['React 19', 'TypeScript', 'Vite 7', 'Material-UI v7', 'Supabase PostgreSQL'],
     highlights: [
       'Plataforma especialista voltada para otimização e alocação de laboratórios acadêmicos e técnicos',
@@ -144,8 +156,9 @@ export const initialProjects: Project[] = [
     language: 'TypeScript / React Native',
     featured: false,
     demoUrl: 'https://github.com/luizedu0494/DecifrAI',
-    imageUrl: '/images/decifrai_preview.png',
-    description: 'Jogo mobile em React Native onde uma IA conduz perguntas em português e tenta adivinhar a personalidade que você está pensando — jogadores de futebol, figuras públicas, personagens. Uma reimaginação do Akinator com LLMs como motor de raciocínio.',
+    imageUrl: '/images/decifrai_preview.webp',
+    description:
+      'Jogo mobile em React Native onde uma IA conduz perguntas em português e tenta adivinhar a personalidade que você está pensando — jogadores de futebol, figuras públicas, personagens. Uma reimaginação do Akinator com LLMs como motor de raciocínio.',
     stack: ['React Native', 'TypeScript', 'Formik + Yup', 'IA Generativa', 'React Navigation'],
     highlights: [
       'Desenvolvimento mobile multiplataforma com React Native & TypeScript',
@@ -161,8 +174,9 @@ export const initialProjects: Project[] = [
     language: 'TypeScript / React',
     featured: false,
     demoUrl: 'https://github.com/luizedu0494/insurebot',
-    imageUrl: '/images/insurebot_preview.png',
-    description: 'Agente conversacional para o setor de seguros — automatiza triagem de clientes, consulta de apólices e geração de cotações sem intervenção humana. Integrado com LangChain.js e LLM API para respostas contextuais em linguagem natural.',
+    imageUrl: '/images/insurebot_preview.webp',
+    description:
+      'Agente conversacional para o setor de seguros — automatiza triagem de clientes, consulta de apólices e geração de cotações sem intervenção humana. Integrado com LangChain.js e LLM API para respostas contextuais em linguagem natural.',
     stack: ['TypeScript', 'React', 'LangChain.js', 'IA Generativa', 'LLM API'],
     highlights: [
       'Fluxo de atendimento automatizado com IA',
@@ -176,8 +190,9 @@ export const initialProjects: Project[] = [
     language: 'TypeScript / React',
     featured: false,
     demoUrl: 'https://github.com/luizedu0494/stech-chatbot-ana',
-    imageUrl: '/images/stech_ana_preview.png',
-    description: 'Ana é a assistente virtual da Stech: responde chamados de suporte técnico em linguagem natural, redireciona para o setor correto e reduz o tempo de espera do atendimento. Interface conversacional construída em React com base em LLM API.',
+    imageUrl: '/images/stech_ana_preview.webp',
+    description:
+      'Ana é a assistente virtual da Stech: responde chamados de suporte técnico em linguagem natural, redireciona para o setor correto e reduz o tempo de espera do atendimento. Interface conversacional construída em React com base em LLM API.',
     stack: ['TypeScript', 'React', 'LLM API', 'Tailwind / CSS'],
     highlights: [
       'Atendimento conversacional humanizado e rápido para a Stech',

@@ -1,20 +1,22 @@
 # Portfólio Profissional — Luiz Eduardo (IA & Software)
 
-> Portfólio web moderno, interativo e de alto desempenho desenvolvido com **Vite 8 + React 19 + TypeScript**, trazendo a identidade visual **Prata Perolizado & Ônix Dark (Pearl Platinum & Onyx)**, fundo dinâmico de rede neural em HTML5 Canvas, iluminação metálica acetinada e um ecossistema completo de música "Dev Focus & Study Vibe".
+> Portfólio web moderno, interativo e de alto desempenho desenvolvido com **Vite 6 + React 19 + TypeScript**, trazendo a identidade visual **Prata Perolizado & Ônix Dark (Pearl Platinum & Onyx)**, fundo dinâmico de rede neural em HTML5 Canvas, iluminação metálica acetinada e um ecossistema completo de música "Dev Focus & Study Vibe".
 
 ---
 
 ## 🛠️ Tecnologias & Arquitetura
 
-- **Core Frontend:** React 19, TypeScript, Vite 8
+- **Core Frontend:** React 19, TypeScript 6, Vite 6
 - **Estilização & Design System:** Vanilla CSS com tokens de cor **Pearl Platinum & Onyx Dark** (`#070709`, `#0d0e12`, `#14151a`, `#f1f5f9`, `#cbd5e1`, `#94a3b8`) e botões acetinados com movimento contínuo (Continuous Fluid Glassmorphic).
 - **Tipografia com Suporte 100% Nativo a Acentuação (Latin-Ext):**
   - **Display / Títulos Tech:** `Orbitron` (Futurista & Cibernética)
   - **Subtítulos & Seções:** `Space Grotesk` & `Outfit` (Suporte nativo completo a acentos do Português: `ã`, `ç`, `ê`, `é`, `á`, `1ª`)
   - **Corpo & Parágrafos:** `Plus Jakarta Sans` (Design UI moderno de altíssima legibilidade)
-- **Background Interativo:** Animação de Canvas HTML5 2D simulando partículas de Rede Neural / Agentes de IA em tom prata perolizado
-- **Gerenciamento de Estado de Áudio:** React `AudioContext` para sincronização global do player entre o menu e as seções
+- **Background Interativo:** Animação de Canvas HTML5 2D simulando partículas de Rede Neural / Agentes de IA em tom prata perolizado (com respeito a `prefers-reduced-motion`)
+- **Gerenciamento de Estado de Áudio:** React `AudioContext` para sincronização global do player entre o menu e as seções, com volume e faixa persistidos em `localStorage`
+- **Mídia Otimizada:** GIFs de cenário convertidos para vídeo MP4 (H.264) com poster WebP — redução de ~95% no peso dos assets visuais
 - **Ícones & Elementos Gráficos:** Lucide React, ícones customizados de Gmail, Outlook e WhatsApp com cores sincronizadas ao tema, e Favicon SVG de brilho perolizado
+- **Qualidade & SEO:** ESLint + Prettier, `sitemap.xml`, `robots.txt`, Open Graph, Twitter Card e JSON-LD (`schema.org/Person`), Vercel Analytics
 
 ---
 
@@ -56,21 +58,41 @@
 ```text
 public/
 ├── assets/
-│   ├── audio/              # Faixas de música MP3 de foco/código
-│   │   ├── daniel.mp3 - green to blue (432hz).mp3
-│   │   ├── Decaying Duet - Dorian Concept.mp3
-│   │   ├── Echo Sax End - by Caleb Arredondo.mp3
+│   ├── audio/              # Faixas MP3 recompressas (112 kbps), nomes em kebab-case
+│   │   ├── green-to-blue-432hz.mp3
+│   │   ├── decaying-duet.mp3
+│   │   ├── echo-sax-end.mp3
 │   │   └── ...
-│   ├── gifs/               # Elementos de cenário visual
-│   │   ├── tech-fear.gif
-│   │   ├── earth-space.gif
-│   │   └── visitante.gif
-│   └── og-preview.png      # Imagem Open Graph para compartilhamento em redes sociais
+│   └── videos/             # Cenários/preview em MP4 (ex-GIFs) + posters WebP
+│       ├── tech-fear.mp4
+│       ├── earth-space.mp4
+│       ├── visitante.mp4
+│       └── *.webp
+├── certificates/           # PDFs de certificações (I2A2)
+├── images/                 # Previews WebP dos projetos secundários
+├── assets/og-preview.png   # Imagem Open Graph para compartilhamento em redes sociais
 ├── fonts/                  # Fontes personalizadas TTF
 │   ├── nexa/               # Nexa-ExtraLight & Nexa-Heavy
 │   ├── retroica/           # Retroica
 │   └── panic/              # Panic
 ├── favicon.svg             # Ícone SVG personalizado em Prata Perolizado
+├── sitemap.xml
+└── robots.txt
+```
+
+## 🗂️ Estrutura do Código (src/)
+
+```text
+src/
+├── App.tsx                 # Navbar, observers de scroll, lightbox e composição das seções
+├── main.tsx                # Bootstrap + Vercel Analytics + reload em erro de chunk
+├── index.css               # Design system & estilos globais
+├── components/             # AudioPlayer, WelcomeModal, NeuralNetworkBg, TypewriterText,
+│                           # ImageLightbox, ExpandableMedia, SceneryMedia, SectionHeader, icons
+├── sections/               # Hero, About, Projects, Skills, Certifications, Contact
+├── context/AudioContext.tsx# Player global de áudio (com persistência em localStorage)
+├── data/                   # initialData.ts (perfil/projetos) & playlistData.ts
+└── types/portfolio.ts      # Tipagens TypeScript
 ```
 
 ---
@@ -94,6 +116,14 @@ npm run dev
 ```
 
 4. Acesse no seu navegador em `http://localhost:3000`.
+
+Outros scripts úteis:
+
+```bash
+npm run typecheck   # Verificação de tipos sem emitir build
+npm run lint        # ESLint
+npm run format      # Prettier
+```
 
 ---
 

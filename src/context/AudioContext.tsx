@@ -22,17 +22,46 @@ interface AudioContextType {
 
 const AudioContext = createContext<AudioContextType | undefined>(undefined);
 
+const STORAGE_KEYS = {
+  volume: 'audio:volume',
+  trackIndex: 'audio:trackIndex'
+} as const;
+
+const readStoredNumber = (key: string, fallback: number): number => {
+  try {
+    const raw = localStorage.getItem(key);
+    if (raw === null) return fallback;
+    const parsed = Number(raw);
+    return Number.isFinite(parsed) ? parsed : fallback;
+  } catch {
+    return fallback;
+  }
+};
+
 export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
+  const [currentTrackIndex, setCurrentTrackIndex] = useState(() => {
+    const stored = readStoredNumber(STORAGE_KEYS.trackIndex, 0);
+    return stored >= 0 && stored < playlist.length ? stored : 0;
+  });
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
-  const [volume, setVolumeState] = useState(0.15); // Volume padrão 15%
+  const [volume, setVolumeState] = useState(() => readStoredNumber(STORAGE_KEYS.volume, 0.15));
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [hasStartedWithAudio, setHasStartedWithAudio] = useState(false);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const currentTrack: Track = playlist[currentTrackIndex] || playlist[0];
+
+  const handleNext = () => {
+    setCurrentTrackIndex((prev) => (prev + 1) % playlist.length);
+    setIsPlaying(true);
+  };
+
+  const handlePrev = () => {
+    setCurrentTrackIndex((prev) => (prev - 1 + playlist.length) % playlist.length);
+    setIsPlaying(true);
+  };
 
   useEffect(() => {
     if (!audioRef.current) {
@@ -61,6 +90,8 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       audio.removeEventListener('loadedmetadata', updateDuration);
       audio.removeEventListener('ended', handleEnded);
     };
+    // Re-criar listeners apenas na troca de faixa; volume/mute/play têm efeitos próprios abaixo
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentTrackIndex]);
 
   useEffect(() => {
@@ -69,13 +100,32 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     }
   }, [volume, isMuted]);
 
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEYS.volume, String(volume));
+    } catch {
+      /* storage indisponível (ex.: modo privado) — ignora */
+    }
+  }, [volume]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEYS.trackIndex, String(currentTrackIndex));
+    } catch {
+      /* storage indisponível (ex.: modo privado) — ignora */
+    }
+  }, [currentTrackIndex]);
+
   const startExperienceWithAudio = () => {
     if (audioRef.current) {
       audioRef.current.volume = volume;
-      audioRef.current.play().then(() => {
-        setIsPlaying(true);
-        setHasStartedWithAudio(true);
-      }).catch(err => console.log('Audio playback allowed via user click:', err));
+      audioRef.current
+        .play()
+        .then(() => {
+          setIsPlaying(true);
+          setHasStartedWithAudio(true);
+        })
+        .catch((err) => console.log('Audio playback allowed via user click:', err));
     }
   };
 
@@ -85,21 +135,14 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       audioRef.current.pause();
       setIsPlaying(false);
     } else {
-      audioRef.current.play().then(() => {
-        setIsPlaying(true);
-        setHasStartedWithAudio(true);
-      }).catch(err => console.log(err));
+      audioRef.current
+        .play()
+        .then(() => {
+          setIsPlaying(true);
+          setHasStartedWithAudio(true);
+        })
+        .catch((err) => console.log(err));
     }
-  };
-
-  const handleNext = () => {
-    setCurrentTrackIndex((prev) => (prev + 1) % playlist.length);
-    setIsPlaying(true);
-  };
-
-  const handlePrev = () => {
-    setCurrentTrackIndex((prev) => (prev - 1 + playlist.length) % playlist.length);
-    setIsPlaying(true);
   };
 
   const handleSeek = (time: number) => {
@@ -121,24 +164,26 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   };
 
   return (
-    <AudioContext.Provider value={{
-      currentTrackIndex,
-      currentTrack,
-      isPlaying,
-      isMuted,
-      volume,
-      currentTime,
-      duration,
-      hasStartedWithAudio,
-      togglePlay,
-      startExperienceWithAudio,
-      handleNext,
-      handlePrev,
-      handleSeek,
-      setVolume,
-      setIsMuted,
-      selectTrack
-    }}>
+    <AudioContext.Provider
+      value={{
+        currentTrackIndex,
+        currentTrack,
+        isPlaying,
+        isMuted,
+        volume,
+        currentTime,
+        duration,
+        hasStartedWithAudio,
+        togglePlay,
+        startExperienceWithAudio,
+        handleNext,
+        handlePrev,
+        handleSeek,
+        setVolume,
+        setIsMuted,
+        selectTrack
+      }}
+    >
       {children}
     </AudioContext.Provider>
   );

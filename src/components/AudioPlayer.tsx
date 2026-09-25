@@ -51,10 +51,20 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({ variant = 'navbar' }) 
         </div>
 
         <div className="drawer-audio-controls">
-          <button onClick={handlePrev} className="drawer-ctrl-btn" title="Anterior" aria-label="Faixa anterior">
+          <button
+            onClick={handlePrev}
+            className="drawer-ctrl-btn"
+            title="Anterior"
+            aria-label="Faixa anterior"
+          >
             <SkipBack size={16} />
           </button>
-          <button onClick={togglePlay} className="drawer-ctrl-btn main-play" title={isPlaying ? 'Pausar' : 'Tocar'} aria-label={isPlaying ? 'Pausar' : 'Tocar'}>
+          <button
+            onClick={togglePlay}
+            className="drawer-ctrl-btn main-play"
+            title={isPlaying ? 'Pausar' : 'Tocar'}
+            aria-label={isPlaying ? 'Pausar' : 'Tocar'}
+          >
             {isPlaying ? <Pause size={16} /> : <Play size={16} style={{ marginLeft: 2 }} />}
           </button>
           <button onClick={handleNext} className="drawer-ctrl-btn" title="Próxima" aria-label="Próxima faixa">
@@ -68,17 +78,19 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({ variant = 'navbar' }) 
   if (variant === 'navbar') {
     return (
       <div className="nav-audio-pill">
-        <button 
-          onClick={togglePlay} 
+        <button
+          onClick={togglePlay}
           className="audio-pill-toggle"
           title={isPlaying ? 'Pausar Músicas Dev' : 'Tocar Trilha Sonora Dev'}
           aria-label={isPlaying ? 'Pausar reprodução de áudio' : 'Tocar reprodução de áudio'}
         >
-          {isPlaying ? <Pause size={14} color="var(--accent-soft)" /> : <Play size={14} color="var(--accent-crimson)" />}
-          
-          <span className="audio-pill-track">
-            {currentTrack.title}
-          </span>
+          {isPlaying ? (
+            <Pause size={14} color="var(--accent-soft)" />
+          ) : (
+            <Play size={14} color="var(--accent-crimson)" />
+          )}
+
+          <span className="audio-pill-track">{currentTrack.title}</span>
 
           {/* Animating Sound Equalizer Bars */}
           <div className={`equalizer-bars ${isPlaying ? 'playing' : ''}`}>
@@ -88,7 +100,12 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({ variant = 'navbar' }) 
           </div>
         </button>
 
-        <button onClick={handleNext} className="audio-pill-next" title="Próxima Faixa" aria-label="Ir para a próxima faixa de áudio">
+        <button
+          onClick={handleNext}
+          className="audio-pill-next"
+          title="Próxima Faixa"
+          aria-label="Ir para a próxima faixa de áudio"
+        >
           <SkipForward size={14} />
         </button>
       </div>
@@ -113,11 +130,11 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({ variant = 'navbar' }) 
         {/* Scrubber Progress Bar */}
         <div className="scrubber-container">
           <span className="time-text">{formatTime(currentTime)}</span>
-          <input 
-            type="range" 
-            min="0" 
-            max={duration || 100} 
-            value={currentTime} 
+          <input
+            type="range"
+            min="0"
+            max={duration || 100}
+            value={currentTime}
             onChange={(e) => handleSeek(Number(e.target.value))}
             className="audio-scrubber"
             aria-label="Posição da música em reprodução"
@@ -131,7 +148,12 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({ variant = 'navbar' }) 
             <button onClick={handlePrev} className="ctrl-btn" title="Anterior" aria-label="Faixa anterior">
               <SkipBack size={18} />
             </button>
-            <button onClick={togglePlay} className="ctrl-btn main-play" title={isPlaying ? 'Pausar' : 'Tocar'} aria-label={isPlaying ? 'Pausar áudio' : 'Tocar áudio'}>
+            <button
+              onClick={togglePlay}
+              className="ctrl-btn main-play"
+              title={isPlaying ? 'Pausar' : 'Tocar'}
+              aria-label={isPlaying ? 'Pausar áudio' : 'Tocar áudio'}
+            >
               {isPlaying ? <Pause size={18} /> : <Play size={18} style={{ marginLeft: 2 }} />}
             </button>
             <button onClick={handleNext} className="ctrl-btn" title="Próxima" aria-label="Próxima faixa">
@@ -140,15 +162,23 @@ export const AudioPlayer: React.FC<AudioPlayerProps> = ({ variant = 'navbar' }) 
           </div>
 
           <div className="volume-control">
-            <button onClick={() => setIsMuted(!isMuted)} className="ctrl-btn" aria-label={isMuted ? 'Ativar som' : 'Mutar som'}>
-              {isMuted || volume === 0 ? <VolumeX size={16} color="var(--accent-soft)" /> : <Volume2 size={16} />}
+            <button
+              onClick={() => setIsMuted(!isMuted)}
+              className="ctrl-btn"
+              aria-label={isMuted ? 'Ativar som' : 'Mutar som'}
+            >
+              {isMuted || volume === 0 ? (
+                <VolumeX size={16} color="var(--accent-soft)" />
+              ) : (
+                <Volume2 size={16} />
+              )}
             </button>
-            <input 
-              type="range" 
-              min="0" 
-              max="1" 
-              step="0.05" 
-              value={isMuted ? 0 : volume} 
+            <input
+              type="range"
+              min="0"
+              max="1"
+              step="0.05"
+              value={isMuted ? 0 : volume}
               onChange={(e) => setVolume(Number(e.target.value))}
               className="volume-slider"
               aria-label="Controle de volume do áudio"

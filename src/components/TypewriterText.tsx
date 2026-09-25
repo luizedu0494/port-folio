@@ -22,25 +22,28 @@ export const TypewriterText: React.FC<TypewriterTextProps> = ({
   useEffect(() => {
     const targetWord = words[wordIndex];
 
-    const timer = setTimeout(() => {
-      if (!isDeleting) {
-        // Digitando
-        setCurrentText(targetWord.substring(0, currentText.length + 1));
+    const timer = setTimeout(
+      () => {
+        if (!isDeleting) {
+          // Digitando
+          setCurrentText(targetWord.substring(0, currentText.length + 1));
 
-        if (currentText === targetWord) {
-          // Pausa antes de apagar
-          setTimeout(() => setIsDeleting(true), pauseDuration);
-        }
-      } else {
-        // Apagando
-        setCurrentText(targetWord.substring(0, currentText.length - 1));
+          if (currentText === targetWord) {
+            // Pausa antes de apagar
+            setTimeout(() => setIsDeleting(true), pauseDuration);
+          }
+        } else {
+          // Apagando
+          setCurrentText(targetWord.substring(0, currentText.length - 1));
 
-        if (currentText === '') {
-          setIsDeleting(false);
-          setWordIndex((prev) => (prev + 1) % words.length);
+          if (currentText === '') {
+            setIsDeleting(false);
+            setWordIndex((prev) => (prev + 1) % words.length);
+          }
         }
-      }
-    }, isDeleting ? deletingSpeed : typingSpeed);
+      },
+      isDeleting ? deletingSpeed : typingSpeed
+    );
 
     return () => clearTimeout(timer);
   }, [currentText, isDeleting, wordIndex, words, typingSpeed, deletingSpeed, pauseDuration]);
