@@ -4,7 +4,7 @@ import { useAudio } from '../context/AudioContext';
 
 export const WelcomeModal: React.FC = () => {
   const { startExperienceWithAudio } = useAudio();
-  const [isVisible, setIsVisible] = useState<boolean>(false); // TEMP-TESTE: restaurar para true
+  const [isVisible, setIsVisible] = useState<boolean>(true);
   const [isClosing, setIsClosing] = useState<boolean>(false);
 
   if (!isVisible) return null;
