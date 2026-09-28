@@ -1,22 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { Sparkles } from 'lucide-react';
 import { DeveloperProfile, Project } from './types/portfolio';
 import { initialProfile, initialProjects } from './data/initialData';
 import { NeuralNetworkBg } from './components/NeuralNetworkBg';
 import { AudioPlayer } from './components/AudioPlayer';
-import { WelcomeModal } from './components/WelcomeModal';
+import { AsciiIntro } from './components/AsciiIntro';
+import { ScrambleText } from './components/ScrambleText';
+import { HoverAsciiTitle } from './components/HoverAsciiTitle';
 import { ImageLightbox, LightboxMedia } from './components/ImageLightbox';
-import { AudioProvider } from './context/AudioContext';
+import { AudioProvider, useAudio } from './context/AudioContext';
 import { Hero } from './sections/Hero';
 import { About } from './sections/About';
 import { Projects } from './sections/Projects';
-import { Skills } from './sections/Skills';
-import { Certifications } from './sections/Certifications';
-import { Contact } from './sections/Contact';
+
+const Skills = lazy(() => import('./sections/Skills').then((m) => ({ default: m.Skills })));
+const Certifications = lazy(() =>
+  import('./sections/Certifications').then((m) => ({ default: m.Certifications }))
+);
+const Contact = lazy(() => import('./sections/Contact').then((m) => ({ default: m.Contact })));
 
 const SECTION_IDS = ['inicio', 'sobre', 'projetos', 'habilidades', 'certificacoes', 'contato'];
 
 export const AppContent: React.FC = () => {
+  const { startExperienceWithAudio } = useAudio();
+  const [entered, setEntered] = useState<boolean>(false);
   const [profile] = useState<DeveloperProfile>(initialProfile);
   const [projects] = useState<Project[]>(initialProjects);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
@@ -94,8 +101,17 @@ export const AppContent: React.FC = () => {
 
   return (
     <div className="portfolio-app">
-      {/* Modal de Boas-Vindas & Autorização do Player de Áudio */}
-      <WelcomeModal />
+      <a href="#inicio" className="skip-link">Pular para o conteúdo</a>
+
+      {/* Intro Espiral ASCII — substitui o modal de boas-vindas */}
+      {!entered && (
+        <AsciiIntro
+          onEnter={(withAudio) => {
+            setEntered(true);
+            if (withAudio) startExperienceWithAudio();
+          }}
+        />
+      )}
 
       {/* Background de Rede Neural Interativa em Movimento */}
       <NeuralNetworkBg />
@@ -108,7 +124,7 @@ export const AppContent: React.FC = () => {
         <div className="container nav-container">
           <a href="#inicio" className="brand-logo font-display">
             <Sparkles size={20} color="var(--accent-crimson)" />
-            LUIZ EDUARDO
+            <ScrambleText text="LUIZ EDUARDO" className="brand-wordmark-text" hover />
           </a>
 
           {/* Player de Áudio & Menu Toggle visíveis no Header no Mobile */}
@@ -158,9 +174,11 @@ export const AppContent: React.FC = () => {
           githubProfileUrl={profile.contacts.github}
           onPreview={setPreviewMedia}
         />
-        <Skills profile={profile} />
-        <Certifications profile={profile} />
-        <Contact profile={profile} />
+        <Suspense fallback={null}>
+          <Skills profile={profile} />
+          <Certifications profile={profile} />
+          <Contact profile={profile} />
+        </Suspense>
       </main>
 
       {/* Modal Lightbox de Expansão de Imagem / Vídeo */}
@@ -169,6 +187,7 @@ export const AppContent: React.FC = () => {
       {/* Footer */}
       <footer className="footer">
         <div className="container">
+          <HoverAsciiTitle text="LUIZ EDUARDO" className="footer-wordmark-title" />
           <p>© {new Date().getFullYear()} · Luiz Eduardo Lopes — Desenvolvedor de Software & IA · v1.0.0</p>
           <p className="footer-version">v1.0.0</p>
         </div>

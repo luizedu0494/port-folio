@@ -101,6 +101,10 @@ export const NeuralNetworkBg: React.FC = () => {
     let lastDrawTime = 0;
 
     const render = (currentTime: number) => {
+      if (document.hidden) {
+        animationFrameId = requestAnimationFrame(render);
+        return;
+      }
       // Com movimento reduzido, renderiza um único frame estático
       if (prefersReducedMotion) {
         drawFrame();

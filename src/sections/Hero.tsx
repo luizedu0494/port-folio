@@ -3,6 +3,7 @@ import { MapPin } from 'lucide-react';
 import { DeveloperProfile } from '../types/portfolio';
 import { TypewriterText } from '../components/TypewriterText';
 import { SceneryMedia } from '../components/SceneryMedia';
+import { HoverAsciiTitle } from '../components/HoverAsciiTitle';
 import { GithubIcon, LinkedinIcon, GmailIcon, OutlookIcon, WhatsappIcon } from '../components/icons';
 
 interface HeroProps {
@@ -13,7 +14,10 @@ export const Hero: React.FC<HeroProps> = ({ profile }) => (
   <section id="inicio" className="hero-section reveal-on-scroll">
     <div className="container hero-container-grid">
       <div>
-        <h1 className="hero-title font-display">{profile.name}</h1>
+        <h1 className="hero-wordmark-title">
+          <span className="visually-hidden">LUIZ EDUARDO</span>
+          <HoverAsciiTitle text="LUIZ EDUARDO" className="hero-wordmark-text" />
+        </h1>
         <p className="hero-headline font-subtitle">
           Desenvolvedor de Software focado em{' '}
           <TypewriterText

@@ -1,0 +1,1 @@
+usando skills gasp, uiuxmaxpro, motiondesign, gsd, everthing claude code, para melhor meu portifolio usando também o arquivo analise-awwwards para pegar elementos que tem no site proposto de premios, que teve reconhecimento pelos efeitos usados no site

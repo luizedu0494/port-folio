@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800;900&family=Outfit:wght@500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap');
+﻿
 
 :root {
   /* Pearl Platinum & Onyx Dark Palette */
@@ -319,7 +319,7 @@ button {
     align-items: center;
   }
 
-  /* Fix 1 & 3: Desativar animações pesadas no body::before e remover will-change em excesso no mobile */
+  /* Fix 1 & 3: Desativar animaÃ§Ãµes pesadas no body::before e remover will-change em excesso no mobile */
   body::before {
     animation: none !important;
     mix-blend-mode: normal !important;
@@ -403,7 +403,7 @@ button {
   padding-bottom: 70px;
 }
 
-/* Utilitário para seções alternadas sem duplicação de style inline */
+/* UtilitÃ¡rio para seÃ§Ãµes alternadas sem duplicaÃ§Ã£o de style inline */
 .section-alt {
   padding: 80px 0;
   background: var(--bg-secondary);
@@ -429,7 +429,7 @@ button {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
 }
 
-/* Cards de Certificações com Hover Responsivo */
+/* Cards de CertificaÃ§Ãµes com Hover Responsivo */
 .cert-card {
   background: var(--bg-card);
   padding: 24px;
@@ -1340,7 +1340,7 @@ button {
   }
 }
 
-/* Mobile Drawer Audio Player Card - Oculto no desktop, visível apenas no drawer mobile */
+/* Mobile Drawer Audio Player Card - Oculto no desktop, visÃ­vel apenas no drawer mobile */
 .mobile-drawer-audio-container {
   display: none;
 }
@@ -2209,11 +2209,11 @@ button {
 }
 
 /* ==========================================================
-   Adições — Otimização de mídia (vídeos no lugar de GIFs)
-   e utilitários extraídos de estilos inline (Fases 2/3/5)
+   AdiÃ§Ãµes â€” OtimizaÃ§Ã£o de mÃ­dia (vÃ­deos no lugar de GIFs)
+   e utilitÃ¡rios extraÃ­dos de estilos inline (Fases 2/3/5)
    ========================================================== */
 
-/* Vídeos de cenário herdam o visual dos antigos GIFs */
+/* VÃ­deos de cenÃ¡rio herdam o visual dos antigos GIFs */
 .hero-scenery-video {
   width: 100%;
   max-width: 440px;
@@ -2244,7 +2244,7 @@ button {
   transform: scale(1.04);
 }
 
-/* Vídeos dentro de previews expansíveis seguem as regras das imagens */
+/* VÃ­deos dentro de previews expansÃ­veis seguem as regras das imagens */
 .expandable-preview-container video {
   display: block;
   width: 100%;
@@ -2267,7 +2267,7 @@ button {
   background: #000;
 }
 
-/* Utilitários extraídos de estilos inline repetidos */
+/* UtilitÃ¡rios extraÃ­dos de estilos inline repetidos */
 .section-padded {
   padding: 80px 0;
 }
@@ -2366,7 +2366,7 @@ button {
   margin-right: auto;
 }
 
-/* Poster estático exibido apenas quando o usuário prefere movimento reduzido */
+/* Poster estÃ¡tico exibido apenas quando o usuÃ¡rio prefere movimento reduzido */
 .reduced-motion-poster {
   display: none;
 }
@@ -2400,4 +2400,229 @@ button {
   .reduced-motion-poster {
     display: block !important;
   }
+}
+
+/* Skip link ï¿½ acessibilidade de navegaï¿½ï¿½o por teclado */
+.skip-link {
+  position: absolute;
+  top: -48px;
+  left: 16px;
+  z-index: 10000;
+  padding: 10px 18px;
+  background: var(--accent-soft, #f1f5f9);
+  color: var(--bg-deep, #070709);
+  border-radius: 8px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: 12px;
+}
+
+
+/* Intro Espiral ASCII — substitui o modal de boas-vindas */
+.ascii-intro-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: var(--bg-deep, #070709);
+  cursor: pointer;
+  transition: opacity 0.6s ease;
+}
+
+.ascii-intro-overlay--out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ascii-intro-canvas {
+  position: absolute;
+  inset: 0;
+}
+
+.ascii-intro-silent {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: none;
+  border: none;
+  color: var(--text-muted, #94a3b8);
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  padding: 8px 12px;
+  opacity: 0.75;
+  transition: opacity 0.25s ease, color 0.25s ease;
+}
+
+.ascii-intro-silent:hover,
+.ascii-intro-silent:focus-visible {
+  opacity: 1;
+  color: var(--text-primary, #f1f5f9);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+/* ===== TextScramble (decrypt reveal) — mecanismo do aino.agency ===== */
+.font-wordmark {
+  font-family: 'Anton', 'Arial Black', sans-serif;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--text-primary, #f1f5f9);
+}
+
+.scramble-text {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+/* Caracteres ainda em ruido: cinza + aberracao cromatica falsa (vermelho/ciano) */
+.dud {
+  color: #8a8a86;
+  text-shadow: 1px 0 #ff3b6f, -1px 0 #31e0e0;
+}
+
+/* Hero: nome grande em Anton com scramble */
+.hero-wordmark-title {
+  margin: 0 0 8px 0;
+  font-size: clamp(40px, 7.2vw, 88px);
+  line-height: 1.05;
+}
+
+.hero-wordmark-title .scramble-text {
+  cursor: default;
+}
+
+/* Navbar: marca pequena */
+.brand-wordmark-text {
+  font-family: 'Anton', 'Arial Black', sans-serif;
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+}
+
+/* Rodape: wordmark centrado */
+.footer-wordmark-text {
+  display: block;
+  font-size: clamp(28px, 4vw, 44px);
+  line-height: 1.1;
+  margin-bottom: 18px;
+  cursor: default;
+}
+
+/* Intro: palavra gigante centrada */
+.ascii-intro-word-wrap {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.ascii-intro-word {
+  font-size: clamp(40px, 9vw, 120px);
+  line-height: 1.05;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* ===== Wordmark SVG (Archivo Black) — limpo no DOM, ASCII no hover ===== */
+.ascii-wordmark {
+  display: inline-block;
+  line-height: 0;
+  cursor: default;
+}
+
+.ascii-wordmark svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: opacity 0.28s ease;
+}
+
+.ascii-wordmark svg path {
+  fill: var(--text-primary, #f1f5f9);
+}
+
+.ascii-wordmark--hover svg {
+  opacity: 0;
+}
+
+.hero-wordmark-title {
+  margin: 0 0 12px 0;
+}
+
+.hero-wordmark {
+  display: block;
+  width: 100%;
+}
+
+.footer-wordmark {
+  display: block;
+  width: min(420px, 78vw);
+  margin: 0 auto 20px auto;
+}
+
+/* AsciiName - nome como partculas do motor (hero e rodape) */
+.ascii-name {
+  width: 100%;
+  cursor: default;
+}
+
+.hero-name {
+  height: clamp(40px, 6.4vw, 68px);
+  margin-bottom: 10px;
+}
+
+.footer-name {
+  height: clamp(26px, 4vw, 42px);
+  width: min(460px, 80vw);
+  margin: 0 auto 20px auto;
+}
+
+/* HoverAsciiTitle - efeito rodape do aino: texto limpo, hover vira ASCII inteiro */
+.hover-ascii-title {
+  font-family: 'Space Grotesk', 'Arial', sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: var(--text-primary, #f1f5f9);
+  cursor: default;
+  transition: opacity 0.28s ease;
+  user-select: none;
+}
+
+.hover-ascii-title--hover {
+  opacity: 0.15;
+}
+
+.hero-wordmark-title {
+  margin: 0 0 14px 0;
+}
+
+.hero-wordmark-text.hover-ascii-title {
+  display: block;
+  font-size: clamp(46px, 8.2vw, 116px);
+  white-space: nowrap;
+}
+
+.footer-wordmark-title.hover-ascii-title {
+  display: block;
+  width: fit-content;
+  font-size: clamp(28px, 4.5vw, 52px);
+  margin: 0 auto 20px auto;
 }
