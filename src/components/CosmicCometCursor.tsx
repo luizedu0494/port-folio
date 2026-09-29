@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 
-const SPARKS_POOL = ['·', '+', '*', '1', '0', '#', ':', '¬', '°', 'x'];
+const POOL = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789#@$%&*+=<>?/!·-:";
 
 interface TrailPoint {
   x: number;
@@ -29,12 +29,17 @@ export const CosmicCometCursor: React.FC = () => {
     let my = -9999;
     let bx = -9999;
     let by = -9999;
+
     let isHoveringInteractive = false;
     let isClicking = false;
     let isVisible = false;
     let haloScale = 1;
 
+    // Rastro calibrado no meio-termo padrão para ambas as partes
+    const MAX_TRAIL = 30;
     const trail: TrailPoint[] = [];
+
+    let lastTargetCheck = 0;
 
     const onMouseMove = (e: MouseEvent) => {
       mx = e.clientX;
@@ -45,11 +50,16 @@ export const CosmicCometCursor: React.FC = () => {
         isVisible = true;
       }
 
-      // Detecta se o elemento sob o cursor é interativo
-      const target = e.target as HTMLElement | null;
-      if (target) {
-        const interactive = target.closest('a, button, input, textarea, select, [role="button"], .btn-primary, .btn-secondary, .contact-pill, .project-card, .clickable');
-        isHoveringInteractive = !!interactive;
+      // Throttle de verificação de elemento interativo sob o cursor
+      const now = performance.now();
+      if (now - lastTargetCheck > 60) {
+        lastTargetCheck = now;
+        const target = e.target as HTMLElement | null;
+        if (target) {
+          isHoveringInteractive = !!target.closest(
+            'a, button, input, textarea, select, [role="button"], .btn-primary, .btn-secondary, .contact-pill, .project-card, .featured-card, .cert-card, .flip-card-wrapper, .clickable'
+          );
+        }
       }
     };
 
@@ -84,68 +94,74 @@ export const CosmicCometCursor: React.FC = () => {
 
       if (!isVisible || mx < -100) return;
 
-      // Suavização do cometa (lerp)
-      bx += (mx - bx) * 0.32;
-      by += (my - by) * 0.32;
+      // Suavização do cometa idêntica em ambas as partes (interpolação 0.25)
+      bx += (mx - bx) * 0.25;
+      by += (my - by) * 0.25;
 
-      trail.push({ x: bx, y: by, time: performance.now() });
-      if (trail.length > 20) trail.shift();
-
-      // Transição suave de escala no hover
-      const targetScale = isClicking ? 0.7 : isHoveringInteractive ? 1.65 : 1;
-      haloScale += (targetScale - haloScale) * 0.2;
-
-      // 1. Cauda afilada do cometa
-      if (trail.length > 2) {
-        ctx.lineCap = 'round';
-        ctx.lineJoin = 'round';
-
-        for (let i = 1; i < trail.length; i++) {
-          const p0 = trail[i - 1];
-          const p1 = trail[i];
-          const f = i / trail.length;
-
-          ctx.strokeStyle = isHoveringInteractive
-            ? `rgba(255, 255, 255, ${(f * f * 0.55).toFixed(2)})`
-            : `rgba(215, 230, 255, ${(f * f * 0.45).toFixed(2)})`;
-          ctx.lineWidth = 1 + f * 3.5;
-
-          ctx.beginPath();
-          ctx.moveTo(p0.x, p0.y);
-          ctx.lineTo(p1.x, p1.y);
-          ctx.stroke();
-        }
-
-        // Faíscas sutis de caracteres ASCII na cauda
-        for (let i = 2; i < trail.length; i += 3) {
-          const q = trail[trail.length - 1 - i];
-          const f = 1 - i / trail.length;
-          const char = SPARKS_POOL[(i * 3) % SPARKS_POOL.length];
-
-          ctx.font = `500 ${Math.floor(7 + f * 4)}px "JetBrains Mono", monospace`;
-          ctx.fillStyle = `rgba(240, 246, 255, ${(f * 0.42).toFixed(2)})`;
-          ctx.fillText(
-            char,
-            q.x + (Math.sin(q.time * 0.01 + i) * 6 * (1 - f)),
-            q.y + (Math.cos(q.time * 0.01 + i) * 6 * (1 - f))
-          );
-        }
+      const now = performance.now();
+      trail.push({ x: bx, y: by, time: now });
+      while (trail.length > MAX_TRAIL) {
+        trail.shift();
       }
 
-      // 2. Halo Cósmico / Brilho Radial da Cabeça
-      const baseRadius = 24 * haloScale;
+      // Transição suave de escala no hover
+      const targetScale = isClicking ? 0.75 : isHoveringInteractive ? 1.45 : 1;
+      haloScale += (targetScale - haloScale) * 0.2;
+
+      // ── 1. Rastro Fluido do Cometa (Igual à Primeira Parte) ──
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+
+      for (let i = 1; i < trail.length; i++) {
+        const a0 = trail[i - 1];
+        const a1 = trail[i];
+        const f = i / trail.length;
+
+        ctx.strokeStyle = isHoveringInteractive
+          ? `rgba(255, 255, 255, ${(f * f * 0.7).toFixed(2)})`
+          : `rgba(220, 235, 255, ${(f * f * 0.6).toFixed(2)})`;
+        ctx.lineWidth = 1 + f * 4.5 * (isHoveringInteractive ? 1.2 : 1);
+
+        ctx.beginPath();
+        ctx.moveTo(a0.x, a0.y);
+        ctx.lineTo(a1.x, a1.y);
+        ctx.stroke();
+      }
+
+      // ── 2. Halo Cósmico / Brilho Radial da Cabeça ──
+      const baseRadius = 26 * haloScale;
       const hg = ctx.createRadialGradient(bx, by, 0, bx, by, baseRadius);
-      hg.addColorStop(0, isHoveringInteractive ? 'rgba(255, 255, 255, 0.95)' : 'rgba(245, 250, 255, 0.9)');
-      hg.addColorStop(0.2, isHoveringInteractive ? 'rgba(230, 240, 255, 0.6)' : 'rgba(220, 235, 255, 0.45)');
-      hg.addColorStop(0.65, 'rgba(180, 210, 255, 0.1)');
-      hg.addColorStop(1, 'rgba(180, 210, 255, 0)');
+      hg.addColorStop(0, 'rgba(255, 255, 255, 0.95)');
+      hg.addColorStop(0.25, isHoveringInteractive ? 'rgba(240, 248, 255, 0.7)' : 'rgba(235, 245, 255, 0.6)');
+      hg.addColorStop(0.6, 'rgba(190, 215, 255, 0.15)');
+      hg.addColorStop(1, 'rgba(190, 215, 255, 0)');
 
       ctx.fillStyle = hg;
       ctx.beginPath();
       ctx.arc(bx, by, baseRadius, 0, Math.PI * 2);
       ctx.fill();
 
-      // 3. Anel sutil de mira quando hover em link/botão
+      // ── 3. Ponto Núcleo Branco Sólido ──
+      ctx.fillStyle = '#ffffff';
+      ctx.beginPath();
+      ctx.arc(bx, by, isHoveringInteractive ? 2.5 : 3.5, 0, Math.PI * 2);
+      ctx.fill();
+
+      // ── 4. Faíscas ASCII na Cauda (Idênticas à Primeira Parte) ──
+      for (let i = 2; i < trail.length; i += 2) {
+        const q = trail[trail.length - 1 - i];
+        const f = 1 - i / trail.length;
+        ctx.font = `${Math.floor(7 + f * 6)}px "JetBrains Mono", monospace`;
+        ctx.fillStyle = `rgba(240, 245, 255, ${(f * 0.65).toFixed(2)})`;
+        const char = POOL[Math.floor(Math.random() * POOL.length)];
+        ctx.fillText(
+          char,
+          q.x + (Math.random() - 0.5) * 10 * (1 - f) * 2,
+          q.y + (Math.random() - 0.5) * 10 * (1 - f) * 2
+        );
+      }
+
+      // ── 5. Anel Sutil de Mira em Elementos Interativos ──
       if (isHoveringInteractive) {
         ctx.strokeStyle = 'rgba(255, 255, 255, 0.65)';
         ctx.lineWidth = 1.2;
@@ -153,12 +169,6 @@ export const CosmicCometCursor: React.FC = () => {
         ctx.arc(bx, by, 16 * haloScale, 0, Math.PI * 2);
         ctx.stroke();
       }
-
-      // 4. Ponto Núcleo Branco Sólido
-      ctx.fillStyle = '#ffffff';
-      ctx.beginPath();
-      ctx.arc(bx, by, isHoveringInteractive ? 2.5 : 3.5, 0, Math.PI * 2);
-      ctx.fill();
     };
 
     animId = requestAnimationFrame(draw);

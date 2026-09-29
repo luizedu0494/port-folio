@@ -3,6 +3,8 @@ import { Wrench } from 'lucide-react';
 import { DeveloperProfile } from '../types/portfolio';
 import { SectionHeader } from '../components/SectionHeader';
 
+import { SkillFlipCard } from '../components/SkillFlipCard';
+
 interface SkillsProps {
   profile: DeveloperProfile;
 }
@@ -16,33 +18,13 @@ export const Skills: React.FC<SkillsProps> = ({ profile }) => (
         triggerId="habilidades"
       />
 
-      <div className="grid-auto-260" style={{ gap: '24px' }}>
-        {profile.skillCategories.map((category) => (
-          <div key={category.title} className="skill-card">
-            <h3
-              className="font-subtitle"
-              style={{ fontSize: '1.2rem', color: 'var(--accent-soft)', marginBottom: '18px', wordBreak: 'break-word' }}
-            >
-              {category.title}
-            </h3>
-            <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              {category.skills.map((skill, sIdx) => (
-                <li
-                  key={sIdx}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '8px',
-                    fontSize: '0.95rem',
-                    color: 'var(--text-secondary)'
-                  }}
-                >
-                  <span className="skill-dot" style={{ backgroundColor: 'var(--accent-soft)' }}></span>
-                  {skill.name}
-                </li>
-              ))}
-            </ul>
-          </div>
+      <div className="flip-cards-grid">
+        {profile.skillCategories.map((category, index) => (
+          <SkillFlipCard
+            key={category.title}
+            category={category}
+            index={index}
+          />
         ))}
       </div>
     </div>

@@ -1,11 +1,10 @@
 import React, { useMemo, useState } from 'react';
-import { Brain, CheckCircle2, ExternalLink, Layers } from 'lucide-react';
+import { Brain, Layers } from 'lucide-react';
 import { Project } from '../types/portfolio';
 import { SectionHeader } from '../components/SectionHeader';
-import { ScrambleText } from '../components/ScrambleText';
-import { ExpandableMedia } from '../components/ExpandableMedia';
 import type { LightboxMedia } from '../components/ImageLightbox';
-import { GithubIcon } from '../components/icons';
+import { ProjectFlipCard } from '../components/ProjectFlipCard';
+import { FeaturedFlipCard } from '../components/FeaturedFlipCard';
 
 interface ProjectsProps {
   projects: Project[];
@@ -64,8 +63,6 @@ export const Projects: React.FC<ProjectsProps> = ({ projects, githubProfileUrl, 
     });
   }, [otherProjects, activeFilter, searchQuery]);
 
-  const repoUrl = (repo: string) => `${githubProfileUrl}/${repo}`;
-
   const filters: { id: string; label: React.ReactNode }[] = [
     { id: 'all', label: <>Todos ({otherProjects.length})</> },
     {
@@ -93,74 +90,10 @@ export const Projects: React.FC<ProjectsProps> = ({ projects, githubProfileUrl, 
               triggerId="projetos"
             />
 
-            <div className="featured-card">
-              <div className="featured-content">
-                <div>
-                  <h3 className="featured-title font-subtitle">
-                    <ScrambleText text={featuredProject.name} onView hover fast />
-                  </h3>
-                  <p className="featured-description">{featuredProject.description}</p>
-
-                  <div style={{ marginBottom: '20px' }}>
-                    <h4
-                      className="font-subtitle"
-                      style={{ fontSize: '0.95rem', color: 'var(--accent-soft)', marginBottom: '10px' }}
-                    >
-                      Destaques do Projeto:
-                    </h4>
-                    <ul className="highlights-list">
-                      {featuredProject.highlights?.map((h, i) => (
-                        <li key={i} className="highlight-item">
-                          <CheckCircle2 size={16} className="highlight-icon" />
-                          <span>{h}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="tech-tags">
-                    {featuredProject.stack.map((tech, idx) => (
-                      <span key={idx} className={`tech-tag ${idx < 3 ? 'highlight' : ''}`}>
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-
-                  <div className="hero-actions" style={{ marginTop: '24px' }}>
-                    {featuredProject.demoUrl && (
-                      <a
-                        href={featuredProject.demoUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="btn-primary"
-                      >
-                        <ExternalLink size={18} /> Acessar Aplicação
-                      </a>
-                    )}
-                    <a
-                      href={repoUrl(featuredProject.repo)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn-secondary"
-                    >
-                      <GithubIcon size={18} /> Ver Repositório no GitHub
-                    </a>
-                  </div>
-                </div>
-
-                {featuredProject.imageUrl && (
-                  <ExpandableMedia
-                    src={featuredProject.imageUrl}
-                    videoSrc={featuredProject.videoUrl}
-                    alt={featuredProject.name}
-                    containerClass="featured-image-container"
-                    mediaClass="featured-gif-preview"
-                    hint="Clique para Expandir"
-                    onExpand={onPreview}
-                  />
-                )}
-              </div>
-            </div>
+            <FeaturedFlipCard
+              project={featuredProject}
+              githubProfileUrl={githubProfileUrl}
+            />
           </div>
         </section>
       )}
@@ -212,60 +145,13 @@ export const Projects: React.FC<ProjectsProps> = ({ projects, githubProfileUrl, 
 
             {/* Grid */}
             <div className="projects-grid">
-              {filteredProjects.map((project) => (
-                <div key={project.id} className="project-card">
-                  <div>
-                    {project.imageUrl && (
-                      <ExpandableMedia
-                        src={project.imageUrl}
-                        alt={project.name}
-                        containerClass="project-card-image-wrapper"
-                        mediaClass="project-card-image"
-                        lazy
-                        onExpand={onPreview}
-                      />
-                    )}
-
-                    <div className="project-card-header">
-                      <h3 className="project-name font-subtitle">
-                        {project.name}
-                      </h3>
-                    </div>
-
-                    <p className="project-description">{project.description}</p>
-
-                    <div className="tech-tags" style={{ marginBottom: '16px' }}>
-                      {project.stack.map((t, i) => (
-                        <span key={i} className="tech-tag">
-                          {t}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="project-footer">
-                    <span style={{ fontSize: '0.8rem', color: 'var(--accent-soft)' }}>
-                      {project.language}
-                    </span>
-
-                    <div style={{ display: 'flex', gap: '12px' }}>
-                      <a
-                        href={repoUrl(project.repo)}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{
-                          color: '#fff',
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '6px',
-                          fontSize: '0.85rem'
-                        }}
-                      >
-                        <GithubIcon size={16} /> GitHub
-                      </a>
-                    </div>
-                  </div>
-                </div>
+              {filteredProjects.map((project, index) => (
+                <ProjectFlipCard
+                  key={project.id}
+                  project={project}
+                  githubProfileUrl={githubProfileUrl}
+                  index={index}
+                />
               ))}
             </div>
           </div>

@@ -13,7 +13,7 @@ export const About: React.FC<AboutProps> = ({ profile }) => (
   <section id="sobre" className="about-intro-section reveal-on-scroll">
     <div className="container about-editorial-layout">
 
-      {/* ── Coluna Esquerda: Vídeo (25%) + Player ── */}
+      {/* ── Coluna Esquerda: Vídeo Original + Player ── */}
       <aside className="about-left-col">
         <SceneryMedia
           videoSrc="/assets/videos/tech-fear.mp4"

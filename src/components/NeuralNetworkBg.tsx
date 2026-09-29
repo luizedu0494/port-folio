@@ -5,51 +5,137 @@ const DENSE = "NAOI1234568908";
 const SPARSE = "·-+:.";
 
 const KEYWORDS = [
-  'python',
-  'react',
-  'ts',
-  'llm',
-  'api',
-  'ai',
+  // IA & Agentes
   'agent',
+  'ai',
+  'llm',
+  'langchain',
+  'langgraph',
+  'crewai',
   'rag',
   'groq',
-  'node',
-  'vite',
-  'sql',
-  'git',
-  'langchain',
-  'prompt',
-  'supabase',
-  'next',
-  'docker',
   'openai',
-  'fastapi',
+  'prompt',
   'vector',
-  'linux',
-  'css',
-  'html',
-  'json',
-  'jwt',
-  'rest',
-  'postgres',
-  'tailwind',
-  'graphql',
-  'auth',
-  'ml',
   'embedding',
-  'redux',
-  'native',
-  'dev',
+  'deepseek',
+  'gemini',
+  'claude',
+  'transformer',
+  'tokens',
+  'autonomous',
+  'neural',
+  'inference',
+  'context',
+  'multimodal',
+  'multi-agent',
+  'reasoning',
+  'weights',
+  'embeddings',
+  
+  // Landing Pages, Frontend & Conversão
+  'landing-page',
+  'conversion',
+  'cro',
+  'copywriting',
+  'seo',
+  'react19',
+  'nextjs',
+  'vite',
+  'typescript',
+  'ui/ux',
+  'micro-interactions',
+  'web-performance',
+  'responsive',
+  'css-grid',
+  'animations',
+  'keyframes',
+  'high-converting',
+  'web-vitals',
+  'framer',
+  'dom',
+  'cta',
+  'canvas',
+  'design-system',
+  'tailwind',
+  
+  // Backend, Cloud & Dados
+  'supabase',
+  'postgresql',
+  'fastapi',
+  'python',
+  'realtime',
+  'edge-functions',
+  'rest-api',
+  'graphql',
+  'jwt',
+  'docker',
+  'auth',
+  'redis',
+  'sql',
+  'json',
+  'git',
+  'deploy',
+  'vercel',
+  'serverless',
+  'pipeline',
   'cloud',
-  'bot',
-  'vibe',
-  'model',
-  'code',
-  'deploy'
+
+  // Cosmos & Espaço Cyber
+  'cosmos',
+  'orbit',
+  'nebula',
+  'galaxy',
+  'matrix',
+  'node',
+  'cluster',
+  'constellation',
+  'pulsar',
+  'telemetry',
+  'quantum',
+  'gravity',
+  'flux',
+  'core',
+  'singularity',
+  'stream',
+  'horizon',
+  'celestial',
+  'zenith',
+  'void',
+  'supernova'
+];
+
+const COSMIC_TELEMETRY = [
+  'SEC.04 // RA 19h50m',
+  'GRID-9 // 0x7F',
+  'NODE::α7',
+  'FLUX:99.8%',
+  'ORBIT-RAD:380k',
+  'VECTOR_DIM:1536',
+  'LATENCY:14ms',
+  'EPOCH:2026',
+  'SYS::READY',
+  'AGENTS::ACTIVE',
+  'CONV::OPTIMIZED',
+  'NEURAL_SPACE::ON',
+  'SEO::INDEXED'
+];
+
+const FORMATTERS = [
+  (w: string) => `[${w}]`,
+  (w: string) => `{${w}}`,
+  (w: string) => `<${w}/>`,
+  (w: string) => `// ${w}`,
+  (w: string) => `* ${w} *`,
+  (w: string) => `$ ${w}`,
+  (w: string) => `::${w}`,
+  (w: string) => `~ ${w} ~`,
+  (w: string) => `> ${w}`,
+  (w: string) => `const ${w}`
 ];
 
 const rnd = (a: string | string[]) => a[Math.floor(Math.random() * a.length)];
+const rndItem = <T,>(a: T[]): T => a[Math.floor(Math.random() * a.length)];
 
 interface CosmicParticle {
   x: number;
@@ -71,13 +157,17 @@ interface FloatingKeyword {
   y: number;
   vx: number;
   vy: number;
-  text: string;
+  rawText: string;
+  formattedText: string;
   displayChars: string[];
   baseAlpha: number;
   heat: number;
   driftAngle: number;
   driftSpeed: number;
   nextJitter: number;
+  depth: number; // 0: fundo distante, 1: médio, 2: próximo
+  fontSize: number;
+  isTelemetry?: boolean;
 }
 
 interface TrailPoint {
@@ -99,30 +189,32 @@ export const NeuralNetworkBg: React.FC = () => {
     let H = (canvas.height = window.innerHeight);
 
     const isMobile = window.innerWidth <= 768;
-    const particleCount = isMobile ? 130 : 260;
-    const keywordCount = isMobile ? 14 : 26;
-    const maxLinkDist = isMobile ? 95 : 125;
+    const particleCount = isMobile ? 110 : 210;
+    const keywordCount = isMobile ? 20 : 38;
+    const maxLinkDist = isMobile ? 90 : 120;
 
     const particles: CosmicParticle[] = [];
     const keywords: FloatingKeyword[] = [];
-    const stars: { x: number; y: number; s: number; a: number; speed: number }[] = [];
+    const stars: { x: number; y: number; s: number; a: number; speed: number; pulseSpeed: number }[] = [];
 
-    // 1. Estrelas de fundo distantes
-    for (let i = 0; i < 90; i++) {
+    // 1. Estrelas de fundo distantes (campo estelar cósmico cintilante)
+    const starCount = isMobile ? 70 : 140;
+    for (let i = 0; i < starCount; i++) {
       stars.push({
         x: Math.random() * W,
         y: Math.random() * H,
-        s: Math.random() * 1.3 + 0.6,
-        a: Math.random() * 0.35 + 0.15,
-        speed: 0.04 + Math.random() * 0.08
+        s: Math.random() * 1.5 + 0.5,
+        a: Math.random() * 0.45 + 0.15,
+        speed: 0.03 + Math.random() * 0.08,
+        pulseSpeed: 0.0015 + Math.random() * 0.002
       });
     }
 
     const now0 = performance.now();
 
-    // 2. Partículas Cósmicas em ASCII (alta densidade)
+    // 2. Partículas Cósmicas em ASCII
     for (let i = 0; i < particleCount; i++) {
-      const isDense = Math.random() < 0.28;
+      const isDense = Math.random() < 0.32;
       const initialChar = isDense
         ? rnd(DENSE)
         : Math.random() < 0.68
@@ -145,22 +237,39 @@ export const NeuralNetworkBg: React.FC = () => {
       });
     }
 
-    // 3. Palavras-Chave de Skills Flutuantes
-    const shuffledKeywords = [...KEYWORDS].sort(() => Math.random() - 0.5);
+    // 3. Palavras-Chave de Skills & Telemetria Cósmica Flutuantes
+    const allWordPool = [...KEYWORDS];
+    const shuffledKeywords = allWordPool.sort(() => Math.random() - 0.5);
+
     for (let i = 0; i < keywordCount; i++) {
-      const kw = shuffledKeywords[i % shuffledKeywords.length];
+      const isTelem = Math.random() < 0.18;
+      const rawText = isTelem
+        ? rnd(COSMIC_TELEMETRY)
+        : shuffledKeywords[i % shuffledKeywords.length];
+
+      const formatFn = isTelem ? (w: string) => w : rndItem(FORMATTERS);
+      const formattedText = formatFn(rawText);
+
+      const depth = Math.random() < 0.35 ? 0 : Math.random() < 0.75 ? 1 : 2;
+      const baseAlpha = depth === 0 ? 0.18 + Math.random() * 0.12 : depth === 1 ? 0.28 + Math.random() * 0.18 : 0.42 + Math.random() * 0.22;
+      const fontSize = depth === 0 ? 9 : depth === 1 ? 11 : 12.5;
+
       keywords.push({
         x: Math.random() * W,
         y: Math.random() * H,
-        vx: (Math.random() - 0.5) * (isMobile ? 0.2 : 0.28),
-        vy: (Math.random() - 0.5) * (isMobile ? 0.2 : 0.28),
-        text: kw,
-        displayChars: kw.split(''),
-        baseAlpha: Math.random() * 0.25 + 0.28,
+        vx: (Math.random() - 0.5) * (isMobile ? 0.18 : 0.26) * (depth === 0 ? 0.6 : 1),
+        vy: (Math.random() - 0.5) * (isMobile ? 0.18 : 0.26) * (depth === 0 ? 0.6 : 1),
+        rawText,
+        formattedText,
+        displayChars: formattedText.split(''),
+        baseAlpha,
         heat: 0,
         driftAngle: Math.random() * Math.PI * 2,
-        driftSpeed: 0.12 + Math.random() * 0.22,
-        nextJitter: 0
+        driftSpeed: (0.10 + Math.random() * 0.20) * (depth === 0 ? 0.7 : 1.1),
+        nextJitter: 0,
+        depth,
+        fontSize,
+        isTelemetry: isTelem
       });
     }
 
@@ -304,8 +413,10 @@ export const NeuralNetworkBg: React.FC = () => {
 
             // Jitter de caracteres na palavra quando aquecida pelo cometa
             if (now > kw.nextJitter) {
-              kw.displayChars = kw.text.split('').map((ch) =>
-                Math.random() < 0.45 * f ? rnd(POOL) : ch
+              kw.displayChars = kw.formattedText.split('').map((ch) =>
+                ch === ' ' || ch === '/' || ch === ':' || ch === '[' || ch === ']' || ch === '{' || ch === '}' || ch === '<' || ch === '>'
+                  ? ch
+                  : Math.random() < 0.45 * f ? rnd(POOL) : ch
               );
               kw.nextJitter = now + 45;
             }
@@ -315,24 +426,33 @@ export const NeuralNetworkBg: React.FC = () => {
         kw.heat *= 0.965; // Esfria gradualmente
 
         if (kw.heat < 0.08) {
-          kw.displayChars = kw.text.split('');
+          kw.displayChars = kw.formattedText.split('');
         }
 
-        const alpha = Math.min(1, kw.baseAlpha + kw.heat * 0.75);
-        const fontSize = Math.floor(10 + kw.heat * 3);
-        ctx.font = `600 ${fontSize}px "JetBrains Mono", ui-monospace, monospace`;
+        const alpha = Math.min(0.95, kw.baseAlpha + kw.heat * 0.75);
+        const dynamicFontSize = Math.floor(kw.fontSize + (kw.heat > 0.1 ? kw.heat * 2.5 : 0));
+        const isTelem = kw.isTelemetry;
+        
+        ctx.font = `${isTelem ? '700' : kw.depth === 2 ? '600' : '500'} ${dynamicFontSize}px "JetBrains Mono", ui-monospace, monospace`;
 
         if (kw.heat > 0.2) {
           ctx.fillStyle = `rgba(255, 255, 255, ${alpha.toFixed(2)})`;
+        } else if (isTelem) {
+          ctx.fillStyle = `rgba(140, 225, 255, ${(alpha * 0.85).toFixed(2)})`;
+        } else if (kw.depth === 0) {
+          ctx.fillStyle = `rgba(130, 165, 215, ${alpha.toFixed(2)})`;
+        } else if (kw.depth === 1) {
+          ctx.fillStyle = `rgba(175, 205, 245, ${alpha.toFixed(2)})`;
         } else {
-          ctx.fillStyle = `rgba(180, 205, 245, ${alpha.toFixed(2)})`;
+          ctx.fillStyle = `rgba(215, 235, 255, ${alpha.toFixed(2)})`;
         }
 
-        ctx.fillText(`[${kw.displayChars.join('')}]`, kw.x, kw.y);
+        ctx.fillText(kw.displayChars.join(''), kw.x, kw.y);
       }
 
-      // 4. Render das Partículas de Caracteres Cósmicos
+      // 4. Render das Partículas de Caracteres Cósmicos (Otimizado em Lote)
       ctx.textAlign = 'center';
+      let activeFont = '';
 
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
@@ -376,12 +496,15 @@ export const NeuralNetworkBg: React.FC = () => {
         p.heat *= 0.965;
 
         const currentAlpha = Math.min(0.95, p.baseAlpha + p.heat * 0.65);
-        const glowColor = p.heat > 0.18
+        ctx.fillStyle = p.heat > 0.18
           ? `rgba(255, 255, 255, ${currentAlpha.toFixed(2)})`
           : `rgba(195, 215, 250, ${currentAlpha.toFixed(2)})`;
 
-        ctx.font = `${p.isDense ? '700' : '500'} ${Math.floor(p.size + p.heat * 3)}px "JetBrains Mono", ui-monospace, monospace`;
-        ctx.fillStyle = glowColor;
+        const neededFont = `${p.isDense ? '700' : '500'} ${Math.floor(p.size)}px "JetBrains Mono", ui-monospace, monospace`;
+        if (activeFont !== neededFont) {
+          ctx.font = neededFont;
+          activeFont = neededFont;
+        }
         ctx.fillText(p.char, p.x, p.y);
       }
     };

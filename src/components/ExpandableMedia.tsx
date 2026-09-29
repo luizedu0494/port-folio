@@ -13,16 +13,12 @@ interface ExpandableMediaProps {
   onExpand: (media: LightboxMedia) => void;
 }
 
-/** Placeholder transparente 1px */
-const PLACEHOLDER = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
-
 export const ExpandableMedia: React.FC<ExpandableMediaProps> = ({
   src,
   alt,
   containerClass,
   mediaClass,
   videoSrc,
-  lazy = false,
   hint = 'Expandir',
   onExpand
 }) => (
@@ -46,20 +42,19 @@ export const ExpandableMedia: React.FC<ExpandableMediaProps> = ({
         preload="metadata"
         style={{
           mixBlendMode: 'screen',
-          opacity: 0.78,
+          opacity: 0.9,
           background: 'transparent'
         }}
       />
     ) : (
       <img
-        data-src={src}
-        src={lazy ? PLACEHOLDER : src}
+        src={src}
         alt={alt}
-        className={`${mediaClass}${lazy ? ' lazy-gif' : ''}`}
+        className={mediaClass}
         loading="lazy"
         decoding="async"
         style={{
-          opacity: 0.85,
+          opacity: 0.95,
           background: 'transparent'
         }}
       />

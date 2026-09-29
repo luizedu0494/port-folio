@@ -13,32 +13,97 @@ const TEXT_WORD = "luiz.edu";
 const PHRASE_CHARS = TEXT_WORD.replace(/\s/g, '');
 
 const INTRO_KEYWORDS = [
-  'python',
-  'react',
-  'ts',
-  'llm',
-  'api',
-  'ai',
+  // IA & Agentes
   'agent',
+  'ai',
+  'llm',
+  'langchain',
+  'langgraph',
+  'crewai',
   'rag',
   'groq',
-  'node',
-  'vite',
-  'sql',
-  'git',
-  'langchain',
-  'prompt',
-  'supabase',
-  'next',
-  'docker',
   'openai',
-  'fastapi',
+  'prompt',
   'vector',
-  'linux',
-  'gemini',
+  'embedding',
   'deepseek',
-  'pytorch',
-  'claude'
+  'gemini',
+  'claude',
+  'transformer',
+  'tokens',
+  'autonomous',
+  'neural',
+  'inference',
+  'multi-agent',
+  'weights',
+  
+  // Landing Pages & Frontend
+  'landing-page',
+  'conversion',
+  'cro',
+  'copywriting',
+  'seo',
+  'react19',
+  'nextjs',
+  'vite',
+  'typescript',
+  'ui/ux',
+  'micro-interactions',
+  'performance',
+  'animations',
+  'high-converting',
+  'framer',
+  'design-system',
+  
+  // Backend & Cloud
+  'supabase',
+  'postgresql',
+  'fastapi',
+  'python',
+  'realtime',
+  'edge-functions',
+  'docker',
+  'auth',
+  'deploy',
+  'vercel',
+
+  // Cosmos & Espaço
+  'cosmos',
+  'orbit',
+  'nebula',
+  'galaxy',
+  'matrix',
+  'cluster',
+  'constellation',
+  'pulsar',
+  'telemetry',
+  'quantum',
+  'gravity',
+  'flux',
+  'singularity'
+];
+
+const INTRO_TELEMETRY = [
+  'SEC.04 // RA 19h50m',
+  'NODE::α7',
+  'FLUX:99.8%',
+  'ORBIT-RAD:380k',
+  'SYS::READY',
+  'AGENTS::ACTIVE',
+  'NEURAL_SPACE::ON',
+  'CONV::OPTIMIZED'
+];
+
+const INTRO_FORMATTERS = [
+  (w: string) => `[${w}]`,
+  (w: string) => `{${w}}`,
+  (w: string) => `<${w}/>`,
+  (w: string) => `// ${w}`,
+  (w: string) => `* ${w} *`,
+  (w: string) => `$ ${w}`,
+  (w: string) => `::${w}`,
+  (w: string) => `~ ${w} ~`,
+  (w: string) => `> ${w}`
 ];
 
 interface SpaceParticle {
@@ -70,13 +135,16 @@ interface FloatingIntroKeyword {
   y: number;
   vx: number;
   vy: number;
-  text: string;
+  rawText: string;
+  formattedText: string;
   displayChars: string[];
   baseAlpha: number;
   heat: number;
   driftAngle: number;
   driftSpeed: number;
   nextJitter: number;
+  fontSize: number;
+  isTelemetry?: boolean;
 }
 
 interface TrailPoint {
@@ -85,6 +153,7 @@ interface TrailPoint {
 }
 
 const rnd = (a: string | string[]) => a[Math.floor(Math.random() * a.length)];
+const rndItem = <T,>(a: T[]): T => a[Math.floor(Math.random() * a.length)];
 
 export const AsciiIntro: React.FC<AsciiIntroProps> = ({ onEnter, onStart }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -239,22 +308,35 @@ export const AsciiIntro: React.FC<AsciiIntroProps> = ({ onEnter, onStart }) => {
       }
 
       if (keywords.length === 0) {
-        const shuffled = [...INTRO_KEYWORDS].sort(() => Math.random() - 0.5);
-        const kwCount = W < 600 ? 12 : 22;
+        const allWords = [...INTRO_KEYWORDS];
+        const shuffled = allWords.sort(() => Math.random() - 0.5);
+        const kwCount = W < 600 ? 18 : 34;
+
         for (let i = 0; i < kwCount; i++) {
-          const kw = shuffled[i % shuffled.length];
+          const isTelem = Math.random() < 0.2;
+          const rawText = isTelem
+            ? rnd(INTRO_TELEMETRY)
+            : shuffled[i % shuffled.length];
+
+          const formatFn = isTelem ? (w: string) => w : rndItem(INTRO_FORMATTERS);
+          const formattedText = formatFn(rawText);
+          const fontSize = isTelem ? 10.5 : W < 600 ? 10 : 11.5;
+
           keywords.push({
             x: Math.random() * W,
             y: Math.random() * H,
             vx: (Math.random() - 0.5) * (W < 600 ? 0.22 : 0.32),
             vy: (Math.random() - 0.5) * (W < 600 ? 0.22 : 0.32),
-            text: kw,
-            displayChars: kw.split(''),
-            baseAlpha: Math.random() * 0.25 + 0.25,
+            rawText,
+            formattedText,
+            displayChars: formattedText.split(''),
+            baseAlpha: Math.random() * 0.28 + 0.22,
             heat: 0,
             driftAngle: Math.random() * Math.PI * 2,
-            driftSpeed: 0.15 + Math.random() * 0.25,
-            nextJitter: 0
+            driftSpeed: 0.14 + Math.random() * 0.24,
+            nextJitter: 0,
+            fontSize,
+            isTelemetry: isTelem
           });
         }
       }
@@ -376,10 +458,10 @@ export const AsciiIntro: React.FC<AsciiIntroProps> = ({ onEnter, onStart }) => {
       const dt = Math.min((now - lastF) / 1000, 0.05);
       lastF = now;
 
-      bx += (mx - bx) * 0.22;
-      by += (my - by) * 0.22;
+      bx += (mx - bx) * 0.25;
+      by += (my - by) * 0.25;
       trail.push({ x: bx, y: by });
-      if (trail.length > 55) trail.shift();
+      if (trail.length > 30) trail.shift();
 
       const vcx = W / 2;
       const vcy = H / 2;
@@ -460,27 +542,32 @@ export const AsciiIntro: React.FC<AsciiIntroProps> = ({ onEnter, onStart }) => {
             kw.heat = Math.max(kw.heat, f);
 
             if (now > kw.nextJitter) {
-              kw.displayChars = kw.text.split('').map((ch) =>
-                Math.random() < 0.45 * f ? rnd(POOL) : ch
+              kw.displayChars = kw.formattedText.split('').map((ch) =>
+                ch === ' ' || ch === '/' || ch === ':' || ch === '[' || ch === ']' || ch === '{' || ch === '}' || ch === '<' || ch === '>'
+                  ? ch
+                  : Math.random() < 0.45 * f ? rnd(POOL) : ch
               );
               kw.nextJitter = now + 45;
             }
           }
 
           kw.heat *= 0.965;
-          if (kw.heat < 0.08) kw.displayChars = kw.text.split('');
+          if (kw.heat < 0.08) kw.displayChars = kw.formattedText.split('');
 
           const kwAlpha = Math.min(0.95, kw.baseAlpha + kw.heat * 0.7);
-          const fontSize = Math.floor(10 + kw.heat * 3);
-          ctx.font = `600 ${fontSize}px "JetBrains Mono", ui-monospace, monospace`;
+          const fontSize = Math.floor(kw.fontSize + kw.heat * 3);
+          const isTelem = kw.isTelemetry;
+          ctx.font = `${isTelem ? '700' : '600'} ${fontSize}px "JetBrains Mono", ui-monospace, monospace`;
 
           if (kw.heat > 0.2) {
             ctx.fillStyle = `rgba(255, 255, 255, ${kwAlpha.toFixed(2)})`;
+          } else if (isTelem) {
+            ctx.fillStyle = `rgba(140, 225, 255, ${(kwAlpha * 0.9).toFixed(2)})`;
           } else {
-            ctx.fillStyle = `rgba(180, 205, 245, ${kwAlpha.toFixed(2)})`;
+            ctx.fillStyle = `rgba(190, 215, 250, ${kwAlpha.toFixed(2)})`;
           }
 
-          ctx.fillText(`[${kw.displayChars.join('')}]`, kw.x, kw.y);
+          ctx.fillText(kw.displayChars.join(''), kw.x, kw.y);
         }
       }
 

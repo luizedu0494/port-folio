@@ -7,6 +7,7 @@ import { AudioPlayer } from './components/AudioPlayer';
 import { AsciiIntro } from './components/AsciiIntro';
 import { SvgAsciiWordmark } from './components/SvgAsciiWordmark';
 import { TypewriterText } from './components/TypewriterText';
+import { ScrambleText } from './components/ScrambleText';
 import { ImageLightbox, LightboxMedia } from './components/ImageLightbox';
 import { AudioProvider, useAudio } from './context/AudioContext';
 import { initGridSystem } from './ascii/gridSystem';
@@ -27,6 +28,37 @@ export const AppContent: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const [previewMedia, setPreviewMedia] = useState<LightboxMedia | null>(null);
   const [activeSection, setActiveSection] = useState<string>('sobre');
+  const [isNavVisible, setIsNavVisible] = useState<boolean>(true);
+
+  // Auto-hide da navbar no scroll down e reaparece no scroll up (60 FPS com requestAnimationFrame)
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const currentScrollY = window.scrollY;
+          const diff = currentScrollY - lastScrollY;
+
+          if (currentScrollY < 50) {
+            setIsNavVisible(true);
+          } else if (diff > 8 && currentScrollY > 100) {
+            setIsNavVisible(false);
+          } else if (diff < -6) {
+            setIsNavVisible(true);
+          }
+
+          lastScrollY = currentScrollY;
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   useEffect(() => {
     const cleanGrid = initGridSystem();
@@ -143,17 +175,31 @@ export const AppContent: React.FC = () => {
       {/* Background de Rede Neural Interativa em Movimento */}
       <NeuralNetworkBg />
 
-      {/* Cursor Cometa Cósmico no Desktop (apenas após a transição da intro) */}
+      {/* Cursor Cometa Cósmico no Desktop */}
       {entered && <CosmicCometCursor />}
 
       {/* Overlay escuro de fundo ao abrir drawer mobile */}
       {isMobileMenuOpen && <div className="mobile-overlay" onClick={() => setIsMobileMenuOpen(false)} />}
 
-      <header className="navbar" inert={!entered}>
+      <header
+        className={`navbar ${!isNavVisible && !isMobileMenuOpen ? 'navbar--hidden' : ''}`}
+        inert={!entered}
+      >
         <div className="container nav-container">
-          <a href="#sobre" className="brand-logo font-display" aria-label="Ir para Sobre Mim">
+          <a
+            href="#sobre"
+            className="brand-logo font-display"
+            aria-label="Ir para Sobre Mim"
+            onClick={() => {
+              window.dispatchEvent(
+                new CustomEvent('trigger-section-scramble', { detail: { id: 'sobre' } })
+              );
+            }}
+          >
             <Sparkles size={20} color="var(--accent-soft)" />
-            <span className="brand-wordmark-text">luiz.edu</span>
+            <span className="brand-wordmark-text">
+              <ScrambleText text="luiz.edu" hover fast />
+            </span>
           </a>
 
           {/* Player de Áudio & Menu Toggle visíveis no Header no Mobile */}
@@ -229,17 +275,21 @@ export const AppContent: React.FC = () => {
             <SvgAsciiWordmark variant="footer" />
           </div>
 
-          <p className="footer-headline-text">
-            Desenvolvedor de Software focado em{' '}
-            <TypewriterText
-              words={[
-                'Landing Pages de Alta Conversão',
-                'Engenharia de IA & Agentes',
-                'Desenvolvimento Fullstack React & Python',
-                'Sistemas Inteligentes & Web Performance'
-              ]}
-            />
-          </p>
+          <div className="footer-headline-wrapper">
+            <p className="footer-headline-text">
+              <span className="footer-headline-intro">Desenvolvedor de Software focado em</span>
+              <span className="footer-headline-dynamic">
+                <TypewriterText
+                  words={[
+                    'Landing Pages de Alta Conversão',
+                    'Engenharia de IA & Agentes',
+                    'Desenvolvimento Fullstack React & Python',
+                    'Sistemas Inteligentes & Web Performance'
+                  ]}
+                />
+              </span>
+            </p>
+          </div>
 
           <div className="footer-bottom-line">
             <p className="footer-copy">
