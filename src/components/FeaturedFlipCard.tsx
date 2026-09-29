@@ -118,6 +118,7 @@ export const FeaturedFlipCard: React.FC<FeaturedFlipCardProps> = ({
               target="_blank"
               rel="noopener noreferrer"
               onClick={handleLinkClick}
+              onPointerDown={(e) => e.stopPropagation()}
               className="btn-primary"
             >
               <ExternalLink size={17} /> Acessar Aplicação
@@ -128,6 +129,7 @@ export const FeaturedFlipCard: React.FC<FeaturedFlipCardProps> = ({
             target="_blank"
             rel="noopener noreferrer"
             onClick={handleLinkClick}
+            onPointerDown={(e) => e.stopPropagation()}
             className="btn-secondary"
           >
             <GithubIcon size={17} /> Ver Repositório no GitHub

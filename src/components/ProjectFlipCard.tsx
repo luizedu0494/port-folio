@@ -88,6 +88,7 @@ export const ProjectFlipCard: React.FC<ProjectFlipCardProps> = ({
             target="_blank"
             rel="noopener noreferrer"
             onClick={handleLinkClick}
+            onPointerDown={(e) => e.stopPropagation()}
             className="project-action-btn project-action-btn--primary"
             aria-label={`Ver repositório do ${project.name} no GitHub`}
           >
@@ -100,6 +101,7 @@ export const ProjectFlipCard: React.FC<ProjectFlipCardProps> = ({
               target="_blank"
               rel="noopener noreferrer"
               onClick={handleLinkClick}
+              onPointerDown={(e) => e.stopPropagation()}
               className="project-action-btn project-action-btn--secondary"
               aria-label={`Acessar aplicação ${project.name}`}
             >

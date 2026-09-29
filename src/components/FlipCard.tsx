@@ -167,6 +167,10 @@ export const FlipCard: React.FC<FlipCardProps> = ({
 
   const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     if (disabled || e.button !== 0 || grip.current) return;
+    const isInteractive = Boolean(
+      (e.target as HTMLElement)?.closest('a, button, input, select, textarea, [data-no-flip]')
+    );
+    if (isInteractive) return;
     try {
       e.currentTarget.setPointerCapture(e.pointerId);
     } catch {}
@@ -245,11 +249,19 @@ export const FlipCard: React.FC<FlipCardProps> = ({
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (disabled || (e.key !== 'Enter' && e.key !== ' ')) return;
+    const isInteractive = Boolean(
+      (e.target as HTMLElement)?.closest('a, button, input, select, textarea, [data-no-flip]')
+    );
+    if (isInteractive) return;
     e.preventDefault();
     if (!e.repeat) flip(true);
   };
 
   const onClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const isInteractive = Boolean(
+      (e.target as HTMLElement)?.closest('a, button, input, select, textarea, [data-no-flip]')
+    );
+    if (isInteractive) return;
     if (!disabled && e.detail === 0) flip(true);
   };
 
