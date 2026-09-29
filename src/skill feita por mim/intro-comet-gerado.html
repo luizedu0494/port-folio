@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>abertura ASCII</title>
+<style>
+:root{--bg:#05060c;--fg:#e8ecff;--hot:#ffffff;box-sizing:border-box}
+html,body{height:100%;margin:0;background:var(--bg);overflow:hidden;font-family:ui-monospace,Menlo,Consolas,monospace}
+#c{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none}
+#main{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;color:var(--fg);text-align:center;padding:24px;opacity:0;pointer-events:none;transition:opacity 1.4s ease}
+#main.on{opacity:1;pointer-events:auto}
+#main h1{font-size:clamp(28px,6vw,64px);margin:0;letter-spacing:.04em}
+#main p{max-width:46ch;margin:0;opacity:.7;line-height:1.6}
+button{font:inherit;color:var(--fg);background:transparent;border:1px solid var(--hot);padding:10px 22px;cursor:pointer;letter-spacing:.1em}
+button:hover{background:var(--hot);color:#05060c}
+#sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+</style>
+</head>
+<body>
+<canvas id="c" aria-hidden="true"></canvas>
+<div id="sr" aria-live="polite"></div>
+<section id="main">
+  <!-- EDITE AQUI: conteúdo principal depois da abertura -->
+  <h1>luiz.edu</h1>
+  <p>Aqui começa a parte principal do site.</p>
+  <button id="again">recomeçar</button>
+</section>
+<script>
+// ===== CONFIG (preenchida por scripts/ascii_comet.py; pode editar à mão) =====
+const CFG = {"phrases": ["seja bem-vindo", "luiz.edu"], "bg": "luiz.edu", "cue": "clique", "cueBack": "continuar", "n": 3400, "hold": 6500, "take": 85, "style": "comet"} || { phrases: ["seja bem-vindo", "luiz.edu"], bg: "luiz.edu", cue: "clique", cueBack: "continuar", hold: 6500, take: 85, n: 3400, style: "comet" };
+const PHRASES = CFG.phrases;   // cada clique usa a próxima
+const BG = CFG.bg;             // nome escondido no fundo
+const BG_CH = BG.replace(/\s/g, "");
+const CUE = CFG.cue, CUE2 = CFG.cueBack;
+const HOLD = CFG.hold;         // ms até a frase passar por cima sozinha
+const TAKE = CFG.take;         // ms entre trocas de glifos
+const HOT = "#ffffff";
+const STYLE = CFG.style;       // "comet" (cometa branco, cursor escondido) ou "cursor" (cursor normal + palavra seguindo)
+if (STYLE === "comet") document.getElementById('c').style.cursor = 'none';
+// =====================================================================
+const cv = document.getElementById('c'), ctx = cv.getContext('2d');
+const main = document.getElementById('main'), sr = document.getElementById('sr');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const POOL = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789ÁÉÍÓÚÃÕÇâêôàü#@$%&*+=<>?/!·-:";
+const DENSE = "NAOI1234568908", SPARSE = "·-+:.";
+let W, H, DPR, N, P = [], t0 = performance.now();
+let mx, my, bx, by, trail = [];
+let state = 'swirl', idx = 0, st = 0, pts = [], phraseChars = "", lastTake = 0, holdTimer;
+const rnd = a => a[Math.random() * a.length | 0];
+
+function size() {
+  DPR = Math.min(devicePixelRatio || 1, 2);
+  W = innerWidth; H = innerHeight;
+  if (W < 2 || H < 2) { W = H = 0; return; } // janela ainda sem tamanho: tenta de novo no próximo quadro
+  cv.width = W * DPR; cv.height = H * DPR;
+  ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  const want = W < 600 ? Math.round(CFG.n / 2) : CFG.n;
+  if (want !== N) {
+    N = want; P = [];
+    for (let i = 0; i < N; i++) {
+      const far = Math.random() < .18;
+      const r = far ? .6 + Math.random() * .7 : Math.pow(Math.random(), 1.25), arm = i % 3, rock = Math.random() < .04;
+      P.push({ r, a: arm * 2.094 + r * 7 + (Math.random() - .5) * (far ? 3 : 1.1), z: .4 + Math.random() * .6,
+        h: 0, j: (Math.random() - .5) * (far ? .8 : .35), sv: .7 + Math.random() * .6, ph: Math.random() * 6.28, rock,
+        x: W / 2, y: H / 2, vx: 0, vy: 0, ch: rnd(r < .3 ? DENSE : r < .65 ? "ABO+=1I" : SPARSE), tx: null, ty: null });
+    }
+  }
+  if (mx == null) { mx = bx = W / 2; my = by = H * .86; }
+  buildBg();
+}
+size(); function onResize() { size(); if (state === 'phrase') buildPhrase(PHRASES[idx]); }
+addEventListener('resize', onResize);
+
+function sample(text, limit) {
+  if (!W || !H) return [];
+  const o = document.createElement('canvas'); o.width = W; o.height = H;
+  const c = o.getContext('2d');
+  let lines = [text];
+  if (text.length > 14 && text.includes(' ')) {
+    const w = text.split(' '), m = Math.ceil(w.length / 2);
+    lines = [w.slice(0, m).join(' '), w.slice(m).join(' ')];
+  }
+  const longest = Math.max(...lines.map(l => l.length));
+  const fs = Math.min(W * .86 / (longest * .62), H * .34);
+  c.font = `bold ${fs}px ui-monospace,Menlo,Consolas,monospace`;
+  c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillStyle = '#fff';
+  lines.forEach((l, i) => c.fillText(l, W / 2, H / 2 + (i - (lines.length - 1) / 2) * fs * 1.15));
+  const d = c.getImageData(0, 0, W, H).data;
+  let s = 4, out;
+  for (;; s++) {
+    out = [];
+    for (let y = 0; y < H; y += s) for (let x = 0; x < W; x += s) if (d[(y * W + x) * 4 + 3] > 120) out.push([x, y]);
+    if (out.length <= limit) break;
+  }
+  for (let i = out.length - 1; i > 0; i--) { const j = Math.random() * (i + 1) | 0; [out[i], out[j]] = [out[j], out[i]]; }
+  return out;
+}
+function buildBg() {
+  const bg = sample(BG, N * .3);
+  if (!bg.length) return;
+  P.forEach((p, i) => { p.bx = i < bg.length ? bg[i][0] : null; p.by = i < bg.length ? bg[i][1] : null; });
+}
+function buildPhrase(text) {
+  pts = sample(text, N * .92); phraseChars = text.replace(/\s/g, '');
+  P.forEach((p, i) => { p.tx = i < pts.length ? pts[i][0] : null; p.ty = i < pts.length ? pts[i][1] : null; });
+}
+
+function burst() {
+  if (reduce) return;
+  P.forEach(p => {
+    const dx = p.x - bx, dy = p.y - by, d = Math.hypot(dx, dy) + 1, f = 8 + Math.random() * 14;
+    p.vx += dx / d * f; p.vy += dy / d * f;
+  });
+}
+
+function click() {
+  if (state === 'swirl') {
+    main.classList.remove('on');
+    buildPhrase(PHRASES[idx]); sr.textContent = PHRASES[idx];
+    state = 'phrase'; st = performance.now(); burst();
+    clearTimeout(holdTimer); holdTimer = setTimeout(leave, HOLD);
+  } else if (state === 'phrase') leave();
+}
+function leave() {
+  if (state !== 'phrase') return;
+  clearTimeout(holdTimer); state = 'exit'; st = performance.now();
+}
+function after() {
+  P.forEach(p => { p.tx = null; });
+  idx++;
+  if (idx >= PHRASES.length) { idx = 0; state = 'main'; main.classList.add('on'); }
+  else state = 'swirl';
+  if (state === 'main') return;
+}
+document.getElementById('again').onclick = e => { e.stopPropagation(); main.classList.remove('on'); state = 'swirl'; };
+addEventListener('pointermove', e => { mx = e.clientX; my = e.clientY; });
+cv.addEventListener('pointerdown', e => { mx = e.clientX; my = e.clientY; click(); });
+addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); click(); } });
+
+const eob = x => { const c1 = 1.9, c3 = c1 + 1; return 1 + c3 * Math.pow(x - 1, 3) + c1 * Math.pow(x - 1, 2); };
+let lastF = performance.now();
+
+function frame(now) {
+  requestAnimationFrame(frame);
+  if (innerWidth !== W || innerHeight !== H) onResize();
+  if (!W || !N) return;
+  const t = (now - t0) / 1000, dt = Math.min((now - lastF) / 1000, .05); lastF = now;
+  if (STYLE === 'cursor') { bx = mx; by = my; } else { bx += (mx - bx) * .18; by += (my - by) * .18; }
+  trail.push({ x: bx, y: by }); if (trail.length > 60) trail.shift();
+  const vcx = W / 2, vcy = H / 2;
+  const R = Math.max(W, H) * .72;
+
+  // fase da frase
+  let k = 1, alpha = 1, phraseOn = false;
+  if (state === 'phrase' || state === 'exit') {
+    phraseOn = true;
+    const e = (now - st) / 1000;
+    if (state === 'phrase') {
+      k = reduce ? 1 : .1 + .9 * eob(Math.min(e / 2, 1)) + .035 * Math.max(0, e - 2);
+      if (now - lastTake > TAKE && !reduce) {
+        lastTake = now;
+        P.forEach(p => { if (p.tx != null) p.ch = Math.random() < .5 ? rnd(phraseChars) : rnd(POOL); });
+      }
+    } else {
+      const x = Math.min(e / 1.3, 1);
+      k = (reduce ? 1 : (1.08 + 6 * x * x * x));
+      alpha = 1 - x * x;
+      if (e >= 1.3) { phraseOn = false; after(); }
+    }
+  }
+
+  ctx.fillStyle = '#05060c'; ctx.fillRect(0, 0, W, H);
+  // estrelas de fundo (parallax leve)
+  ctx.fillStyle = 'rgba(200,210,255,.35)';
+  for (let i = 0; i < 60; i++) {
+    const sx = (i * 977 % W + (bx - W / 2) * -.02 * (i % 3)) , sy = (i * 613 % H);
+    ctx.fillRect(sx, sy, 1.2, 1.2);
+  }
+
+  let lastFont = '';
+  const infl = 130, HEAT_R = 100;
+  for (let i = 0; i < N; i++) {
+    const p = P[i];
+    let dx, dy, a = 1, fs, red = 0;
+    if (phraseOn && p.tx != null) {
+      dx = W / 2 + (p.tx - W / 2) * k; dy = H / 2 + (p.ty - H / 2) * k;
+      fs = 5 + 9 * Math.min(k, 3.2); a = alpha * (.35 + .65 * Math.min(k, 1));
+    } else {
+      const isBg = p.bx != null && state !== 'main';
+      if (isBg) {
+        dx = W / 2 + (p.bx - W / 2) * .8 + Math.sin(t * .7 + p.ph) * 1.5;
+        dy = H / 2 + (p.by - H / 2) * .8 + Math.cos(t * .6 + p.ph) * 1.5;
+      } else {
+        const sp = .5 / Math.pow(.12 + p.r, .65);
+        const th = p.a + t * sp * .28 * p.sv;
+        const rad = p.r * R * (1 + p.j) + Math.sin(t * .6 + p.ph) * 14;
+        dx = vcx + Math.cos(th) * rad; dy = vcy + Math.sin(th) * rad * .62 + Math.cos(t * .5 + p.ph) * 10;
+      }
+      // cometa empurra as letras por onde passa
+      const ox = dx - bx, oy = dy - by, d = Math.hypot(ox, oy);
+      if (isBg) {
+        // o nome NÃO é empurrado: só esquenta (brilha e vibra) onde o cometa passa
+        if (d < HEAT_R) p.h = Math.max(p.h, 1 - d / HEAT_R);
+        p.h *= .99;
+        red = p.h;
+        dx += (Math.random() - .5) * 5 * p.h; dy += (Math.random() - .5) * 5 * p.h;
+      } else if (d < infl) {
+        const f = 1 - d / infl, push = 1 + f * f * 2.6;
+        dx = bx + ox * push; dy = by + oy * push;
+        red = f;
+      }
+      if (isBg) {
+        fs = 7 + p.h * 4; a = .08 + p.h * .92;
+        if (!phraseOn) p.ch = (p.h > .25 && Math.random() < .3) ? rnd(POOL) : (Math.random() < .05 || p.h < .05 ? rnd(BG_CH) : p.ch);
+      } else {
+        fs = p.rock ? 16 + p.z * 12 : 5 + p.z * 6;
+        if (p.rock && Math.random() < .01) p.ch = rnd("O@0#%&8");
+        a = (state === 'main' ? .35 : .3) + p.z * .4;
+      }
+      if (phraseOn) a *= .18 * alpha + .05;
+    }
+    p.vx *= .9; p.vy *= .9;
+    p.x += (dx - p.x) * .11 + p.vx; p.y += (dy - p.y) * .11 + p.vy;
+    if (!phraseOn && Math.random() < .004) p.ch = rnd(p.r < .3 ? DENSE : p.r < .65 ? "ABO+=1I" : SPARSE);
+    if (p.x < -20 || p.x > W + 20 || p.y < -20 || p.y > H + 20) continue;
+    const f = (fs | 0) + 'px ui-monospace,Menlo,monospace';
+    if (f !== lastFont) { ctx.font = f; lastFont = f; }
+    ctx.fillStyle = red > .12 ? `rgba(255,255,255,${Math.min(1, a + red * .5)})` : `rgba(200,208,240,${a})`;
+    ctx.fillText(p.ch, p.x, p.y);
+  }
+
+  // buraco negro (cursor) + cometa "clique"
+  if (state !== 'exit' && STYLE === 'cursor') {
+    const word = state === 'phrase' ? CUE2 : (state === 'swirl' ? CUE : "");
+    if (word) {
+      const q = trail[Math.max(0, trail.length - 12)];
+      ctx.font = 'bold 18px ui-monospace,Menlo,monospace';
+      ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+      const tw = ctx.measureText(word).width;
+      let lx = q.x + 24, ly = q.y + 30;
+      if (lx + tw > W - 6) lx = q.x - 24 - tw;
+      if (ly > H - 16) ly = q.y - 30;
+      ctx.lineJoin = 'round'; ctx.lineWidth = 5; ctx.strokeStyle = 'rgba(5,6,12,.9)';
+      ctx.strokeText(word, lx, ly);
+      ctx.fillStyle = '#fff'; ctx.fillText(word, lx, ly);
+      ctx.textAlign = 'start'; ctx.textBaseline = 'alphabetic';
+    }
+  } else if (state !== 'exit') {
+    // cauda afilada do cometa
+    ctx.lineCap = 'round';
+    for (let i = 1; i < trail.length; i++) {
+      const a0 = trail[i - 1], a1 = trail[i], f = i / trail.length;
+      ctx.strokeStyle = `rgba(255,255,255,${f * f * .6})`;
+      ctx.lineWidth = 1 + f * 6;
+      ctx.beginPath(); ctx.moveTo(a0.x, a0.y); ctx.lineTo(a1.x, a1.y); ctx.stroke();
+    }
+    // cabeça
+    const hg = ctx.createRadialGradient(bx, by, 0, bx, by, 46);
+    hg.addColorStop(0, 'rgba(255,255,255,.95)'); hg.addColorStop(.18, 'rgba(255,255,255,.6)');
+    hg.addColorStop(.5, 'rgba(210,225,255,.18)'); hg.addColorStop(1, 'rgba(210,225,255,0)');
+    ctx.fillStyle = hg; ctx.beginPath(); ctx.arc(bx, by, 46, 0, 7); ctx.fill();
+    ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(bx, by, 4.5, 0, 7); ctx.fill();
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    // cauda de faíscas
+    for (let i = 2; i < trail.length; i += 2) {
+      const q = trail[trail.length - 1 - i], f = 1 - i / trail.length;
+      ctx.font = (7 + f * 6 | 0) + 'px ui-monospace,monospace';
+      ctx.fillStyle = `rgba(255,255,255,${f * .6})`;
+      ctx.fillText(rnd(POOL), q.x + (Math.random() - .5) * 10 * (1 - f) * 2, q.y + (Math.random() - .5) * 10 * (1 - f) * 2);
+    }
+    // palavra corre atrás
+    const word = state === 'phrase' ? CUE2 : (state === 'swirl' ? CUE : "");
+    if (word) {
+      const q = trail[Math.max(0, trail.length - 14)];
+      ctx.font = 'bold 18px ui-monospace,Menlo,monospace';
+      const tw = ctx.measureText(word).width, px = 12, ph = 30;
+      let lx = q.x + 44, ly = q.y + 34;
+      if (lx + tw + px * 2 > W - 6) lx = q.x - 44 - tw - px * 2;
+      if (ly + ph > H - 6) ly = q.y - 34 - ph;
+      ctx.fillStyle = 'rgba(5,6,12,.88)'; ctx.fillRect(lx, ly, tw + px * 2, ph);
+      ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.2; ctx.strokeRect(lx, ly, tw + px * 2, ph);
+      ctx.fillStyle = '#fff'; ctx.fillText(word, lx + tw / 2 + px, ly + ph / 2 + 1);
+    }
+    ctx.textAlign = 'start'; ctx.textBaseline = 'alphabetic';
+  }
+}
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>

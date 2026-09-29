@@ -16,8 +16,7 @@ export const Contact: React.FC<ContactProps> = ({ profile }) => (
         Entre em Contato
       </h2>
       <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', marginBottom: '32px' }}>
-        Aberto a projetos, posições CLT/PJ e colaborações na área de IA & Software. Se você tem um problema
-        interessante para resolver, quer conversar sobre uma ideia ou está formando um time — pode me chamar.
+        Aberto a projetos de <strong>landing pages de alta conversão</strong>, sites modernos, posições CLT/PJ e soluções em IA & Software. Se você precisa de uma página impactante para sua marca, quer tirar uma ideia do papel ou formar um time — pode me chamar.
       </p>
 
       <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', flexWrap: 'wrap' }}>

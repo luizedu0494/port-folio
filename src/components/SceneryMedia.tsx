@@ -8,34 +8,43 @@ interface SceneryMediaProps {
 }
 
 /**
- * Mídia de cenário em vídeo (substitui GIFs pesados).
- * Com prefers-reduced-motion, o vídeo é ocultado via CSS e o poster estático é exibido.
+ * Mídia de cenário em vídeo com transparência cósmica (screen blend mode).
+ * Permite que as partículas ASCII do fundo passem e sejam vistas através do GIF/vídeo.
  */
 export const SceneryMedia: React.FC<SceneryMediaProps> = ({
   videoSrc,
   posterSrc,
   wrapperClass,
   mediaClass
-}) => (
-  <div className={wrapperClass}>
-    <video
-      src={videoSrc}
-      poster={posterSrc}
-      className={`autoplay-motion ${mediaClass}`}
-      role="presentation"
-      autoPlay
-      loop
-      muted
-      playsInline
-      preload="metadata"
-    />
-    <img
-      src={posterSrc}
-      alt=""
-      role="presentation"
-      className={`reduced-motion-poster ${mediaClass}`}
-      loading="lazy"
-      decoding="async"
-    />
-  </div>
-);
+}) => {
+  return (
+    <div
+      className={wrapperClass}
+      style={{
+        background: 'transparent',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'relative'
+      }}
+    >
+      <video
+        src={videoSrc}
+        poster={posterSrc}
+        className={mediaClass}
+        role="presentation"
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="metadata"
+        style={{
+          mixBlendMode: 'screen',
+          opacity: 0.75,
+          background: 'transparent',
+          display: 'block'
+        }}
+      />
+    </div>
+  );
+};

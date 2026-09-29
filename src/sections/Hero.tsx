@@ -2,21 +2,22 @@ import React from 'react';
 import { MapPin } from 'lucide-react';
 import { DeveloperProfile } from '../types/portfolio';
 import { TypewriterText } from '../components/TypewriterText';
-import { SceneryMedia } from '../components/SceneryMedia';
-import { HoverAsciiTitle } from '../components/HoverAsciiTitle';
+import { SvgAsciiWordmark } from '../components/SvgAsciiWordmark';
 import { GithubIcon, LinkedinIcon, GmailIcon, OutlookIcon, WhatsappIcon } from '../components/icons';
 
 interface HeroProps {
   profile: DeveloperProfile;
+  ready: boolean;
 }
 
 export const Hero: React.FC<HeroProps> = ({ profile }) => (
   <section id="inicio" className="hero-section reveal-on-scroll">
     <div className="container hero-container-grid">
       <div>
+        {/* Título Wordmark Vetorial SVG -> ASCII Interativo */}
         <h1 className="hero-wordmark-title">
           <span className="visually-hidden">LUIZ EDUARDO</span>
-          <HoverAsciiTitle text="LUIZ EDUARDO" className="hero-wordmark-text" />
+          <SvgAsciiWordmark variant="hero" />
         </h1>
         <p className="hero-headline font-subtitle">
           Desenvolvedor de Software focado em{' '}
@@ -28,9 +29,8 @@ export const Hero: React.FC<HeroProps> = ({ profile }) => (
             ]}
           />
         </p>
-        <p className="hero-bio">{profile.aboutMe.summary}</p>
 
-        <div className="hero-actions">
+        <div className="hero-actions" style={{ marginTop: '28px' }}>
           <a href={profile.contacts.github} target="_blank" rel="noopener noreferrer" className="btn-primary">
             <GithubIcon size={18} /> Ver Perfil no GitHub
           </a>
@@ -69,14 +69,6 @@ export const Hero: React.FC<HeroProps> = ({ profile }) => (
           </span>
         </div>
       </div>
-
-      {/* Elemento de Cenário Visual ao Lado do Hero (vídeo otimizado, ex-GIF) */}
-      <SceneryMedia
-        videoSrc="/assets/videos/tech-fear.mp4"
-        posterSrc="/assets/videos/tech-fear-poster.webp"
-        wrapperClass="hero-scenery-wrapper"
-        mediaClass="hero-scenery-video"
-      />
     </div>
   </section>
 );

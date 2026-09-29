@@ -5,21 +5,19 @@ import { initialProfile, initialProjects } from './data/initialData';
 import { NeuralNetworkBg } from './components/NeuralNetworkBg';
 import { AudioPlayer } from './components/AudioPlayer';
 import { AsciiIntro } from './components/AsciiIntro';
-import { ScrambleText } from './components/ScrambleText';
-import { HoverAsciiTitle } from './components/HoverAsciiTitle';
+import { SvgAsciiWordmark } from './components/SvgAsciiWordmark';
+import { TypewriterText } from './components/TypewriterText';
 import { ImageLightbox, LightboxMedia } from './components/ImageLightbox';
 import { AudioProvider, useAudio } from './context/AudioContext';
-import { Hero } from './sections/Hero';
+import { initGridSystem } from './ascii/gridSystem';
+import { CosmicCometCursor } from './components/CosmicCometCursor';
 import { About } from './sections/About';
 import { Projects } from './sections/Projects';
+import { Skills } from './sections/Skills';
+import { Certifications } from './sections/Certifications';
+import { Contact } from './sections/Contact';
 
-const Skills = lazy(() => import('./sections/Skills').then((m) => ({ default: m.Skills })));
-const Certifications = lazy(() =>
-  import('./sections/Certifications').then((m) => ({ default: m.Certifications }))
-);
-const Contact = lazy(() => import('./sections/Contact').then((m) => ({ default: m.Contact })));
-
-const SECTION_IDS = ['inicio', 'sobre', 'projetos', 'habilidades', 'certificacoes', 'contato'];
+const SECTION_IDS = ['sobre', 'projetos', 'habilidades', 'certificacoes', 'contato'];
 
 export const AppContent: React.FC = () => {
   const { startExperienceWithAudio } = useAudio();
@@ -28,26 +26,55 @@ export const AppContent: React.FC = () => {
   const [projects] = useState<Project[]>(initialProjects);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const [previewMedia, setPreviewMedia] = useState<LightboxMedia | null>(null);
-  const [activeSection, setActiveSection] = useState<string>('inicio');
+  const [activeSection, setActiveSection] = useState<string>('sobre');
 
   useEffect(() => {
-    // 1. Observer para revelação suave das seções no scroll
+    const cleanGrid = initGridSystem();
+    return () => {
+      cleanGrid();
+    };
+  }, []);
+
+  // Trava o scroll do body quando o menu mobile está aberto
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.touchAction = 'none';
+    } else {
+      document.body.style.overflow = '';
+      document.body.style.touchAction = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.touchAction = '';
+    };
+  }, [isMobileMenuOpen]);
+
+  useEffect(() => {
     const revealObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
             entry.target.classList.add('is-visible');
           }
         });
       },
-      { threshold: 0.05 }
+      { threshold: 0.1 }
     );
 
-    const elements = document.querySelectorAll('.reveal-on-scroll');
-    elements.forEach((el) => revealObserver.observe(el));
+    document.querySelectorAll('.reveal-on-scroll').forEach((el) => {
+      revealObserver.observe(el);
+    });
 
-    // 2. Observer para rastreamento da seção ativa na navbar
-    const sectionObservers: (IntersectionObserver | null)[] = SECTION_IDS.map((id) => {
+    if (entered) {
+      document.querySelectorAll('.reveal-on-scroll').forEach((el) => {
+        el.classList.add('visible');
+        el.classList.add('is-visible');
+      });
+    }
+
+    const sectionObservers = SECTION_IDS.map((id) => {
       const el = document.getElementById(id);
       if (!el) return null;
       const obs = new IntersectionObserver(
@@ -56,7 +83,7 @@ export const AppContent: React.FC = () => {
             setActiveSection(id);
           }
         },
-        { threshold: 0.3 }
+        { threshold: 0.35 }
       );
       obs.observe(el);
       return obs;
@@ -66,9 +93,9 @@ export const AppContent: React.FC = () => {
       revealObserver.disconnect();
       sectionObservers.forEach((obs) => obs?.disconnect());
     };
-  }, []);
+  }, [entered]);
 
-  // Lazy loading das imagens do grid: atribui o src somente quando entram na viewport
+  // Lazy loading das imagens do grid
   useEffect(() => {
     const lazyImages = document.querySelectorAll<HTMLImageElement>('img.lazy-gif');
     if (!lazyImages.length) return;
@@ -93,38 +120,40 @@ export const AppContent: React.FC = () => {
   }, []);
 
   const navLinks = [
-    { id: 'sobre', label: 'Sobre' },
     { id: 'projetos', label: 'Projetos' },
     { id: 'habilidades', label: 'Habilidades' },
     { id: 'certificacoes', label: 'Certificados' }
   ];
 
   return (
-    <div className="portfolio-app">
-      <a href="#inicio" className="skip-link">Pular para o conteúdo</a>
+    <div className={`portfolio-app ${entered ? 'ready' : ''}`}>
+      <a href="#sobre" className="skip-link">Pular para o conteúdo</a>
 
-      {/* Intro Espiral ASCII — substitui o modal de boas-vindas */}
+      {/* Intro Vortex Cosmic */}
       {!entered && (
         <AsciiIntro
-          onEnter={(withAudio) => {
-            setEntered(true);
+          videoSrc="/assets/videos/tech-fear.mp4"
+          onStart={(withAudio) => {
             if (withAudio) startExperienceWithAudio();
           }}
+          onEnter={() => setEntered(true)}
         />
       )}
 
       {/* Background de Rede Neural Interativa em Movimento */}
       <NeuralNetworkBg />
 
+      {/* Cursor Cometa Cósmico no Desktop (apenas após a transição da intro) */}
+      {entered && <CosmicCometCursor />}
+
       {/* Overlay escuro de fundo ao abrir drawer mobile */}
       {isMobileMenuOpen && <div className="mobile-overlay" onClick={() => setIsMobileMenuOpen(false)} />}
 
-      {/* Glassmorphism Header com Navegação Limpa & Menu Hambúrguer Mobile */}
-      <header className="navbar">
+      <header className="navbar" inert={!entered}>
         <div className="container nav-container">
-          <a href="#inicio" className="brand-logo font-display">
-            <Sparkles size={20} color="var(--accent-crimson)" />
-            <ScrambleText text="LUIZ EDUARDO" className="brand-wordmark-text" hover />
+          <a href="#sobre" className="brand-logo font-display" aria-label="Ir para Sobre Mim">
+            <Sparkles size={20} color="var(--accent-soft)" />
+            <span className="brand-wordmark-text">luiz.edu</span>
           </a>
 
           {/* Player de Áudio & Menu Toggle visíveis no Header no Mobile */}
@@ -153,45 +182,78 @@ export const AppContent: React.FC = () => {
                 key={link.id}
                 href={`#${link.id}`}
                 className={`nav-link ${activeSection === link.id ? 'nav-link--active' : ''}`}
-                onClick={() => setIsMobileMenuOpen(false)}
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  // Dispara scramble simultâneo no título da seção + label do nav
+                  window.dispatchEvent(
+                    new CustomEvent('trigger-section-scramble', { detail: { id: link.id } })
+                  );
+                }}
               >
                 {link.label}
               </a>
             ))}
 
-            <a href="#contato" className="nav-cta-btn" onClick={() => setIsMobileMenuOpen(false)}>
+            <a
+              href="#contato"
+              className="nav-cta-btn"
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                window.dispatchEvent(
+                  new CustomEvent('trigger-section-scramble', { detail: { id: 'contato' } })
+                );
+              }}
+            >
               Contato
             </a>
           </nav>
         </div>
       </header>
 
-      <main>
-        <Hero profile={profile} />
+      <main id="conteudo-principal">
         <About profile={profile} />
         <Projects
           projects={projects}
           githubProfileUrl={profile.contacts.github}
-          onPreview={setPreviewMedia}
+          onPreview={(m) => setPreviewMedia(m)}
         />
-        <Suspense fallback={null}>
-          <Skills profile={profile} />
-          <Certifications profile={profile} />
-          <Contact profile={profile} />
-        </Suspense>
+        <Skills profile={profile} />
+        <Certifications profile={profile} />
+        <Contact profile={profile} />
       </main>
 
-      {/* Modal Lightbox de Expansão de Imagem / Vídeo */}
-      {previewMedia && <ImageLightbox media={previewMedia} onClose={() => setPreviewMedia(null)} />}
+      {/* Rodapé Expandido — Wordmark + Apresentação */}
+      <footer className="footer-ascii-section" aria-label="Rodapé do portfólio">
+        <div className="container footer-container">
+          <div className="footer-wordmark-wrapper footer-wordmark-wrapper--large">
+            <SvgAsciiWordmark variant="footer" />
+          </div>
 
-      {/* Footer */}
-      <footer className="footer">
-        <div className="container">
-          <HoverAsciiTitle text="LUIZ EDUARDO" className="footer-wordmark-title" />
-          <p>© {new Date().getFullYear()} · Luiz Eduardo Lopes — Desenvolvedor de Software & IA · v1.0.0</p>
-          <p className="footer-version">v1.0.0</p>
+          <p className="footer-headline-text">
+            Desenvolvedor de Software focado em{' '}
+            <TypewriterText
+              words={[
+                'Landing Pages de Alta Conversão',
+                'Engenharia de IA & Agentes',
+                'Desenvolvimento Fullstack React & Python',
+                'Sistemas Inteligentes & Web Performance'
+              ]}
+            />
+          </p>
+
+          <div className="footer-bottom-line">
+            <p className="footer-copy">
+              © {new Date().getFullYear()} Luiz Eduardo. Todos os direitos reservados.
+            </p>
+            <p className="footer-tech-stack">
+              Arquitetado com React 19, TypeScript &amp; Neural Space Canvas
+            </p>
+          </div>
         </div>
       </footer>
+
+      {/* Modal de Lightbox para Pré-visualização Ampliada */}
+      {previewMedia && <ImageLightbox media={previewMedia} onClose={() => setPreviewMedia(null)} />}
     </div>
   );
 };
@@ -203,3 +265,5 @@ export const App: React.FC = () => {
     </AudioProvider>
   );
 };
+
+export default App;

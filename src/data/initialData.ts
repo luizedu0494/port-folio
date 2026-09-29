@@ -23,20 +23,31 @@ export const initialProfile: DeveloperProfile = {
   },
   aboutMe: {
     summary:
-      'Construo sistemas e agentes de IA que resolvem problemas reais — sem complexidade desnecessária e com foco na experiência de quem usa.',
+      'Oi, sou o Luiz Eduardo (conhecido como luiz.edu).\nDesenvolvo landing pages de alta conversão e sistemas de IA — unindo design marcante, performance e foco total na experiência de quem usa.',
     paragraphs: [
-      'Trabalho com desenvolvimento de sistemas e agentes autônomos — ferramentas que executam tarefas repetitivas, integram dados e respondem por conta própria. Cursando Análise e Desenvolvimento de Sistemas no CESMAC, minha convicção é simples: IA de qualidade é aquela que o usuário final nem percebe que está lá, porque o processo simplesmente funciona.',
-      'Minha abordagem é iterativa por natureza: métricas de uso, padrões de comportamento e retorno direto dos usuários guiam cada decisão de código — desde a arquitetura até o detalhe de UX. O CronoLab 2.0 nasceu exatamente assim: de uma dor real do ambiente acadêmico que virou produto.',
-      'Tecnicamente, atuo com React 19, React Native e TypeScript, orquestração de LLMs (LangChain.js, Groq API, OpenAI) e bancos de dados como Supabase (PostgreSQL).'
+      'Graduando em Análise e Desenvolvimento de Sistemas no CESMAC, acredito que a tecnologia mais sofisticada é a que desaparece para quem usa. O CronoLab 2.0 nasceu exatamente nessa lógica — de uma dor real do cotidiano acadêmico que virou produto funcional, sem nenhuma tela desnecessária no caminho.',
+      'Cada decisão de código começa no comportamento real: métricas de uso, padrões de interação e feedbacks diretos guiam desde a arquitetura até o mínimo detalhe de UX. Lançar, observar e refinar — não especular.',
+      'Também atuo com foco na criação de landing pages e páginas institucionais de alta conversão — combinando copywriting persuasivo, SEO técnico, micro-animações fluidas e design visual refinado para valorizar marcas, prender a atenção e maximizar resultados de vendas e captação.'
     ],
     highlights: [
       'Graduação em ADS — CESMAC EAD (Em andamento)',
-      'Foco em Agentes Autônomos & Eliminação de Gargalos Operacionais',
-      'Abordagem Guiada por Feedback Contínuo e Métricas de Uso',
-      'Stack: React 19, React Native, TypeScript, LLMs (LangChain.js) & Supabase'
+      'Landing Pages de Alta Conversão, SEO Técnico & Copywriting',
+      'Agentes Autônomos & Eliminação de Gargalos Operacionais',
+      'Stack: React 19, TypeScript, Micro-animações, LLMs & Supabase'
     ]
   },
   skillCategories: [
+    {
+      title: 'Frontend & Landing Pages',
+      skills: [
+        { name: 'Landing Pages de Alta Conversão' },
+        { name: 'React 19 / Vite' },
+        { name: 'TypeScript & JavaScript' },
+        { name: 'Micro-animações & CSS Avançado' },
+        { name: 'SEO Técnico & Web Performance' },
+        { name: 'UI/UX & Design Systems' }
+      ]
+    },
     {
       title: 'Inteligência Artificial & Agentes',
       skills: [
@@ -44,16 +55,6 @@ export const initialProfile: DeveloperProfile = {
         { name: 'LLM APIs (Groq, OpenAI)' },
         { name: 'Orquestração de Agentes' },
         { name: 'Prompt Engineering' }
-      ]
-    },
-    {
-      title: 'Desenvolvimento Frontend',
-      skills: [
-        { name: 'React 19 / Vite' },
-        { name: 'TypeScript' },
-        { name: 'JavaScript (ES6+)' },
-        { name: 'HTML5 & CSS3 Avançado' },
-        { name: 'Material-UI & Design Systems' }
       ]
     },
     {
@@ -66,12 +67,12 @@ export const initialProfile: DeveloperProfile = {
       ]
     },
     {
-      title: 'Ferramentas & Metodologias',
+      title: 'Estratégia & Ferramentas',
       skills: [
+        { name: 'Copywriting Estratégico' },
+        { name: 'Otimização de Conversão (CRO)' },
         { name: 'Git & GitHub' },
-        { name: 'Diagnóstico & Resolução de Problemas' },
-        { name: 'Deploy (Vercel / Netlify)' },
-        { name: 'Metodologias Ágeis' }
+        { name: 'Deploy (Vercel / Netlify)' }
       ]
     }
   ],
@@ -120,10 +121,10 @@ export const initialProfile: DeveloperProfile = {
     }
   ],
   currentlyLearning: [
+    'Micro-animações Web & Interatividade Avançada',
+    'Otimização de Conversão (CRO) & SEO Estratégico',
     'Arquiteturas Multi-Agentes (LangGraph / CrewAI)',
-    'FastAPI para endpoints de IA em produção',
-    'RAG Avançado com Reranking Semântico',
-    'Supabase Edge Functions'
+    'FastAPI para endpoints de IA em produção'
   ]
 };
 

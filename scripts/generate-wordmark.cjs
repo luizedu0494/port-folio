@@ -1,17 +1,17 @@
 /**
- * Gera o wordmark "LUIZ EDUARDO" em SVG (paths vetoriais) a partir da Orbitron 900.
+ * Gera o wordmark "luiz.edu" em SVG (paths vetoriais) a partir da Archivo Black.
  * Uso: node scripts/generate-wordmark.cjs
- * Saída: public/assets/wordmark.svg (single path, sem fill — estilizado via CSS)
+ * Saída: public/assets/wordmark.svg (single path, tightly cropped, flush left)
  */
 
 const opentype = require('opentype.js');
 const { writeFileSync, mkdirSync } = require('fs');
 const { dirname } = require('path');
 
-const TEXT = 'LUIZ EDUARDO';
-const SIZE = 200; // coordenadas do viewBox (escala depois via CSS/SVG)
-const LETTER_SPACING = 0.06; // proporção do tamanho — respiro para o modo ASCII
-const WORD_SPACING = 0.3;
+const TEXT = 'luiz.edu';
+const SIZE = 240; // coordenadas do viewBox
+const LETTER_SPACING = -0.02; // kerning ultra-bold compacto estilo Aino Agency
+const WORD_SPACING = 0.2;
 
 // Archivo Black — grotesk bold chunky estilo poster (WOFF estático do fontsource)
 const FONT_URL =
@@ -25,40 +25,55 @@ async function main() {
 
   const scale = SIZE / font.unitsPerEm;
   const ascender = font.ascender * scale;
-  const descender = font.descender * scale;
-  const pad = SIZE * 0.08;
 
-  let x = pad;
-  let d = '';
+  let rawX = 0;
+  const combinedPath = new opentype.Path();
+
   for (const ch of TEXT) {
     if (ch !== ' ') {
       const glyph = font.charToGlyph(ch);
-      // Baseline arredondada: evita bug do opentype.js com ruído de ponto flutuante
-      const p = glyph.getPath(Math.round(x), Math.round(ascender + pad), SIZE);
-      d += p.toPathData(2) + ' ';
+      const glyphPath = glyph.getPath(rawX, ascender, SIZE);
+      combinedPath.commands.push(...glyphPath.commands);
     }
-    const glyphAdvance = font
-      .charToGlyph(ch)
-      .advanceWidth * scale;
-    x +=
+    const glyphAdvance = font.charToGlyph(ch).advanceWidth * scale;
+    rawX +=
       ch === ' '
         ? glyphAdvance + SIZE * WORD_SPACING
         : glyphAdvance + SIZE * LETTER_SPACING;
   }
-  // remove o espaçamento extra do último caractere
-  const width = x - SIZE * LETTER_SPACING + pad;
-  const height = ascender - descender + pad * 2;
+
+  const bbox = combinedPath.getBoundingBox();
+  const minX = bbox.x1;
+  const minY = bbox.y1;
+  const width = bbox.x2 - bbox.x1;
+  const height = bbox.y2 - bbox.y1;
+
+  // Normaliza o path para que comece exatamente em x=0, y=0 (flush no canto superior-esquerdo)
+  const normalizedPath = new opentype.Path();
+  for (const cmd of combinedPath.commands) {
+    const newCmd = { ...cmd };
+    if ('x' in newCmd) newCmd.x = Number((newCmd.x - minX).toFixed(2));
+    if ('y' in newCmd) newCmd.y = Number((newCmd.y - minY).toFixed(2));
+    if ('x1' in newCmd) newCmd.x1 = Number((newCmd.x1 - minX).toFixed(2));
+    if ('y1' in newCmd) newCmd.y1 = Number((newCmd.y1 - minY).toFixed(2));
+    if ('x2' in newCmd) newCmd.x2 = Number((newCmd.x2 - minX).toFixed(2));
+    if ('y2' in newCmd) newCmd.y2 = Number((newCmd.y2 - minY).toFixed(2));
+    normalizedPath.commands.push(newCmd);
+  }
+
+  const pathData = normalizedPath.toPathData(2);
 
   const svg = `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width.toFixed(2)} ${height.toFixed(2)}">
-  <path d="${d.trim()}"/>
+  <path d="${pathData}"/>
 </svg>
 `;
 
   const out = 'public/assets/wordmark.svg';
   mkdirSync(dirname(out), { recursive: true });
   writeFileSync(out, svg);
-  console.log(`Wordmark gerado: ${out} (viewBox ${width.toFixed(0)}x${height.toFixed(0)})`);
+  console.log(`Wordmark gerado: ${out} (viewBox 0 0 ${width.toFixed(2)} ${height.toFixed(2)})`);
+  console.log(`PATH_DATA: ${pathData}`);
 }
 
 function bufToArrayBuffer(buf) {
@@ -72,3 +87,4 @@ main().catch((err) => {
   console.error(err);
   process.exit(1);
 });
+

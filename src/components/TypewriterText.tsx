@@ -5,53 +5,104 @@ interface TypewriterTextProps {
   typingSpeed?: number;
   deletingSpeed?: number;
   pauseDuration?: number;
+  glitchDuration?: number;
   className?: string;
 }
 
+const ASCII_GLITCH_POOL = ['#', 'Ø', '1', '0', '_', '/', '[', ']', '$', '*', '!', '&', '<', '>', '~', '+', ':'];
+
 export const TypewriterText: React.FC<TypewriterTextProps> = ({
   words,
-  typingSpeed = 90,
-  deletingSpeed = 50,
-  pauseDuration = 2200,
+  typingSpeed = 65,
+  deletingSpeed = 35,
+  pauseDuration = 2400,
+  glitchDuration = 480,
   className = ''
 }) => {
   const [wordIndex, setWordIndex] = useState(0);
-  const [currentText, setCurrentText] = useState('');
-  const [isDeleting, setIsDeleting] = useState(false);
+  const [phase, setPhase] = useState<'typing' | 'glitch' | 'paused' | 'deleting'>('typing');
+  const [displayText, setDisplayText] = useState('');
+  const [isGlitching, setIsGlitching] = useState(false);
+  const [glitchOutput, setGlitchOutput] = useState<Array<{ char: string; isAscii: boolean }>>([]);
+
+  const targetWord = words[wordIndex] || '';
 
   useEffect(() => {
-    const targetWord = words[wordIndex];
+    let timeoutId: ReturnType<typeof setTimeout>;
 
-    const timer = setTimeout(
-      () => {
-        if (!isDeleting) {
-          // Digitando
-          setCurrentText(targetWord.substring(0, currentText.length + 1));
+    if (phase === 'typing') {
+      setIsGlitching(false);
+      if (displayText.length < targetWord.length) {
+        timeoutId = setTimeout(() => {
+          setDisplayText(targetWord.slice(0, displayText.length + 1));
+        }, typingSpeed);
+      } else {
+        setPhase('glitch');
+      }
+    } else if (phase === 'glitch') {
+      setIsGlitching(true);
+      const startTime = Date.now();
 
-          if (currentText === targetWord) {
-            // Pausa antes de apagar
-            setTimeout(() => setIsDeleting(true), pauseDuration);
-          }
+      const glitchInterval = setInterval(() => {
+        const elapsed = Date.now() - startTime;
+        if (elapsed >= glitchDuration) {
+          clearInterval(glitchInterval);
+          setIsGlitching(false);
+          setPhase('paused');
         } else {
-          // Apagando
-          setCurrentText(targetWord.substring(0, currentText.length - 1));
-
-          if (currentText === '') {
-            setIsDeleting(false);
-            setWordIndex((prev) => (prev + 1) % words.length);
-          }
+          const glitched = targetWord.split('').map((c) => {
+            if (c === ' ' || c === '/' || c === '&') return { char: c, isAscii: false };
+            if (Math.random() < 0.28) {
+              const asciiChar = ASCII_GLITCH_POOL[Math.floor(Math.random() * ASCII_GLITCH_POOL.length)];
+              return { char: asciiChar, isAscii: true };
+            }
+            return { char: c, isAscii: false };
+          });
+          setGlitchOutput(glitched);
         }
-      },
-      isDeleting ? deletingSpeed : typingSpeed
-    );
+      }, 70);
 
-    return () => clearTimeout(timer);
-  }, [currentText, isDeleting, wordIndex, words, typingSpeed, deletingSpeed, pauseDuration]);
+      return () => clearInterval(glitchInterval);
+    } else if (phase === 'paused') {
+      setIsGlitching(false);
+      timeoutId = setTimeout(() => {
+        setPhase('deleting');
+      }, pauseDuration);
+    } else if (phase === 'deleting') {
+      setIsGlitching(false);
+      if (displayText.length > 0) {
+        timeoutId = setTimeout(() => {
+          setDisplayText(displayText.slice(0, -1));
+        }, deletingSpeed);
+      } else {
+        setPhase('typing');
+        setWordIndex((prev) => (prev + 1) % words.length);
+      }
+    }
+
+    return () => clearTimeout(timeoutId);
+  }, [displayText, phase, wordIndex, targetWord, words.length, typingSpeed, deletingSpeed, pauseDuration, glitchDuration]);
 
   return (
-    <span className={`typewriter-wrapper ${className}`}>
-      <span>{currentText}</span>
-      <span className="typewriter-cursor">|</span>
+    <span className={`typewriter-wrapper ${isGlitching ? 'typewriter-glitching' : ''} ${className}`}>
+      <span className="typewriter-content" aria-label={targetWord}>
+        {isGlitching ? (
+          glitchOutput.map((item, idx) =>
+            item.isAscii ? (
+              <span key={idx} className="typewriter-ascii-char">
+                {item.char}
+              </span>
+            ) : (
+              <span key={idx} className="typewriter-char">
+                {item.char}
+              </span>
+            )
+          )
+        ) : (
+          <span>{displayText}</span>
+        )}
+      </span>
+      <span className={`typewriter-cursor ${isGlitching ? 'typewriter-cursor--glitch' : ''}`}>|</span>
     </span>
   );
 };

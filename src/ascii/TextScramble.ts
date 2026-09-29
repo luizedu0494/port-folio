@@ -1,11 +1,11 @@
 /**
- * TextScramble — algoritmo clássico de "decrypt reveal" (soulwire),
- * com o alfabeto de ruído e jitter (dx/dy) observados no aino.agency.
+ * TextScramble — Efeito de decodificação/desembaralhamento estilo Aino Agency,
+ * totalmente monocromático (preto, branco e prata).
+ * 
+ * Preserva estritamente o layout e comprimento das palavras sem deslocamento.
  */
 
-const CHARS = 'NO0I3=:?<>-+!/93.6874ONI';
-const JITTER_X = 2;
-const JITTER_Y = 1;
+const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_.-+=/*<>#!';
 
 interface QueueItem {
   from: string;
@@ -15,12 +15,11 @@ interface QueueItem {
   char: string | null;
 }
 
-const escapeHtml = (ch: string) => {
-  if (ch === '<') return '<';
-  if (ch === '>') return '>';
-  if (ch === '&') return '&';
-  return ch;
-};
+export interface ScrambleOptions {
+  from?: string;
+  spread?: number;
+  length?: number;
+}
 
 export class TextScramble {
   private el: HTMLElement;
@@ -34,8 +33,11 @@ export class TextScramble {
     this.update = this.update.bind(this);
   }
 
-  setText(newText: string): Promise<void> {
-    const oldText = this.el.textContent || '';
+  setText(newText: string, opts: ScrambleOptions = {}): Promise<void> {
+    const oldText = opts.from ?? (this.el.textContent || '');
+    // Cadência suave e cinematográfica: spread e length aumentados para leitura agradável
+    const spread = opts.spread ?? 24;
+    const extra = opts.length ?? 32;
     const length = Math.max(oldText.length, newText.length);
     const promise = new Promise<void>((resolve) => {
       this.resolve = resolve;
@@ -43,48 +45,73 @@ export class TextScramble {
 
     this.queue = [];
     for (let i = 0; i < length; i++) {
-      const from = oldText[i] || '';
-      const to = newText[i] || '';
-      const start = Math.floor(Math.random() * 20);
-      const end = start + Math.floor(Math.random() * 20) + 10;
-      this.queue.push({ from, to, start, end, char: null });
+      const fromChar = oldText[i] || '';
+      const toChar = newText[i] || '';
+      
+      // Se for espaço em branco mantemos sem embaralhar para preservar o formato da frase
+      if (toChar === ' ' && fromChar === ' ') {
+        this.queue.push({ from: ' ', to: ' ', start: 0, end: 0, char: ' ' });
+        continue;
+      }
+
+      // Distribuição suave da decodificação da esquerda para a direita
+      const charPosOffset = Math.floor((i / Math.max(1, length)) * spread * 0.8);
+      const start = charPosOffset + Math.floor(Math.random() * (spread * 0.4));
+      const end = start + Math.floor(Math.random() * extra) + 14;
+      this.queue.push({ from: fromChar, to: toChar, start, end, char: null });
     }
 
     cancelAnimationFrame(this.frameRequest);
     this.frame = 0;
+    this.el.dataset.scrambling = '1';
     this.update();
     return promise;
   }
 
   destroy() {
     cancelAnimationFrame(this.frameRequest);
+    delete this.el.dataset.scrambling;
     this.resolve = null;
   }
 
   private update() {
-    let output = '';
+    const nodes: Node[] = [];
+    let buf = '';
     let complete = 0;
+
+    const flush = () => {
+      if (buf) {
+        nodes.push(document.createTextNode(buf));
+        buf = '';
+      }
+    };
 
     for (const item of this.queue) {
       const { to, start, end } = item;
       if (this.frame >= end) {
         complete++;
-        output += to === ' ' ? ' ' : escapeHtml(to);
+        buf += to;
       } else if (this.frame >= start) {
-        if (!item.char || Math.random() < 0.3) {
+        // Atualiza caracteres aleatórios a cada 2 frames para dar percepção nítida dos glifos
+        if (!item.char || this.frame % 2 === 0) {
           item.char = CHARS[Math.floor(Math.random() * CHARS.length)];
         }
-        const jx = (Math.random() * 2 - 1) * JITTER_X;
-        const jy = (Math.random() * 2 - 1) * JITTER_Y;
-        output += `<span class="dud" style="display:inline-block;transform:translate(${jx.toFixed(1)}px,${jy.toFixed(1)}px)">${escapeHtml(item.char)}</span>`;
+        flush();
+        const span = document.createElement('span');
+        span.className = 'dud';
+        span.style.color = 'rgba(203, 213, 225, 0.7)';
+        span.style.textShadow = '0 0 8px rgba(248, 250, 252, 0.4)';
+        span.textContent = item.char;
+        nodes.push(span);
       } else {
-        output += item.from === ' ' ? ' ' : escapeHtml(item.from);
+        buf += item.from;
       }
     }
-
-    this.el.innerHTML = output;
+    flush();
+    this.el.replaceChildren(...nodes);
 
     if (complete === this.queue.length) {
+      delete this.el.dataset.scrambling;
       this.resolve?.();
       this.resolve = null;
     } else {

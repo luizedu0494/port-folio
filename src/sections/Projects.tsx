@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { Brain, CheckCircle2, ExternalLink, Layers } from 'lucide-react';
 import { Project } from '../types/portfolio';
 import { SectionHeader } from '../components/SectionHeader';
+import { ScrambleText } from '../components/ScrambleText';
 import { ExpandableMedia } from '../components/ExpandableMedia';
 import type { LightboxMedia } from '../components/ImageLightbox';
 import { GithubIcon } from '../components/icons';
@@ -84,17 +85,20 @@ export const Projects: React.FC<ProjectsProps> = ({ projects, githubProfileUrl, 
     <>
       {/* Hero Featured Project (CronoLab 2.0) (#projetos) */}
       {featuredProject && (
-        <section id="projetos" className="featured-section reveal-on-scroll" style={{ paddingTop: '60px' }}>
+        <section id="projetos" className="featured-section reveal-on-scroll">
           <div className="container">
             <SectionHeader
-              icon={<Layers color="var(--accent-crimson)" size={28} />}
+              icon={<Layers color="var(--accent-soft)" size={28} />}
               title="Projeto Principal"
+              triggerId="projetos"
             />
 
             <div className="featured-card">
               <div className="featured-content">
                 <div>
-                  <h3 className="featured-title">{featuredProject.name}</h3>
+                  <h3 className="featured-title font-subtitle">
+                    <ScrambleText text={featuredProject.name} onView hover fast />
+                  </h3>
                   <p className="featured-description">{featuredProject.description}</p>
 
                   <div style={{ marginBottom: '20px' }}>
@@ -161,11 +165,11 @@ export const Projects: React.FC<ProjectsProps> = ({ projects, githubProfileUrl, 
         </section>
       )}
 
-      {/* Demais Projetos Grid (Exibido apenas se houver múltiplos projetos) */}
+      {/* Demais Projetos Grid */}
       {otherProjects.length > 0 && (
         <section className="projects-grid-section">
           <div className="container">
-            <div className="section-header">
+            <div className="section-header" style={{ marginBottom: '24px' }}>
               <h3 className="font-subtitle" style={{ fontSize: '1.4rem', color: 'var(--text-secondary)' }}>
                 Outros Projetos Desenvolvidos
               </h3>
@@ -223,7 +227,9 @@ export const Projects: React.FC<ProjectsProps> = ({ projects, githubProfileUrl, 
                     )}
 
                     <div className="project-card-header">
-                      <h3 className="project-name font-subtitle">{project.name}</h3>
+                      <h3 className="project-name font-subtitle">
+                        {project.name}
+                      </h3>
                     </div>
 
                     <p className="project-description">{project.description}</p>

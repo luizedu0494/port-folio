@@ -1,66 +1,101 @@
-﻿import React, { useEffect, useRef, useState } from 'react';
-import { ensureWordmarkImage, rasterChars, GridChars } from '../ascii/rasterize';
-import { DENSITY_PALETTE, interpolateChar } from '../ascii/palette';
+import React, { useEffect, useRef, useState } from 'react';
 
 interface AsciiIntroProps {
   onEnter: (withAudio: boolean) => void;
+  onStart?: (withAudio: boolean) => void;
+  videoSrc?: string;
 }
 
-const FIELD_CHARS = '!<>-_\\/[]{}—=+*^?#@$%&';
+const POOL = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789ÁÉÍÓÚÃÕÇâêôàü#@$%&*+=<>?/!·-:";
+const DENSE = "NAOI1234568908Ø#";
+const SPARSE = "·-+:.¬°";
+const TEXT_WORD = "luiz.edu";
+const PHRASE_CHARS = TEXT_WORD.replace(/\s/g, '');
 
-interface Particle {
-  // redemoinho: rotação + fluxo pra fora
-  angle: number;
-  radius: number;
-  omega: number;
-  rSpeed: number;
-  char: string;
-  nextSwap: number;
-  // física
+const INTRO_KEYWORDS = [
+  'python',
+  'react',
+  'ts',
+  'llm',
+  'api',
+  'ai',
+  'agent',
+  'rag',
+  'groq',
+  'node',
+  'vite',
+  'sql',
+  'git',
+  'langchain',
+  'prompt',
+  'supabase',
+  'next',
+  'docker',
+  'openai',
+  'fastapi',
+  'vector',
+  'linux',
+  'gemini',
+  'deepseek',
+  'pytorch',
+  'claude'
+];
+
+interface SpaceParticle {
+  r: number;
+  a: number;
+  z: number;
+  j: number;
+  sv: number;
+  ph: number;
+  rock: boolean;
   x: number;
   y: number;
   vx: number;
   vy: number;
+  ch: string;
   alpha: number;
-  // morph
-  tx: number;
-  ty: number;
-  toIdx: number;
-  delay: number;
-  arrived: boolean;
-  hasTarget: boolean;
 }
 
-type Phase = 'whirl' | 'collapse' | 'forming' | 'zoom' | 'done';
+interface PhraseCell {
+  x: number;
+  y: number;
+  char: string;
+  baseChar: string;
+  heat: number;
+}
 
-export const AsciiIntro: React.FC<AsciiIntroProps> = ({ onEnter }) => {
+interface FloatingIntroKeyword {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  text: string;
+  displayChars: string[];
+  baseAlpha: number;
+  heat: number;
+  driftAngle: number;
+  driftSpeed: number;
+  nextJitter: number;
+}
+
+interface TrailPoint {
+  x: number;
+  y: number;
+}
+
+const rnd = (a: string | string[]) => a[Math.floor(Math.random() * a.length)];
+
+export const AsciiIntro: React.FC<AsciiIntroProps> = ({ onEnter, onStart }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const mouseRef = useRef({
-    x: typeof window !== 'undefined' ? window.innerWidth / 2 : 0,
-    y: typeof window !== 'undefined' ? window.innerHeight / 2 : 0
-  });
-  const cursorPosRef = useRef({
-    x: typeof window !== 'undefined' ? window.innerWidth / 2 : 0,
-    y: typeof window !== 'undefined' ? window.innerHeight / 2 : 0
-  });
-  const phaseRef = useRef<Phase>('whirl');
-  const clickTimeRef = useRef(0);
-  const phaseStartRef = useRef(0);
-  const cursorPhaseRef = useRef(0);
-  const gridRef = useRef<GridChars | null>(null);
-  const imgRef = useRef<HTMLImageElement | null>(null);
-  const audioRef = useRef(true);
-  const finishedRef = useRef(false);
   const onEnterRef = useRef(onEnter);
+  const onStartRef = useRef(onStart);
+  const [fading, setFading] = useState(false);
 
   useEffect(() => {
     onEnterRef.current = onEnter;
-  }, [onEnter]);
-
-  const [reduced] = useState(
-    () => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  );
-  const [fading, setFading] = useState(false);
+    onStartRef.current = onStart;
+  }, [onEnter, onStart]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -68,409 +103,635 @@ export const AsciiIntro: React.FC<AsciiIntroProps> = ({ onEnter }) => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-    canvas.width = Math.floor(width * dpr);
-    canvas.height = Math.floor(height * dpr);
-    canvas.style.width = `${width}px`;
-    canvas.style.height = `${height}px`;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-    const isMobile = width <= 768;
-    const cellH = isMobile ? 18 : 22;
-    const cx = width / 2;
-    const cy = height / 2;
-    const maxR = Math.hypot(width, height) / 2;
-    const dt = 1 / 30;
-
-    // Wordmark pré-carregado — instantâneo no clique
-    ensureWordmarkImage()
-      .then((img) => {
-        imgRef.current = img;
-      })
-      .catch((e) => console.error('wordmark falhou ao carregar', e));
-
-    // Redemoinho: rotação + fluxo pra fora (nasce no centro, espirala até a borda, renasce)
-    const N = reduced ? 0 : isMobile ? 560 : 1200;
-    const particles: Particle[] = [];
-    const respawn = (p: Particle, now: number, center = false) => {
-      p.angle = Math.random() * Math.PI * 2;
-      p.radius = center ? Math.random() * 30 : 10 + Math.random() * maxR * 0.9;
-      // Rio calmo: rotação e deriva bem lentas
-      p.omega = 0.05 + Math.random() * 0.1;
-      p.rSpeed = 0.12 + Math.random() * 0.35;
-      p.char = FIELD_CHARS[Math.floor(Math.random() * FIELD_CHARS.length)];
-      p.nextSwap = now + 1500 + Math.random() * 4500;
-      p.alpha = 0;
-      p.hasTarget = false;
-      p.arrived = false;
-      p.vx = 0;
-      p.vy = 0;
-    };
-    const now0 = performance.now();
-    for (let i = 0; i < N; i++) {
-      particles.push({
-        angle: 0,
-        radius: 0,
-        omega: 0,
-        rSpeed: 0,
-        char: '',
-        nextSwap: 0,
-        x: 0,
-        y: 0,
-        vx: 0,
-        vy: 0,
-        alpha: 0,
-        tx: 0,
-        ty: 0,
-        toIdx: 0,
-        delay: 0,
-        arrived: false,
-        hasTarget: false
-      });
-      respawn(particles[i], now0);
-      // alpha inicial conforme a distância (campo já estabelecido no load)
-      particles[i].alpha = Math.min(0.6, particles[i].radius / (maxR * 0.5)) * 0.9;
-    }
-
-    const onMouseMove = (e: MouseEvent) => {
-      mouseRef.current = { x: e.clientX, y: e.clientY };
-    };
-    window.addEventListener('mousemove', onMouseMove);
-
-    let animationFrameId = 0;
-
-    // FASE 1 — redemoinho: letras giram e fluem pra fora; cursor torce,
-    // empurra e randomiza a região próxima (com aberração cromática)
-    const drawWhirl = (now: number) => {
-      ctx.font = `${cellH}px "Courier New", monospace`;
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-
-      // fase ancorada no cursor: o redemoinho torce suavemente pro mouse
-      const targetPhase = ((mouseRef.current.x - cx) / width) * Math.PI * 1.2;
-      cursorPhaseRef.current += (targetPhase - cursorPhaseRef.current) * 0.03;
-      const phase = cursorPhaseRef.current;
-
-      for (const p of particles) {
-        p.angle += p.omega * dt * 0.9; // giro lento de rio
-        p.radius += p.rSpeed * dt * 60 * 0.3; // deriva suave pra fora
-
-        if (p.radius > maxR) {
-          respawn(p, now, true); // renasce no centro — fluxo contínuo
-        }
-
-        const r = p.radius;
-        p.x = cx + Math.cos(p.angle + phase) * r;
-        p.y = cy + Math.sin(p.angle + phase) * r;
-
-        // alpha: entra suave no nascimento, firma no meio, esvai na borda
-        if (p.alpha < 0.5) p.alpha += 0.02;
-        const edgeFade = Math.max(0.15, 1 - Math.max(0, (r - maxR * 0.75) / (maxR * 0.25)));
-
-        if (now > p.nextSwap) {
-          p.char = FIELD_CHARS[Math.floor(Math.random() * FIELD_CHARS.length)];
-          p.nextSwap = now + 1500 + Math.random() * 4500;
-        }
-
-        // Cursor: repulsão ampla e forte — o rastro abre espaço pro CLIQUE
-        const dx = p.x - mouseRef.current.x;
-        const dy = p.y - mouseRef.current.y;
-        const dist = Math.hypot(dx, dy);
-        let drawX = p.x;
-        let drawY = p.y;
-        let boost = 0;
-        if (dist < 200) {
-          const falloff = 1 - dist / 200;
-          if (Math.random() < 0.25 + falloff * 0.4) {
-            p.char = FIELD_CHARS[Math.floor(Math.random() * FIELD_CHARS.length)];
-          }
-          const push = falloff * 16;
-          drawX = p.x + (dx / (dist || 1)) * push;
-          drawY = p.y + (dy / (dist || 1)) * push;
-          boost = falloff;
-        }
-
-        const alpha = Math.min(1, p.alpha * edgeFade + boost * 0.5);
-        if (boost > 0.25) {
-          ctx.fillStyle = `rgba(255, 59, 111, ${alpha * 0.45})`;
-          ctx.fillText(p.char, drawX + 1, drawY);
-          ctx.fillStyle = `rgba(49, 224, 224, ${alpha * 0.45})`;
-          ctx.fillText(p.char, drawX - 1, drawY);
-          ctx.fillStyle = `rgba(235, 240, 248, ${alpha})`;
-          ctx.fillText(p.char, drawX, drawY);
-        } else {
-          ctx.fillStyle = `rgba(203, 213, 225, ${alpha})`;
-          ctx.fillText(p.char, drawX, drawY);
-        }
-      }
+    let finished = false;
+    const finish = (audio = true) => {
+      if (finished) return;
+      finished = true;
+      onEnterRef.current(audio);
     };
 
-    // FASE 2a — colapso: gravidade + explosão
-    const drawCollapse = () => {
-      ctx.font = `${cellH}px "Courier New", monospace`;
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      for (const p of particles) {
-        if (p.vx === 0 && p.vy === 0) {
-          const dx = p.x - cx;
-          const dy = p.y - cy;
-          const dist = Math.max(1, Math.hypot(dx, dy));
-          const v = 2 + Math.random() * 6;
-          p.vx = (dx / dist) * v;
-          p.vy = (dy / dist) * v - 2;
-        }
-        p.x += p.vx * dt * 60;
-        p.y += p.vy * dt * 60;
-        p.vy += 0.16;
-        p.alpha *= 0.99;
-        if (p.alpha > 0.02) {
-          ctx.fillStyle = `rgba(203, 213, 225, ${p.alpha})`;
-          ctx.fillText(p.char, p.x, p.y);
-        }
-      }
-    };
-
-    // FASE 2b — formação: letras voam (spring) pras posições do nome
-    // enquanto ele nasce pequeno e cresce; char percorre a paleta ordenada
-    const drawForming = (now: number) => {
-      const grid = gridRef.current;
-      if (!grid) return;
-      const elapsed = now - phaseStartRef.current;
-      const u = Math.min(1, elapsed / 1700);
-      const growEase = 1 - Math.pow(1 - u, 3);
-      const scale = 0.15 + 0.85 * growEase;
-
-      ctx.font = `${grid.cellH}px "Courier New", monospace`;
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-
-      const scalePos = (px: number, py: number) => ({
-        sx: cx + (px - cx) * scale,
-        sy: cy + (py - cy) * scale
-      });
-
-      for (const p of particles) {
-        if (p.hasTarget) {
-          const ax = (p.tx - p.x) * 0.012;
-          const ay = (p.ty - p.y) * 0.012;
-          p.vx = (p.vx + ax) * 0.82;
-          p.vy = (p.vy + ay) * 0.82;
-          p.x += p.vx * dt * 60;
-          p.y += p.vy * dt * 60;
-
-          const local = Math.max(0, elapsed - p.delay);
-          const progress = Math.min(1, local / 700);
-          p.char = interpolateChar(0, p.toIdx, progress);
-          const dist = Math.hypot(p.tx - p.x, p.ty - p.y);
-          if (!p.arrived && progress >= 1 && dist < grid.cellW) {
-            p.arrived = true;
-            p.alpha = 0.85;
-          }
-          const { sx, sy } = scalePos(p.x, p.y);
-          ctx.fillStyle = `rgba(226, 232, 240, ${Math.max(p.alpha, 0.5)})`;
-          ctx.fillText(p.char, sx, sy);
-        } else {
-          p.x += p.vx * dt * 60;
-          p.y += p.vy * dt * 60;
-          p.vy += 0.16;
-          p.alpha *= 0.96;
-          if (p.alpha > 0.02) {
-            ctx.fillStyle = `rgba(203, 213, 225, ${p.alpha})`;
-            ctx.fillText(p.char, p.x, p.y);
-          }
-        }
-      }
-
-      // Células sem partícula: fade-in escalado completando o nome
-      const fadeIn = Math.min(1, Math.max(0, (elapsed - 800) / 500));
-      if (fadeIn > 0) {
-        for (const cell of grid.cells) {
-          const px = cx - (grid.cols * grid.cellW) / 2 + cell.x * grid.cellW + grid.cellW / 2;
-          const py = cy - (grid.rows * grid.cellH) / 2 + cell.y * grid.cellH + grid.cellH / 2;
-          const { sx, sy } = scalePos(px, py);
-          ctx.fillStyle = `rgba(226, 232, 240, ${0.85 * fadeIn})`;
-          ctx.fillText(DENSITY_PALETTE[cell.idx], sx, sy);
-        }
-      }
-    };
-
-    // FASE 3 — zoom em direção ao usuário (t⁵): o nome cresce até as letras
-    // passarem pela "câmera" e sumirem
-    let fadeStarted = false;
-    const drawZoom = (now: number) => {
-      const grid = gridRef.current;
-      if (!grid) {
-        // Grade nunca montou (imagem falhou): sai direto
-        if (!finishedRef.current) {
-          finishedRef.current = true;
-          setFading(true);
-          onEnterRef.current(audioRef.current);
-        }
-        return;
-      }
-      const u = Math.min(1, (now - phaseStartRef.current) / 2000);
-      const accel = u * u * u * u * u; // parado → dispara
-      const scale = 1 + 2.4 * accel;
-      const alpha = u < 0.6 ? 0.95 : Math.max(0, 0.95 * (1 - (u - 0.6) / 0.35));
-
-      const drawCellW = grid.cellW * scale;
-      const drawCellH = grid.cellH * scale;
-      const startX = cx - (grid.cols * drawCellW) / 2;
-      const startY = cy - (grid.rows * drawCellH) / 2;
-
-      ctx.font = `${drawCellH}px "Courier New", monospace`;
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      for (const cell of grid.cells) {
-        const px = startX + cell.x * drawCellW + drawCellW / 2;
-        const py = startY + cell.y * drawCellH + drawCellH / 2;
-        ctx.fillStyle = `rgba(235, 240, 248, ${alpha})`;
-        ctx.fillText(DENSITY_PALETTE[cell.idx], px, py);
-      }
-
-      if (u > 0.75 && !fadeStarted) {
-        fadeStarted = true;
-        setFading(true);
-      }
-      if (u >= 1 && !finishedRef.current) {
-        finishedRef.current = true;
-        onEnterRef.current(audioRef.current);
-      }
-    };
-
-    const drawCursorWord = () => {
-      const target = mouseRef.current;
-      const cur = cursorPosRef.current;
-      const lerp = 0.14;
-      cur.x += (target.x - cur.x) * lerp;
-      cur.y += (target.y - cur.y) * lerp;
-      ctx.font = `500 15px "JetBrains Mono", monospace`;
-      ctx.textAlign = 'left';
-      ctx.textBaseline = 'middle';
-      // Fundo escuro atrás da palavra — legível no espaço aberto pela repulsão
-      const label = 'C L I Q U E';
-      const w = ctx.measureText(label).width;
-      ctx.fillStyle = 'rgba(7, 7, 9, 0.75)';
-      ctx.beginPath();
-      ctx.roundRect(cur.x + 10, cur.y - 8, w + 16, 24, 8);
-      ctx.fill();
-      ctx.fillStyle = 'rgba(241, 245, 249, 0.95)';
-      ctx.fillText(label, cur.x + 18, cur.y + 4);
-    };
-
-    // Monta a grade do nome — SÓ muda de fase quando a grade está pronta
-    // (se a imagem ainda não carregou, continua tentando a cada frame)
-    const tryStartForming = (now: number): boolean => {
-      const img = imgRef.current;
-      if (!img) return false;
-      try {
-        // Grade legível: células menores (mais linhas) e nome largo
-        const gridCellH = isMobile ? 12 : 16;
-        const finalW = width * 0.85;
-        const grid = rasterChars(img, gridCellH, finalW, 3);
-        if (!grid.cells.length) return false;
-        gridRef.current = grid;
-        phaseRef.current = 'forming';
-        phaseStartRef.current = now;
-
-        const startX = cx - (grid.cols * grid.cellW) / 2;
-        const startY = cy - (grid.rows * grid.cellH) / 2;
-        const shuffled = [...grid.cells].sort(() => Math.random() - 0.5);
-        let ci = 0;
-        for (const p of particles) {
-          if (p.alpha < 0.05) continue;
-          if (ci < shuffled.length) {
-            const cell = shuffled[ci++];
-            p.hasTarget = true;
-            p.tx = startX + cell.x * grid.cellW + grid.cellW / 2;
-            p.ty = startY + cell.y * grid.cellH + grid.cellH / 2;
-            p.toIdx = cell.idx;
-            p.delay = Math.random() * 250;
-            p.arrived = false;
-          }
-        }
-        return true;
-      } catch (e) {
-        console.error('falha ao montar grade do nome', e);
-        return false;
-      }
-    };
-
-    const render = (now: number) => {
-      animationFrameId = requestAnimationFrame(render);
-      if (document.hidden) return;
-      ctx.clearRect(0, 0, width, height);
-
-      const phase = phaseRef.current;
-      const elapsedClick = now - clickTimeRef.current;
-
-      if (phase === 'whirl') {
-        drawWhirl(now);
-        drawCursorWord();
-      } else if (phase === 'collapse') {
-        drawCollapse();
-        if (elapsedClick > 250) tryStartForming(now);
-        // timeout de segurança: se a grade não montar em 2s, vai pro zoom (que sai com fallback)
-        if (elapsedClick > 2000) {
-          phaseRef.current = 'zoom';
-          phaseStartRef.current = now;
-        }
-      } else if (phase === 'forming') {
-        drawForming(now);
-        if (elapsedClick > 2000) {
-          phaseRef.current = 'zoom';
-          phaseStartRef.current = now;
-        }
-      } else if (phase === 'zoom') {
-        drawZoom(now);
-      }
-    };
-
-    animationFrameId = requestAnimationFrame(render);
-
-    return () => {
-      cancelAnimationFrame(animationFrameId);
-      window.removeEventListener('mousemove', onMouseMove);
-    };
-  }, [reduced]);
-
-  const enter = (withAudio: boolean) => {
-    audioRef.current = withAudio;
-    if (finishedRef.current) return;
-    if (reduced || phaseRef.current !== 'whirl') {
-      finishedRef.current = true;
-      onEnter(withAudio);
+    if (
+      window.location.hash === '#nointro' ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
+      finish(false);
       return;
     }
-    clickTimeRef.current = performance.now();
-    phaseRef.current = 'collapse';
-    phaseStartRef.current = clickTimeRef.current;
-  };
+
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let W = window.innerWidth;
+    let H = window.innerHeight;
+    let DPR = Math.min(window.devicePixelRatio || 1, 2);
+
+    let spaceParticles: SpaceParticle[] = [];
+    let phraseCells: PhraseCell[] = [];
+    const keywords: FloatingIntroKeyword[] = [];
+    const t0 = performance.now();
+
+    let mx = W / 2;
+    let my = H * 0.75;
+    let bx = mx;
+    let by = my;
+    const trail: TrailPoint[] = [];
+
+    type State = 'swirl' | 'zoom' | 'exit';
+    let state: State = 'swirl';
+    let zoomStartTime = 0;
+    let lastTakeTime = 0;
+    let animId: number;
+
+    const buildPhraseCells = () => {
+      if (!W || !H) return;
+      const off = document.createElement('canvas');
+      off.width = W;
+      off.height = H;
+      const octx = off.getContext('2d');
+      if (!octx) return;
+
+      const fs = Math.min(W * 0.75 / (TEXT_WORD.length * 0.58), H * 0.3);
+      octx.font = `bold ${fs}px "JetBrains Mono", ui-monospace, monospace`;
+      octx.textAlign = 'center';
+      octx.textBaseline = 'middle';
+      octx.fillStyle = '#ffffff';
+      octx.fillText(TEXT_WORD, W / 2, H / 2);
+
+      const d = octx.getImageData(0, 0, W, H).data;
+      const step = W < 600 ? 4 : 5;
+      phraseCells = [];
+
+      for (let y = 0; y < H; y += step) {
+        for (let x = 0; x < W; x += step) {
+          const alpha = d[(y * W + x) * 4 + 3];
+          if (alpha > 100) {
+            const ch = rnd(PHRASE_CHARS);
+            phraseCells.push({
+              x,
+              y,
+              char: ch,
+              baseChar: ch,
+              heat: 0
+            });
+          }
+        }
+      }
+    };
+
+    const size = () => {
+      DPR = Math.min(window.devicePixelRatio || 1, 2);
+      W = window.innerWidth;
+      H = window.innerHeight;
+      if (W < 2 || H < 2) return;
+
+      canvas.width = Math.floor(W * DPR);
+      canvas.height = Math.floor(H * DPR);
+      canvas.style.width = `${W}px`;
+      canvas.style.height = `${H}px`;
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+
+      const count = W < 600 ? 2200 : 3400;
+      if (spaceParticles.length === 0 || spaceParticles.length !== count) {
+        spaceParticles = [];
+        for (let i = 0; i < count; i++) {
+          const mode = Math.random();
+          let r: number;
+          let a: number;
+          let isVeil = false;
+          let far = false;
+
+          if (mode < 0.48) {
+            // 1. Véu homogêneo sobre toda a extensão da frase "luiz.edu" (sem acúmulo no centro)
+            isVeil = true;
+            r = 0.07 + Math.random() * 0.44;
+            a = Math.random() * Math.PI * 2;
+          } else if (mode < 0.85) {
+            // 2. Braços em espiral estendidos suavemente pelos arredores
+            const arm = i % 4;
+            r = 0.18 + Math.random() * 0.72;
+            a = arm * 1.57 + r * 5.0 + (Math.random() - 0.5) * 1.2;
+          } else {
+            // 3. Campo cósmico amplo e periférico
+            far = true;
+            r = 0.55 + Math.random() * 0.5;
+            a = Math.random() * Math.PI * 2;
+          }
+
+          const rock = Math.random() < 0.035;
+          spaceParticles.push({
+            r,
+            a,
+            z: 0.35 + Math.random() * 0.65,
+            j: (Math.random() - 0.5) * (far ? 0.6 : 0.35),
+            sv: 0.5 + Math.random() * 0.75,
+            ph: Math.random() * 6.28,
+            rock,
+            x: W / 2,
+            y: H / 2,
+            vx: 0,
+            vy: 0,
+            ch: rnd(isVeil ? (Math.random() < 0.5 ? DENSE : 'ABO+=1IXKZ') : r < 0.5 ? '01XKZ+-' : SPARSE),
+            alpha: isVeil
+              ? 0.28 + Math.random() * 0.35
+              : far
+              ? 0.14 + Math.random() * 0.22
+              : 0.22 + Math.random() * 0.32
+          });
+        }
+      }
+
+      if (keywords.length === 0) {
+        const shuffled = [...INTRO_KEYWORDS].sort(() => Math.random() - 0.5);
+        const kwCount = W < 600 ? 12 : 22;
+        for (let i = 0; i < kwCount; i++) {
+          const kw = shuffled[i % shuffled.length];
+          keywords.push({
+            x: Math.random() * W,
+            y: Math.random() * H,
+            vx: (Math.random() - 0.5) * (W < 600 ? 0.22 : 0.32),
+            vy: (Math.random() - 0.5) * (W < 600 ? 0.22 : 0.32),
+            text: kw,
+            displayChars: kw.split(''),
+            baseAlpha: Math.random() * 0.25 + 0.25,
+            heat: 0,
+            driftAngle: Math.random() * Math.PI * 2,
+            driftSpeed: 0.15 + Math.random() * 0.25,
+            nextJitter: 0
+          });
+        }
+      }
+
+      buildPhraseCells();
+    };
+
+    size();
+    const onResize = () => {
+      size();
+    };
+    window.addEventListener('resize', onResize);
+
+    const triggerBurst = () => {
+      if (reduce) return;
+      const vcx = W / 2;
+      const vcy = H / 2;
+      spaceParticles.forEach((p) => {
+        const dx = p.x - vcx;
+        const dy = p.y - vcy;
+        const d = Math.hypot(dx, dy) + 1;
+        const f = 18 + Math.random() * 26;
+        p.vx += (dx / d) * f;
+        p.vy += (dy / d) * f;
+      });
+
+      keywords.forEach((kw) => {
+        const dx = kw.x - vcx;
+        const dy = kw.y - vcy;
+        const d = Math.hypot(dx, dy) + 1;
+        kw.vx += (dx / d) * 14;
+        kw.vy += (dy / d) * 14;
+      });
+    };
+
+    let fadeOutTriggered = false;
+
+    const leave = () => {
+      if (state !== 'zoom') return;
+      if (!fadeOutTriggered) {
+        fadeOutTriggered = true;
+        setFading(true);
+      }
+      setTimeout(() => finish(true), 600);
+    };
+
+    const click = () => {
+      if (state === 'swirl') {
+        onStartRef.current?.(true);
+        state = 'zoom';
+        zoomStartTime = performance.now();
+        triggerBurst();
+      } else if (state === 'zoom') {
+        leave();
+      }
+    };
+
+    // Suporte a toque com simulação de arrasto (deslize) e toque direto (tap)
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchStartTime = 0;
+    let hasDragged = false;
+
+    const onPointerDown = (e: PointerEvent) => {
+      mx = e.clientX;
+      my = e.clientY;
+      touchStartX = e.clientX;
+      touchStartY = e.clientY;
+      touchStartTime = Date.now();
+      hasDragged = false;
+
+      // No mouse (desktop), clique inicia a transição imediatamente
+      if (e.pointerType === 'mouse') {
+        click();
+      }
+    };
+
+    const onPointerMove = (e: PointerEvent) => {
+      mx = e.clientX;
+      my = e.clientY;
+      if (e.pointerType === 'touch' || e.pointerType === 'pen') {
+        const dist = Math.hypot(e.clientX - touchStartX, e.clientY - touchStartY);
+        if (dist > 8) {
+          hasDragged = true;
+        }
+      }
+    };
+
+    const onPointerUp = (e: PointerEvent) => {
+      if (e.pointerType === 'touch' || e.pointerType === 'pen') {
+        const duration = Date.now() - touchStartTime;
+        // Se foi um toque simples (sem arrasto longo), inicia a transição imediatamente
+        if (!hasDragged || duration < 320) {
+          click();
+        }
+      }
+    };
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        click();
+      } else if (e.key === 'Escape') {
+        finish(false);
+      }
+    };
+
+    window.addEventListener('pointermove', onPointerMove, { passive: true });
+    canvas.addEventListener('pointerdown', onPointerDown);
+    canvas.addEventListener('pointerup', onPointerUp);
+    window.addEventListener('keydown', onKeyDown);
+
+    let lastF = performance.now();
+
+    const frame = (now: number) => {
+      animId = requestAnimationFrame(frame);
+      if (!W || !H) return;
+      const t = (now - t0) / 1000;
+      const dt = Math.min((now - lastF) / 1000, 0.05);
+      lastF = now;
+
+      bx += (mx - bx) * 0.22;
+      by += (my - by) * 0.22;
+      trail.push({ x: bx, y: by });
+      if (trail.length > 55) trail.shift();
+
+      const vcx = W / 2;
+      const vcy = H / 2;
+      const R = Math.max(W, H) * 0.75;
+
+      let scale = 0.85;
+      let phraseAlpha = 1.0;
+
+      if (state === 'zoom') {
+        const elapsed = (now - zoomStartTime) / 1000;
+        const totalDuration = 2.3;
+        const progress = Math.min(elapsed / totalDuration, 1);
+
+        const ease = Math.pow(progress, 3.2);
+        scale = reduce ? 1.0 : 0.85 + 16.5 * ease;
+
+        if (progress > 0.65) {
+          const fadeProgress = (progress - 0.65) / 0.35;
+          phraseAlpha = Math.max(0, 1 - fadeProgress * fadeProgress);
+          if (!fadeOutTriggered) {
+            fadeOutTriggered = true;
+            setFading(true);
+          }
+        }
+
+        if (now - lastTakeTime > 70 && !reduce) {
+          lastTakeTime = now;
+          phraseCells.forEach((c) => {
+            c.char = Math.random() < 0.45 ? rnd(PHRASE_CHARS) : rnd(POOL);
+          });
+        }
+
+        if (progress >= 1.0) {
+          finish(true);
+          return;
+        }
+      }
+
+      ctx.fillStyle = '#05060c';
+      ctx.fillRect(0, 0, W, H);
+
+      // 1. Estrelas distantes
+      ctx.fillStyle = 'rgba(210, 225, 255, 0.28)';
+      for (let i = 0; i < 70; i++) {
+        const sx = ((i * 977) % W) + (bx - W / 2) * -0.02 * (i % 3);
+        const sy = (i * 613) % H;
+        ctx.fillRect(sx, sy, 1.2, 1.2);
+      }
+
+      const infl = Math.max(70, Math.min(105, W * 0.085));
+      const HEAT_R = Math.max(65, Math.min(95, W * 0.075));
+
+      // 2. Palavras-Chave de Skills Flutuantes
+      if (state === 'swirl') {
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'middle';
+
+        for (let i = 0; i < keywords.length; i++) {
+          const kw = keywords[i];
+          kw.driftAngle += 0.006;
+          kw.x += Math.cos(kw.driftAngle) * kw.driftSpeed * dt * 35 + kw.vx * dt * 50;
+          kw.y += Math.sin(kw.driftAngle) * kw.driftSpeed * dt * 35 + kw.vy * dt * 50;
+
+          if (kw.x < -80) kw.x = W + 40;
+          else if (kw.x > W + 80) kw.x = -40;
+          if (kw.y < -30) kw.y = H + 20;
+          else if (kw.y > H + 30) kw.y = -20;
+
+          const ox = kw.x - bx;
+          const oy = kw.y - by;
+          const d = Math.hypot(ox, oy);
+
+          if (d < infl) {
+            const f = 1 - d / infl;
+            const push = f * f * 2.8;
+            kw.x += (ox / (d || 1)) * push * 4;
+            kw.y += (oy / (d || 1)) * push * 4;
+            kw.heat = Math.max(kw.heat, f);
+
+            if (now > kw.nextJitter) {
+              kw.displayChars = kw.text.split('').map((ch) =>
+                Math.random() < 0.45 * f ? rnd(POOL) : ch
+              );
+              kw.nextJitter = now + 45;
+            }
+          }
+
+          kw.heat *= 0.965;
+          if (kw.heat < 0.08) kw.displayChars = kw.text.split('');
+
+          const kwAlpha = Math.min(0.95, kw.baseAlpha + kw.heat * 0.7);
+          const fontSize = Math.floor(10 + kw.heat * 3);
+          ctx.font = `600 ${fontSize}px "JetBrains Mono", ui-monospace, monospace`;
+
+          if (kw.heat > 0.2) {
+            ctx.fillStyle = `rgba(255, 255, 255, ${kwAlpha.toFixed(2)})`;
+          } else {
+            ctx.fillStyle = `rgba(180, 205, 245, ${kwAlpha.toFixed(2)})`;
+          }
+
+          ctx.fillText(`[${kw.displayChars.join('')}]`, kw.x, kw.y);
+        }
+      }
+
+      // 3. Render da Frase luiz.edu
+      if (phraseCells.length > 0) {
+        const cellFontSize = Math.floor(Math.max(7, 8.5 * (scale / 0.85)));
+        ctx.font = `700 ${cellFontSize}px "JetBrains Mono", ui-monospace, monospace`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+
+        for (let i = 0; i < phraseCells.length; i++) {
+          const c = phraseCells[i];
+
+          const drawX = vcx + (c.x - vcx) * scale;
+          const drawY = vcy + (c.y - vcy) * scale;
+
+          if (drawX < -30 || drawX > W + 30 || drawY < -30 || drawY > H + 30) continue;
+
+          if (state === 'swirl') {
+            const dist = Math.hypot(drawX - bx, drawY - by);
+            if (dist < HEAT_R) {
+              c.heat = Math.max(c.heat, (1 - dist / HEAT_R) * 1.2);
+            }
+            c.heat *= 0.982;
+
+            if (c.heat > 0.25 && Math.random() < 0.2) {
+              c.char = rnd(POOL);
+            } else if (c.heat < 0.05) {
+              c.char = c.baseChar;
+            }
+
+            const alpha = Math.min(1, 0.08 + c.heat * 0.92);
+            ctx.fillStyle = `rgba(255, 255, 255, ${alpha.toFixed(2)})`;
+          } else {
+            const alpha = Math.min(1, phraseAlpha * (0.88 + Math.min(scale, 1) * 0.12));
+            ctx.fillStyle = `rgba(255, 255, 255, ${alpha.toFixed(2)})`;
+          }
+
+          ctx.fillText(c.char, drawX, drawY);
+        }
+      }
+
+      // 4. Partículas do Espaço e Onda de Expansão
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+
+      const expansionRadius = (W * 0.38) * (scale / 0.85);
+
+      for (let i = 0; i < spaceParticles.length; i++) {
+        const p = spaceParticles[i];
+
+        const sp = 0.38 / Math.pow(0.22 + p.r, 0.58);
+        const th = p.a + t * sp * 0.22 * p.sv;
+        const rad = p.r * R * (1 + p.j) + Math.sin(t * 0.6 + p.ph) * 12;
+        const aspectX = W > H ? 1.28 : 1.05;
+        const aspectY = W > H ? 0.68 : 0.88;
+        let dx = vcx + Math.cos(th) * rad * aspectX;
+        let dy = vcy + Math.sin(th) * rad * aspectY + Math.cos(t * 0.5 + p.ph) * 8;
+        let glow = 0;
+
+        const ox = dx - bx;
+        const oy = dy - by;
+        const d = Math.hypot(ox, oy);
+
+        if (d < infl) {
+          const f = 1 - d / infl;
+          const push = 1 + f * f * 2.8;
+          dx = bx + ox * push;
+          dy = by + oy * push;
+          glow = f * 0.85;
+
+          p.vx += (ox / (d || 1)) * f * 1.0;
+          p.vy += (oy / (d || 1)) * f * 1.0;
+        }
+
+        if (state === 'zoom' || state === 'exit') {
+          const pdx = p.x - vcx;
+          const pdy = p.y - vcy;
+          const pdist = Math.hypot(pdx, pdy) || 1;
+
+          if (pdist < expansionRadius + 90) {
+            const pushF = Math.max(0, 1 - pdist / (expansionRadius + 90)) * 22;
+            p.vx += (pdx / pdist) * pushF;
+            p.vy += (pdy / pdist) * pushF;
+          }
+        }
+
+        p.vx *= 0.88;
+        p.vy *= 0.88;
+        p.x += (dx - p.x) * 0.12 + p.vx;
+        p.y += (dy - p.y) * 0.12 + p.vy;
+
+        if (p.x < -20 || p.x > W + 20 || p.y < -20 || p.y > H + 20) continue;
+
+        const fs = p.rock ? 15 + p.z * 10 : 5.5 + p.z * 6.5;
+        ctx.font = `600 ${Math.floor(fs)}px "JetBrains Mono", monospace`;
+
+        let curAlpha = p.alpha;
+        if (state === 'zoom' || state === 'exit') {
+          curAlpha *= phraseAlpha * 0.45;
+        }
+
+        if (glow > 0.15) {
+          ctx.fillStyle = `rgba(255, 255, 255, ${Math.min(1, curAlpha + glow * 0.6).toFixed(2)})`;
+        } else {
+          ctx.fillStyle = `rgba(205, 218, 250, ${curAlpha.toFixed(2)})`;
+        }
+        ctx.fillText(p.ch, p.x, p.y);
+      }
+
+      // 5. Render do Cometa Interativo
+      if (state !== 'exit') {
+        ctx.lineCap = 'round';
+
+        for (let i = 1; i < trail.length; i++) {
+          const a0 = trail[i - 1];
+          const a1 = trail[i];
+          const f = i / trail.length;
+          ctx.strokeStyle = `rgba(220, 235, 255, ${(f * f * 0.6).toFixed(2)})`;
+          ctx.lineWidth = 1 + f * 4.5;
+          ctx.beginPath();
+          ctx.moveTo(a0.x, a0.y);
+          ctx.lineTo(a1.x, a1.y);
+          ctx.stroke();
+        }
+
+        const hg = ctx.createRadialGradient(bx, by, 0, bx, by, 26);
+        hg.addColorStop(0, 'rgba(255, 255, 255, 0.95)');
+        hg.addColorStop(0.25, 'rgba(235, 245, 255, 0.6)');
+        hg.addColorStop(0.6, 'rgba(190, 215, 255, 0.15)');
+        hg.addColorStop(1, 'rgba(190, 215, 255, 0)');
+        ctx.fillStyle = hg;
+        ctx.beginPath();
+        ctx.arc(bx, by, 26, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.arc(bx, by, 3.5, 0, Math.PI * 2);
+        ctx.fill();
+
+        for (let i = 2; i < trail.length; i += 2) {
+          const q = trail[trail.length - 1 - i];
+          const f = 1 - i / trail.length;
+          ctx.font = `${Math.floor(7 + f * 6)}px "JetBrains Mono", monospace`;
+          ctx.fillStyle = `rgba(240, 245, 255, ${(f * 0.65).toFixed(2)})`;
+          ctx.fillText(
+            rnd(POOL),
+            q.x + (Math.random() - 0.5) * 10 * (1 - f) * 2,
+            q.y + (Math.random() - 0.5) * 10 * (1 - f) * 2
+          );
+        }
+
+        const isMobile = W <= 768;
+
+        if (isMobile) {
+          // No Mobile: Instrução centralizada e elegante fixada na parte inferior
+          const instructionText =
+            state === 'zoom'
+              ? 'TOQUE PARA CONTINUAR'
+              : 'DESLIZE PARA EXPLORAR • TOQUE PARA ENTRAR';
+
+          ctx.font = `600 11px "JetBrains Mono", monospace`;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+
+          const tw = ctx.measureText(instructionText).width;
+          const px = 14;
+          const ph = 30;
+          const lx = W / 2 - tw / 2 - px;
+          const ly = H - 56;
+
+          ctx.fillStyle = 'rgba(7, 8, 16, 0.88)';
+          ctx.beginPath();
+          ctx.roundRect(lx, ly, tw + px * 2, ph, 15);
+          ctx.fill();
+
+          ctx.strokeStyle = 'rgba(215, 230, 255, 0.35)';
+          ctx.lineWidth = 1;
+          ctx.stroke();
+
+          ctx.fillStyle = '#ffffff';
+          ctx.fillText(instructionText, W / 2, ly + ph / 2);
+        } else {
+          // No Desktop: Pill elegante com dinâmica fluida seguindo o cometa de perto
+          const word = 'CLIQUE';
+          const q = trail[Math.max(0, trail.length - 6)] || { x: bx, y: by };
+          ctx.font = `600 12px "JetBrains Mono", monospace`;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+
+          const tw = ctx.measureText(word).width;
+          const px = 10;
+          const ph = 24;
+
+          let lx = q.x + 18;
+          let ly = q.y + 14;
+          if (lx + tw + px * 2 > W - 12) lx = q.x - 18 - tw - px * 2;
+          if (ly + ph > H - 12) ly = q.y - 14 - ph;
+
+          ctx.fillStyle = 'rgba(5, 6, 12, 0.88)';
+          ctx.beginPath();
+          ctx.roundRect(lx, ly, tw + px * 2, ph, 4);
+          ctx.fill();
+
+          ctx.strokeStyle = 'rgba(215, 230, 255, 0.45)';
+          ctx.lineWidth = 1;
+          ctx.stroke();
+
+          ctx.fillStyle = '#ffffff';
+          ctx.fillText(word, lx + tw / 2 + px, ly + ph / 2);
+        }
+      }
+    };
+
+    animId = requestAnimationFrame(frame);
+
+    return () => {
+      window.removeEventListener('resize', onResize);
+      window.removeEventListener('pointermove', onPointerMove);
+      canvas.removeEventListener('pointerdown', onPointerDown);
+      canvas.removeEventListener('pointerup', onPointerUp);
+      window.removeEventListener('keydown', onKeyDown);
+      cancelAnimationFrame(animId);
+    };
+  }, []);
 
   return (
     <div
-      className={`ascii-intro-overlay ${fading ? 'ascii-intro-overlay--out' : ''}`}
-      onClick={() => enter(true)}
-      role="button"
-      tabIndex={0}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === 'Escape') enter(e.key === 'Escape' ? false : true);
+      className={`ascii-intro-container ${fading ? 'ascii-intro-container--fading' : ''}`}
+      style={{
+        position: 'fixed',
+        inset: 0,
+        zIndex: 9999,
+        background: '#05060c',
+        cursor: 'none',
+        opacity: fading ? 0 : 1,
+        transition: 'opacity 1.1s cubic-bezier(0.16, 1, 0.3, 1)',
+        pointerEvents: fading ? 'none' : 'auto'
       }}
-      aria-label="Entrar no portfólio"
     >
-      <canvas ref={canvasRef} className="ascii-intro-canvas" aria-hidden="true" />
-      <span className="visually-hidden">LUIZ EDUARDO — clique para entrar</span>
-      <button
-        className="ascii-intro-silent"
-        onClick={(e) => {
-          e.stopPropagation();
-          enter(false);
+      <canvas
+        ref={canvasRef}
+        style={{
+          display: 'block',
+          width: '100%',
+          height: '100%',
+          touchAction: 'none'
         }}
-      >
-        entrar em silêncio
-      </button>
+        aria-label="Abertura Espacial Cósmica em ASCII com Frase em Zoom"
+      />
     </div>
   );
 };

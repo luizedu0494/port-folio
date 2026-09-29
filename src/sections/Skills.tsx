@@ -11,8 +11,9 @@ export const Skills: React.FC<SkillsProps> = ({ profile }) => (
   <section id="habilidades" className="reveal-on-scroll section-alt">
     <div className="container">
       <SectionHeader
-        icon={<Wrench color="var(--accent-crimson)" size={28} />}
+        icon={<Wrench color="var(--accent-soft)" size={28} />}
         title="Habilidades & Competências Técnicas"
+        triggerId="habilidades"
       />
 
       <div className="grid-auto-260" style={{ gap: '24px' }}>
@@ -20,7 +21,7 @@ export const Skills: React.FC<SkillsProps> = ({ profile }) => (
           <div key={category.title} className="skill-card">
             <h3
               className="font-subtitle"
-              style={{ fontSize: '1.2rem', color: 'var(--accent-soft)', marginBottom: '18px' }}
+              style={{ fontSize: '1.2rem', color: 'var(--accent-soft)', marginBottom: '18px', wordBreak: 'break-word' }}
             >
               {category.title}
             </h3>
@@ -36,7 +37,7 @@ export const Skills: React.FC<SkillsProps> = ({ profile }) => (
                     color: 'var(--text-secondary)'
                   }}
                 >
-                  <span className="skill-dot"></span>
+                  <span className="skill-dot" style={{ backgroundColor: 'var(--accent-soft)' }}></span>
                   {skill.name}
                 </li>
               ))}

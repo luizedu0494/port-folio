@@ -11,12 +11,13 @@ export const Certifications: React.FC<CertificationsProps> = ({ profile }) => (
   <section id="certificacoes" className="reveal-on-scroll section-padded">
     <div className="container">
       <SectionHeader
-        icon={<Medal color="var(--accent-crimson)" size={28} />}
+        icon={<Medal color="var(--accent-soft)" size={28} />}
         title="Cursos & Certificações"
+        triggerId="certificacoes"
       />
 
       <div
-        style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px' }}
+        style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' }}
       >
         {profile.certifications.map((cert) => (
           <div key={cert.title} className="cert-card">
@@ -42,7 +43,9 @@ export const Certifications: React.FC<CertificationsProps> = ({ profile }) => (
                   </a>
                 )}
               </div>
-              <h3 className="font-subtitle cert-title">{cert.title}</h3>
+              <h3 className="font-subtitle cert-title" style={{ wordBreak: 'break-word' }}>
+                {cert.title}
+              </h3>
               <div className="cert-meta">
                 {cert.issueDate} {cert.credentialId ? `• Credencial: ${cert.credentialId}` : ''}
               </div>
