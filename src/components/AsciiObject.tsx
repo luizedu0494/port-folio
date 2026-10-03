@@ -160,7 +160,7 @@ export const AsciiObject: React.FC<AsciiObjectProps> = ({
           }
 
           // Escolha do Caractere ASCII
-          let charToDraw = '';
+          let charToDraw: string;
           if (mode === 'edges' && edgeChar) {
             charToDraw = edgeChar;
           } else if (mode === 'hybrid' && edgeChar && lum > 110) {

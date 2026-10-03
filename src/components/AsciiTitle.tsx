@@ -83,7 +83,9 @@ export const AsciiTitle: React.FC<AsciiTitleProps> = ({
       trailRef.current = [];
       sparksRef.current = [];
       cometPosRef.current = { x: -9999, y: -9999 };
-      setActiveCharIndex(null);
+      queueMicrotask(() => {
+        setActiveCharIndex(null);
+      });
       return;
     }
 

@@ -25,7 +25,7 @@ const AI_STACK_KEYWORDS = [
 const AI_PROJECT_IDS = ['decifrai', 'insurebot', 'stech-chatbot-ana'];
 const PYTHON_STACK_KEYWORDS = ['python', 'streamlit', 'pandas', 'fastapi'];
 
-export const Projects: React.FC<ProjectsProps> = ({ projects, githubProfileUrl, onPreview }) => {
+export const Projects: React.FC<ProjectsProps> = ({ projects, githubProfileUrl, onPreview: _onPreview }) => {
   const [activeFilter, setActiveFilter] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
 

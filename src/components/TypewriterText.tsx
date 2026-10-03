@@ -22,32 +22,31 @@ export const TypewriterText: React.FC<TypewriterTextProps> = ({
   const [wordIndex, setWordIndex] = useState(0);
   const [phase, setPhase] = useState<'typing' | 'glitch' | 'paused' | 'deleting'>('typing');
   const [displayText, setDisplayText] = useState('');
-  const [isGlitching, setIsGlitching] = useState(false);
   const [glitchOutput, setGlitchOutput] = useState<Array<{ char: string; isAscii: boolean }>>([]);
 
+  const isGlitching = phase === 'glitch';
   const targetWord = words[wordIndex] || '';
 
   useEffect(() => {
     let timeoutId: ReturnType<typeof setTimeout>;
 
     if (phase === 'typing') {
-      setIsGlitching(false);
       if (displayText.length < targetWord.length) {
         timeoutId = setTimeout(() => {
           setDisplayText(targetWord.slice(0, displayText.length + 1));
         }, typingSpeed);
       } else {
-        setPhase('glitch');
+        timeoutId = setTimeout(() => {
+          setPhase('glitch');
+        }, typingSpeed);
       }
     } else if (phase === 'glitch') {
-      setIsGlitching(true);
       const startTime = Date.now();
 
       const glitchInterval = setInterval(() => {
         const elapsed = Date.now() - startTime;
         if (elapsed >= glitchDuration) {
           clearInterval(glitchInterval);
-          setIsGlitching(false);
           setPhase('paused');
         } else {
           const glitched = targetWord.split('').map((c) => {
@@ -64,19 +63,19 @@ export const TypewriterText: React.FC<TypewriterTextProps> = ({
 
       return () => clearInterval(glitchInterval);
     } else if (phase === 'paused') {
-      setIsGlitching(false);
       timeoutId = setTimeout(() => {
         setPhase('deleting');
       }, pauseDuration);
     } else if (phase === 'deleting') {
-      setIsGlitching(false);
       if (displayText.length > 0) {
         timeoutId = setTimeout(() => {
           setDisplayText(displayText.slice(0, -1));
         }, deletingSpeed);
       } else {
-        setPhase('typing');
-        setWordIndex((prev) => (prev + 1) % words.length);
+        timeoutId = setTimeout(() => {
+          setPhase('typing');
+          setWordIndex((prev) => (prev + 1) % words.length);
+        }, deletingSpeed);
       }
     }
 
