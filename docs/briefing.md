@@ -13,10 +13,10 @@
 
 ---
 
-## 2. Perguntas de Confirmação (Máximo de 5) [confirmar]
+## 2. Decisões Confirmadas pelo Cliente [confirmado por Luiz Eduardo]
 
-1. **Prioridade de Conversão:** O seu foco primordial com este portfólio é ser contratado para posições de Engenheiro de Software / IA (CLT/PJ remoto) ou fechar projetos/consultorias como desenvolvedor independente?
-2. **Hierarquia de Projetos:** O projeto **CronoLab 2.0** continua sendo o "carro-chefe" absoluto para você ou gostaria de destacar outros projetos de agentes autônomos ou IA generativa com o mesmo peso?
-3. **Novas Seções Desejadas:** Você sente falta de alguma seção específica para a v2 (ex.: processo de trabalho, depoimentos/recomendações, artigos/estudos de caso detalhados, FAQ)?
-4. **Intensidade dos Efeitos:** Os efeitos de animação atuais (Typewriter, Scramble, cometa no mouse e flip cards) atendem ao seu gosto ou prefere um visual ainda mais sóbrio e sutil (estilo estúdio editorial) para não competir com o conteúdo?
-5. **Idioma Principal:** O foco continuará 100% em Português do Brasil ou você planeja ter alternador para Inglês para recrutadores globais na v2?
+1. **Objetivo de Conversão:** **Ambos** — estruturado tanto para recrutadores técnicos (posições de Engenheiro de Software / IA) quanto para empresas e clientes que buscam desenvolvimento de agentes e produtos sob medida.
+2. **Hierarquia de Projetos:** **CronoLab 2.0** permanece como o **destaque principal absoluto**, com o restante do portfólio servindo de suporte técnico robusto.
+3. **Nova Seção para a v2:** Inclusão de uma seção estruturada de **Processo de Trabalho Passo a Passo** (demonstrando como os projetos são concebidos, arquitetados e entregues).
+4. **Intensidade dos Efeitos & Animações:** Background de rede neural e intro conceitual mantidos em sua essência, aprimorados em visual, sutileza e performance.
+5. **Idioma:** Foco primário em Português do Brasil com terminologia técnica de padrão internacional.
