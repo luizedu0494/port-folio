@@ -1,6 +1,7 @@
 import React from 'react';
 import { Cpu, Search, Bot, Code2, Rocket, ArrowRight } from 'lucide-react';
 import { SectionHeader } from '../components/SectionHeader';
+import BorderGlow from '../components/BorderGlow';
 
 interface ProcessStep {
   step: string;
@@ -70,33 +71,47 @@ export const Process: React.FC = () => {
         </p>
 
         <div className="process-grid">
-          {PROCESS_STEPS.map((item, _index) => {
+          {PROCESS_STEPS.map((item) => {
             const Icon = item.icon;
             return (
-              <div key={item.step} className="process-card">
-                <div className="process-card-header">
-                  <div className="process-step-badge">
-                    <span className="process-step-number font-display">{item.step}</span>
-                    <Icon size={20} color="var(--accent-soft)" />
+              <BorderGlow
+                key={item.step}
+                className="process-card"
+                edgeSensitivity={30}
+                glowColor="40 80 80"
+                backgroundColor="#0d0e15"
+                borderRadius={20}
+                glowRadius={40}
+                glowIntensity={1.0}
+                coneSpread={25}
+                animated={false}
+                colors={['#c084fc', '#38bdf8', '#f472b6']}
+              >
+                <div className="process-card-content">
+                  <div className="process-card-header">
+                    <div className="process-step-badge">
+                      <span className="process-step-number font-display">{item.step}</span>
+                      <Icon size={20} color="var(--accent-soft)" />
+                    </div>
+                    <span className="process-step-tagline">{item.tagline}</span>
                   </div>
-                  <span className="process-step-tagline">{item.tagline}</span>
-                </div>
 
-                <h3 className="process-step-title font-subtitle">{item.title}</h3>
-                <p className="process-step-desc">{item.description}</p>
+                  <h3 className="process-step-title font-subtitle">{item.title}</h3>
+                  <p className="process-step-desc">{item.description}</p>
 
-                <div className="process-deliverables">
-                  <span className="process-deliverables-label">Entregas-chave:</span>
-                  <ul className="process-deliverables-list">
-                    {item.deliverables.map((deliv, dIdx) => (
-                      <li key={dIdx} className="process-deliverable-item">
-                        <ArrowRight size={13} color="var(--accent-soft)" style={{ flexShrink: 0 }} />
-                        <span>{deliv}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  <div className="process-deliverables">
+                    <span className="process-deliverables-label">Entregas-chave:</span>
+                    <ul className="process-deliverables-list">
+                      {item.deliverables.map((deliv, dIdx) => (
+                        <li key={dIdx} className="process-deliverable-item">
+                          <ArrowRight size={13} color="var(--accent-soft)" style={{ flexShrink: 0 }} />
+                          <span>{deliv}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
-              </div>
+              </BorderGlow>
             );
           })}
         </div>

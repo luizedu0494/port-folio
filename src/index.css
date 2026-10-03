@@ -4603,44 +4603,41 @@ body::before {
 .process-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
+  gap: 28px;
   margin-top: 16px;
 }
 
 .process-card {
-  background: var(--bg-card);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  padding: 32px 28px;
   position: relative;
-  overflow: hidden;
-  transition: transform var(--transition-normal), border-color var(--transition-normal), box-shadow var(--transition-normal);
+  height: 100%;
+  will-change: transform;
+  transition: transform var(--transition-fast);
+}
+
+.process-card:nth-child(odd) {
+  animation: celestial-drift-a 6.8s ease-in-out infinite 0.4s;
+}
+
+.process-card:nth-child(even) {
+  animation: celestial-drift-b 7.5s ease-in-out infinite 2.2s;
+}
+
+.process-card:hover {
+  animation-play-state: paused;
+  transform: translateY(-6px);
+}
+
+.process-card .border-glow-inner {
+  padding: 32px 28px;
+  height: 100%;
   display: flex;
   flex-direction: column;
 }
 
-.process-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--border-platinum);
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45), 0 0 20px var(--accent-glow);
-}
-
-.process-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(241, 245, 249, 0.35), transparent);
-  opacity: 0;
-  transition: opacity var(--transition-normal);
-}
-
-.process-card:hover::before {
-  opacity: 1;
+.process-card-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .process-card-header {
@@ -4728,25 +4725,40 @@ body::before {
 .skills-matrix-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
+  gap: 28px;
 }
 
 .skill-matrix-card {
-  background: var(--bg-card);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  padding: 30px;
   position: relative;
-  transition: transform var(--transition-normal), border-color var(--transition-normal), box-shadow var(--transition-normal);
+  height: 100%;
+  will-change: transform;
+  transition: transform var(--transition-fast);
 }
 
-.skill-matrix-card--hover,
+.skill-matrix-card:nth-child(odd) {
+  animation: celestial-drift-a 7.2s ease-in-out infinite 1.2s;
+}
+
+.skill-matrix-card:nth-child(even) {
+  animation: celestial-drift-b 6.6s ease-in-out infinite 3s;
+}
+
 .skill-matrix-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--border-platinum);
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4), 0 0 18px var(--accent-glow);
+  animation-play-state: paused;
+  transform: translateY(-6px);
+}
+
+.skill-matrix-card .border-glow-inner {
+  padding: 30px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.skill-matrix-card-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .skill-matrix-card-header {
@@ -4794,6 +4806,7 @@ body::before {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  margin-top: auto;
 }
 
 .skill-pill-item {
@@ -4808,9 +4821,10 @@ body::before {
 }
 
 .skill-pill-item:hover {
-  background: rgba(226, 232, 240, 0.1);
+  background: rgba(226, 232, 240, 0.12);
   border-color: var(--border-platinum);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(226, 232, 240, 0.15);
 }
 
 .skill-pill-name {
