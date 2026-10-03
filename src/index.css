@@ -9,28 +9,47 @@
   --bg-card-hover: rgba(22, 26, 40, 0.72);
   --bg-card-featured: linear-gradient(135deg, rgba(226, 232, 240, 0.08) 0%, rgba(14, 16, 26, 0.58) 100%);
 
-  --accent-crimson: #f1f5f9;
+  /* Destaques Platinados & Compatibilidade */
+  --accent-platinum: #f1f5f9;
+  --accent-crimson: #f1f5f9; /* Mantido por compatibilidade legada */
   --accent-glow: rgba(226, 232, 240, 0.22);
   --accent-soft: #cbd5e1;
   --accent-dark: #334155;
   --accent-magenta: #e2e8f0;
 
+  /* Tipografia & Contraste WCAG AA */
   --text-primary: #f8fafc;
   --text-secondary: #cbd5e1;
-  --text-muted: #94a3b8;
+  --text-muted: #a7b8cc; /* Elevado para contraste AA sobre fundos escuros */
 
+  /* Bordas */
   --border-color: rgba(226, 232, 240, 0.12);
-  --border-crimson: rgba(226, 232, 240, 0.3);
+  --border-platinum: rgba(226, 232, 240, 0.3);
+  --border-crimson: rgba(226, 232, 240, 0.3); /* Mantido por compatibilidade */
 
+  /* Famílias Tipográficas */
   --font-display: 'Orbitron', sans-serif;
   --font-subtitle: 'Space Grotesk', 'Outfit', sans-serif;
   --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
+  /* Rampa Tipográfica Escalar */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 2rem;
+  --text-4xl: clamp(2rem, 4vw, 2.75rem);
+
+  /* Raios de Borda & Superfícies */
   --radius-sm: 8px;
   --radius-md: 14px;
   --radius-lg: 24px;
   --radius-pill: 9999px;
 
+  /* Transições Suaves */
   --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-normal: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }

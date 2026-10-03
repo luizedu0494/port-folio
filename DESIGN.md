@@ -14,20 +14,22 @@
 - `--bg-card-featured`: `linear-gradient(135deg, rgba(226, 232, 240, 0.08) 0%, rgba(14, 16, 26, 0.58) 100%)` [`src/index.css:L10`]
 
 ### Destaques & Acentos (Pearl Platinum)
-- `--accent-crimson` (renomeado no CSS para tom platina): `#f1f5f9` [`src/index.css:L12`]
-- `--accent-glow`: `rgba(226, 232, 240, 0.22)` (Brilho perolizado suave) [`src/index.css:L13`]
-- `--accent-soft`: `#cbd5e1` (Platina intermediário acetinado) [`src/index.css:L14`]
-- `--accent-dark`: `#334155` (Borda escura de apoio) [`src/index.css:L15`]
-- `--accent-magenta`: `#e2e8f0` [`src/index.css:L16`]
+- `--accent-platinum`: `#f1f5f9` (Tom platina luminoso principal) [`src/index.css:L13`]
+- `--accent-crimson`: `#f1f5f9` (Mantido por compatibilidade legada) [`src/index.css:L14`]
+- `--accent-glow`: `rgba(226, 232, 240, 0.22)` (Brilho perolizado suave) [`src/index.css:L15`]
+- `--accent-soft`: `#cbd5e1` (Platina intermediário acetinado) [`src/index.css:L16`]
+- `--accent-dark`: `#334155` (Borda escura de apoio) [`src/index.css:L17`]
+- `--accent-magenta`: `#e2e8f0` [`src/index.css:L18`]
 
-### Tipografia & Textos
-- `--text-primary`: `#f8fafc` (Branco gelo perolizado de alto contraste) [`src/index.css:L18`]
-- `--text-secondary`: `#cbd5e1` (Cinza claro para subtítulos e descrições) [`src/index.css:L19`]
-- `--text-muted`: `#94a3b8` (Cinza médio para metadados e tags) [`src/index.css:L20`]
+### Tipografia & Textos (WCAG AA)
+- `--text-primary`: `#f8fafc` (Branco gelo perolizado de alto contraste) [`src/index.css:L21`]
+- `--text-secondary`: `#cbd5e1` (Cinza claro para subtítulos e descrições) [`src/index.css:L22`]
+- `--text-muted`: `#a7b8cc` (Cinza suave com contraste elevado > 4.6:1 WCAG AA) [`src/index.css:L23`]
 
 ### Bordas
-- `--border-color`: `rgba(226, 232, 240, 0.12)` (Borda vítrea ultra fina) [`src/index.css:L22`]
-- `--border-crimson`: `rgba(226, 232, 240, 0.3)` (Borda acentuada para cards em foco) [`src/index.css:L23`]
+- `--border-color`: `rgba(226, 232, 240, 0.12)` (Borda vítrea ultra fina) [`src/index.css:L26`]
+- `--border-platinum`: `rgba(226, 232, 240, 0.3)` (Borda platina vítrea) [`src/index.css:L27`]
+- `--border-crimson`: `rgba(226, 232, 240, 0.3)` (Mantida por compatibilidade) [`src/index.css:L28`]
 
 ---
 

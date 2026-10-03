@@ -15,8 +15,8 @@ export const Contact: React.FC<ContactProps> = ({ profile }) => (
       >
         Entre em Contato
       </h2>
-      <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', marginBottom: '32px' }}>
-        Aberto a projetos de <strong>landing pages de alta conversão</strong>, sites modernos, posições CLT/PJ e soluções em IA & Software. Se você precisa de uma página impactante para sua marca, quer tirar uma ideia do papel ou formar um time — pode me chamar.
+      <p style={{ color: 'var(--text-secondary)', fontSize: '1.05rem', marginBottom: '32px', lineHeight: 1.7 }}>
+        Disponível para atuar como <strong>Engenheiro de Software &amp; IA</strong> (posições remotas CLT/PJ), desenvolvimento de <strong>Agentes Autônomos</strong> e produtos web de alta tecnologia. Se você quer integrar inteligência artificial à sua operação, tirar uma ideia complexa do papel ou acelerar seu time — vamos conversar.
       </p>
 
       <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', flexWrap: 'wrap' }}>
