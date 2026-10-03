@@ -31,6 +31,20 @@ export const AppContent: React.FC = () => {
   const [activeSection, setActiveSection] = useState<string>('sobre');
   const [isNavVisible, setIsNavVisible] = useState<boolean>(true);
 
+  // Toggle de Efeitos (Modo Imersivo / Modo Foco de Alta Leitura)
+  const [effectsEnabled, setEffectsEnabled] = useState<boolean>(() => {
+    if (typeof window === 'undefined') return true;
+    return localStorage.getItem('portfolio_effects') !== 'disabled';
+  });
+
+  const toggleEffects = () => {
+    setEffectsEnabled((prev) => {
+      const next = !prev;
+      localStorage.setItem('portfolio_effects', next ? 'enabled' : 'disabled');
+      return next;
+    });
+  };
+
   // Auto-hide da navbar no scroll down e reaparece no scroll up (60 FPS com requestAnimationFrame)
   useEffect(() => {
     let lastScrollY = window.scrollY;
@@ -160,7 +174,7 @@ export const AppContent: React.FC = () => {
   ];
 
   return (
-    <div className={`portfolio-app ${entered ? 'ready' : ''}`}>
+    <div className={`portfolio-app ${entered ? 'ready' : ''} ${effectsEnabled ? 'effects-active' : 'effects-disabled'}`}>
       <a href="#sobre" className="skip-link">Pular para o conteúdo</a>
 
       {/* Intro Vortex Cosmic */}
@@ -175,10 +189,10 @@ export const AppContent: React.FC = () => {
       )}
 
       {/* Background de Rede Neural Interativa em Movimento */}
-      <NeuralNetworkBg />
+      {effectsEnabled && <NeuralNetworkBg />}
 
       {/* Cursor Cometa Cósmico no Desktop */}
-      {entered && <CosmicCometCursor />}
+      {entered && effectsEnabled && <CosmicCometCursor />}
 
       {/* Overlay escuro de fundo ao abrir drawer mobile */}
       {isMobileMenuOpen && <div className="mobile-overlay" onClick={() => setIsMobileMenuOpen(false)} />}
@@ -206,6 +220,16 @@ export const AppContent: React.FC = () => {
 
           {/* Player de Áudio & Menu Toggle visíveis no Header no Mobile */}
           <div className="mobile-header-actions">
+            <button
+              className="effects-toggle-btn mobile-effects-btn"
+              onClick={toggleEffects}
+              title={effectsEnabled ? "Modo Imersivo ativo — Clique para Modo Foco" : "Modo Foco ativo — Clique para reativar efeitos"}
+              aria-label="Alternar efeitos visuais"
+            >
+              <Sparkles size={14} color={effectsEnabled ? "var(--accent-platinum)" : "var(--text-muted)"} />
+              <span className="effects-toggle-text">{effectsEnabled ? "Efeitos" : "Foco"}</span>
+            </button>
+
             <AudioPlayer variant="navbar" />
 
             <button
@@ -241,6 +265,16 @@ export const AppContent: React.FC = () => {
                 {link.label}
               </a>
             ))}
+
+            <button
+              className="effects-toggle-btn desktop-effects-btn"
+              onClick={toggleEffects}
+              title={effectsEnabled ? "Modo Imersivo ativo — Clique para alternar para o Modo Foco" : "Modo Foco ativo — Clique para reativar os efeitos visuais"}
+              aria-label="Alternar efeitos visuais"
+            >
+              <Sparkles size={13} color={effectsEnabled ? "var(--accent-platinum)" : "var(--text-muted)"} />
+              <span className="effects-toggle-text">{effectsEnabled ? "Efeitos: On" : "Modo Foco"}</span>
+            </button>
 
             <a
               href="#contato"

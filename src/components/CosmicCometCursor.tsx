@@ -57,7 +57,7 @@ export const CosmicCometCursor: React.FC = () => {
         const target = e.target as HTMLElement | null;
         if (target) {
           isHoveringInteractive = !!target.closest(
-            'a, button, input, textarea, select, [role="button"], .btn-primary, .btn-secondary, .contact-pill, .project-card, .featured-card, .cert-card, .flip-card-wrapper, .clickable'
+            'a, button, input, textarea, select, [role="button"], .btn-primary, .btn-secondary, .contact-pill, .project-card, .featured-card, .cert-card, .flip-card-wrapper, .clickable, .process-card, .skill-matrix-card, .skill-pill-item'
           );
         }
       }
@@ -173,7 +173,17 @@ export const CosmicCometCursor: React.FC = () => {
 
     animId = requestAnimationFrame(draw);
 
+    const onVisibilityChange = () => {
+      if (document.hidden) {
+        cancelAnimationFrame(animId);
+      } else {
+        animId = requestAnimationFrame(draw);
+      }
+    };
+    document.addEventListener('visibilitychange', onVisibilityChange);
+
     return () => {
+      document.removeEventListener('visibilitychange', onVisibilityChange);
       window.removeEventListener('resize', onResize);
       window.removeEventListener('mousemove', onMouseMove);
       window.removeEventListener('mousedown', onMouseDown);

@@ -4840,11 +4840,81 @@ body::before {
   }
 }
 
+/* ==========================================================================
+   Camada 4: Controles de Efeitos & Modo Foco (Alta Performance / Acessibilidade)
+   ========================================================================== */
 
+.effects-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(226, 232, 240, 0.14);
+  border-radius: var(--radius-pill);
+  padding: 6px 12px;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  user-select: none;
+}
 
+.effects-toggle-btn:hover {
+  background: rgba(226, 232, 240, 0.08);
+  border-color: var(--border-platinum);
+  color: var(--text-primary);
+  box-shadow: 0 0 14px rgba(226, 232, 240, 0.12);
+  transform: translateY(-1px);
+}
 
+.effects-toggle-btn:active {
+  transform: translateY(0);
+}
 
+.desktop-effects-btn {
+  display: inline-flex;
+}
 
+.mobile-effects-btn {
+  display: none;
+}
 
+@media (max-width: 992px) {
+  .desktop-effects-btn {
+    display: none !important;
+  }
 
+  .mobile-effects-btn {
+    display: inline-flex !important;
+    padding: 5px 10px;
+    font-size: 0.75rem;
+  }
+}
+
+/* Estado de Efeitos Desativados (Modo Foco / Desempenho Otimizado) */
+.portfolio-app.effects-disabled,
+.portfolio-app.effects-disabled * {
+  cursor: auto !important;
+}
+
+.portfolio-app.effects-disabled a,
+.portfolio-app.effects-disabled button,
+.portfolio-app.effects-disabled [role="button"],
+.portfolio-app.effects-disabled .clickable,
+.portfolio-app.effects-disabled .contact-pill,
+.portfolio-app.effects-disabled .project-card,
+.portfolio-app.effects-disabled .process-card,
+.portfolio-app.effects-disabled .skill-matrix-card {
+  cursor: pointer !important;
+}
+
+.portfolio-app.effects-disabled .celestial-drift-a,
+.portfolio-app.effects-disabled .celestial-drift-b,
+.portfolio-app.effects-disabled .orbit-star,
+.portfolio-app.effects-disabled .floating-particle {
+  animation: none !important;
+  transform: none !important;
+}
 
