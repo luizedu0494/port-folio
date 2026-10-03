@@ -4638,13 +4638,16 @@ body::before {
   display: flex;
   flex-direction: column;
   height: 100%;
+  min-width: 0;
 }
 
 .process-card-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 16px;
   margin-bottom: 20px;
+  min-width: 0;
 }
 
 .process-step-badge {
@@ -4655,6 +4658,11 @@ body::before {
   border: 1px solid var(--border-color);
   border-radius: var(--radius-pill);
   padding: 6px 14px;
+  flex-shrink: 0;
+}
+
+.process-step-icon {
+  flex-shrink: 0;
 }
 
 .process-step-number {
@@ -4669,7 +4677,11 @@ body::before {
   font-size: 0.78rem;
   color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
+  line-height: 1.4;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  text-align: right;
 }
 
 .process-step-title {
@@ -4677,6 +4689,8 @@ body::before {
   font-weight: 700;
   color: var(--text-primary);
   margin-bottom: 12px;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .process-step-desc {
@@ -4685,6 +4699,8 @@ body::before {
   line-height: 1.65;
   margin-bottom: 24px;
   flex-grow: 1;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .process-deliverables {
@@ -4713,10 +4729,24 @@ body::before {
 
 .process-deliverable-item {
   display: flex;
-  align-items: center;
-  gap: 8px;
+  align-items: flex-start;
+  gap: 10px;
   font-size: 0.85rem;
   color: var(--text-secondary);
+  line-height: 1.45;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.process-deliverable-icon {
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+.process-deliverable-text {
+  flex: 1;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 /* ══════════════════════════════════════════════════════════════════
@@ -4759,6 +4789,7 @@ body::before {
   display: flex;
   flex-direction: column;
   height: 100%;
+  min-width: 0;
 }
 
 .skill-matrix-card-header {
@@ -4766,6 +4797,7 @@ body::before {
   align-items: center;
   gap: 16px;
   margin-bottom: 14px;
+  min-width: 0;
 }
 
 .skill-matrix-icon-wrapper {
@@ -4792,6 +4824,8 @@ body::before {
   color: var(--text-primary);
   font-weight: 700;
   margin-top: 2px;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .skill-matrix-focus {
@@ -4800,6 +4834,8 @@ body::before {
   margin-bottom: 20px;
   padding-bottom: 14px;
   border-bottom: 1px solid rgba(226, 232, 240, 0.08);
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .skill-matrix-pills {
@@ -4818,6 +4854,7 @@ body::before {
   background: rgba(14, 16, 26, 0.7);
   border: 1px solid rgba(226, 232, 240, 0.12);
   transition: all var(--transition-fast);
+  max-width: 100%;
 }
 
 .skill-pill-item:hover {
@@ -4831,12 +4868,73 @@ body::before {
   font-size: 0.85rem;
   color: var(--text-primary);
   font-weight: 500;
+  word-break: break-word;
 }
 
 @media (max-width: 900px) {
   .process-grid,
   .skills-matrix-grid {
     grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .process-card .border-glow-inner {
+    padding: 24px 18px;
+  }
+
+  .process-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .process-step-tagline {
+    text-align: left;
+    font-size: 0.74rem;
+    width: 100%;
+    letter-spacing: 0.04em;
+  }
+
+  .process-step-title {
+    font-size: 1.2rem;
+  }
+
+  .process-step-desc {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .process-deliverables {
+    padding: 14px;
+  }
+
+  .skill-matrix-card .border-glow-inner {
+    padding: 24px 18px;
+  }
+
+  .skill-matrix-title {
+    font-size: 1.15rem;
+  }
+
+  .skill-matrix-focus {
+    font-size: 0.82rem;
+    margin-bottom: 16px;
+  }
+
+  .skill-matrix-pills {
+    gap: 8px;
+  }
+
+  .skill-pill-item {
+    padding: 6px 12px;
+  }
+
+  .skill-pill-name {
+    font-size: 0.8rem;
   }
 }
 

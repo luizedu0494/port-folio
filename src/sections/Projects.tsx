@@ -103,36 +103,6 @@ export const Projects: React.FC<ProjectsProps> = ({ projects, githubProfileUrl, 
         {/* Hero Featured Project (CronoLab 2.0) */}
         {featuredProject && (
           <div className="featured-project-wrapper" style={{ marginBottom: '56px' }}>
-            <div
-              className="featured-project-badge font-mono"
-              style={{
-                marginBottom: '16px',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                color: 'var(--accent-platinum)',
-                fontSize: '0.8rem',
-                textTransform: 'uppercase',
-                letterSpacing: '0.08em',
-                background: 'rgba(226, 232, 240, 0.06)',
-                padding: '6px 14px',
-                borderRadius: 'var(--radius-pill)',
-                border: '1px solid var(--border-color)'
-              }}
-            >
-              <span
-                style={{
-                  width: '8px',
-                  height: '8px',
-                  borderRadius: '50%',
-                  background: '#10b981',
-                  display: 'inline-block',
-                  boxShadow: '0 0 10px #10b981'
-                }}
-              />
-              Destaque Principal · Sistema em Produção
-            </div>
-
             <FeaturedFlipCard
               project={featuredProject}
               githubProfileUrl={githubProfileUrl}

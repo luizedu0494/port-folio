@@ -9,7 +9,7 @@ interface ProcessStep {
   tagline: string;
   description: string;
   deliverables: string[];
-  icon: React.ComponentType<{ size?: number; color?: string; style?: React.CSSProperties }>;
+  icon: React.ComponentType<{ size?: number; color?: string; style?: React.CSSProperties; className?: string }>;
 }
 
 const PROCESS_STEPS: ProcessStep[] = [
@@ -91,7 +91,7 @@ export const Process: React.FC = () => {
                   <div className="process-card-header">
                     <div className="process-step-badge">
                       <span className="process-step-number font-display">{item.step}</span>
-                      <Icon size={20} color="var(--accent-soft)" />
+                      <Icon size={18} color="var(--accent-soft)" className="process-step-icon" />
                     </div>
                     <span className="process-step-tagline">{item.tagline}</span>
                   </div>
@@ -104,8 +104,8 @@ export const Process: React.FC = () => {
                     <ul className="process-deliverables-list">
                       {item.deliverables.map((deliv, dIdx) => (
                         <li key={dIdx} className="process-deliverable-item">
-                          <ArrowRight size={13} color="var(--accent-soft)" style={{ flexShrink: 0 }} />
-                          <span>{deliv}</span>
+                          <ArrowRight size={13} color="var(--accent-soft)" className="process-deliverable-icon" />
+                          <span className="process-deliverable-text">{deliv}</span>
                         </li>
                       ))}
                     </ul>
