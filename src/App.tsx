@@ -13,12 +13,13 @@ import { AudioProvider, useAudio } from './context/AudioContext';
 import { initGridSystem } from './ascii/gridSystem';
 import { CosmicCometCursor } from './components/CosmicCometCursor';
 import { About } from './sections/About';
+import { Process } from './sections/Process';
 import { Projects } from './sections/Projects';
 import { Skills } from './sections/Skills';
 import { Certifications } from './sections/Certifications';
 import { Contact } from './sections/Contact';
 
-const SECTION_IDS = ['sobre', 'projetos', 'habilidades', 'certificacoes', 'contato'];
+const SECTION_IDS = ['sobre', 'processo', 'projetos', 'habilidades', 'certificacoes', 'contato'];
 
 export const AppContent: React.FC = () => {
   const { startExperienceWithAudio } = useAudio();
@@ -152,6 +153,7 @@ export const AppContent: React.FC = () => {
   }, []);
 
   const navLinks = [
+    { id: 'processo', label: 'Processo' },
     { id: 'projetos', label: 'Projetos' },
     { id: 'habilidades', label: 'Habilidades' },
     { id: 'certificacoes', label: 'Certificados' }
@@ -258,6 +260,7 @@ export const AppContent: React.FC = () => {
 
       <main id="conteudo-principal">
         <About profile={profile} />
+        <Process />
         <Projects
           projects={projects}
           githubProfileUrl={profile.contacts.github}

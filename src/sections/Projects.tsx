@@ -79,32 +79,73 @@ export const Projects: React.FC<ProjectsProps> = ({ projects, githubProfileUrl, 
   ];
 
   return (
-    <>
-      {/* Hero Featured Project (CronoLab 2.0) (#projetos) */}
-      {featuredProject && (
-        <section id="projetos" className="featured-section reveal-on-scroll">
-          <div className="container">
-            <SectionHeader
-              icon={<Layers color="var(--accent-soft)" size={28} />}
-              title="Projeto Principal"
-              triggerId="projetos"
-            />
+    <section id="projetos" className="reveal-on-scroll section-padded">
+      <div className="container">
+        <SectionHeader
+          icon={<Layers color="var(--accent-soft)" size={28} />}
+          title="Projetos & Engenharia de IA"
+          triggerId="projetos"
+        />
+
+        <p
+          style={{
+            color: 'var(--text-secondary)',
+            fontSize: '1.05rem',
+            maxWidth: '720px',
+            marginBottom: '32px',
+            lineHeight: 1.7
+          }}
+        >
+          Sistemas e aplicações construídos para resolver problemas reais com <strong>agentes autônomos</strong>,{' '}
+          automações empresariais e arquitetura web escalável.
+        </p>
+
+        {/* Hero Featured Project (CronoLab 2.0) */}
+        {featuredProject && (
+          <div className="featured-project-wrapper" style={{ marginBottom: '56px' }}>
+            <div
+              className="featured-project-badge font-mono"
+              style={{
+                marginBottom: '16px',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                color: 'var(--accent-platinum)',
+                fontSize: '0.8rem',
+                textTransform: 'uppercase',
+                letterSpacing: '0.08em',
+                background: 'rgba(226, 232, 240, 0.06)',
+                padding: '6px 14px',
+                borderRadius: 'var(--radius-pill)',
+                border: '1px solid var(--border-color)'
+              }}
+            >
+              <span
+                style={{
+                  width: '8px',
+                  height: '8px',
+                  borderRadius: '50%',
+                  background: '#10b981',
+                  display: 'inline-block',
+                  boxShadow: '0 0 10px #10b981'
+                }}
+              />
+              Destaque Principal · Sistema em Produção
+            </div>
 
             <FeaturedFlipCard
               project={featuredProject}
               githubProfileUrl={githubProfileUrl}
             />
           </div>
-        </section>
-      )}
+        )}
 
-      {/* Demais Projetos Grid */}
-      {otherProjects.length > 0 && (
-        <section className="projects-grid-section">
-          <div className="container">
-            <div className="section-header" style={{ marginBottom: '24px' }}>
-              <h3 className="font-subtitle" style={{ fontSize: '1.4rem', color: 'var(--text-secondary)' }}>
-                Outros Projetos Desenvolvidos
+        {/* Demais Projetos com Filtros */}
+        {otherProjects.length > 0 && (
+          <div className="secondary-projects-area">
+            <div className="section-header" style={{ marginBottom: '20px' }}>
+              <h3 className="font-subtitle" style={{ fontSize: '1.3rem', color: 'var(--text-primary)' }}>
+                Ecossistema de Soluções &amp; Demonstrações
               </h3>
             </div>
 
@@ -155,8 +196,8 @@ export const Projects: React.FC<ProjectsProps> = ({ projects, githubProfileUrl, 
               ))}
             </div>
           </div>
-        </section>
-      )}
-    </>
+        )}
+      </div>
+    </section>
   );
 };

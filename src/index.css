@@ -4597,6 +4597,235 @@ body::before {
   }
 }
 
+/* ══════════════════════════════════════════════════════════════════
+   SEÇÃO DE PROCESSO DE ENGENHARIA & IA (.process-*)
+   ══════════════════════════════════════════════════════════════════ */
+.process-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-top: 16px;
+}
+
+.process-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 32px 28px;
+  position: relative;
+  overflow: hidden;
+  transition: transform var(--transition-normal), border-color var(--transition-normal), box-shadow var(--transition-normal);
+  display: flex;
+  flex-direction: column;
+}
+
+.process-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-platinum);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45), 0 0 20px var(--accent-glow);
+}
+
+.process-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(241, 245, 249, 0.35), transparent);
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+
+.process-card:hover::before {
+  opacity: 1;
+}
+
+.process-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.process-step-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(226, 232, 240, 0.06);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-pill);
+  padding: 6px 14px;
+}
+
+.process-step-number {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--accent-platinum);
+  letter-spacing: 0.05em;
+}
+
+.process-step-tagline {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.process-step-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+.process-step-desc {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  margin-bottom: 24px;
+  flex-grow: 1;
+}
+
+.process-deliverables {
+  background: rgba(10, 12, 18, 0.5);
+  border: 1px solid rgba(226, 232, 240, 0.08);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+}
+
+.process-deliverables-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--accent-soft);
+  margin-bottom: 10px;
+  letter-spacing: 0.05em;
+}
+
+.process-deliverables-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.process-deliverable-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   MATRIZ TÉCNICA DE HABILIDADES (.skills-matrix-*)
+   ══════════════════════════════════════════════════════════════════ */
+.skills-matrix-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.skill-matrix-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 30px;
+  position: relative;
+  transition: transform var(--transition-normal), border-color var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.skill-matrix-card--hover,
+.skill-matrix-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-platinum);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4), 0 0 18px var(--accent-glow);
+}
+
+.skill-matrix-card-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.skill-matrix-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(226, 232, 240, 0.12), rgba(14, 16, 26, 0.6));
+  border: 1px solid var(--border-platinum);
+  flex-shrink: 0;
+}
+
+.skill-matrix-tag {
+  font-size: 0.72rem;
+  color: var(--accent-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.skill-matrix-title {
+  font-size: 1.25rem;
+  color: var(--text-primary);
+  font-weight: 700;
+  margin-top: 2px;
+}
+
+.skill-matrix-focus {
+  font-size: 0.84rem;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.08);
+}
+
+.skill-matrix-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.skill-pill-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  border-radius: var(--radius-pill);
+  background: rgba(14, 16, 26, 0.7);
+  border: 1px solid rgba(226, 232, 240, 0.12);
+  transition: all var(--transition-fast);
+}
+
+.skill-pill-item:hover {
+  background: rgba(226, 232, 240, 0.1);
+  border-color: var(--border-platinum);
+  transform: translateY(-1px);
+}
+
+.skill-pill-name {
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+@media (max-width: 900px) {
+  .process-grid,
+  .skills-matrix-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 
 
 

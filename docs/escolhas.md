@@ -24,12 +24,12 @@
 
 | Item | Valor Observado | Proposta do Agente | Status Proposto |
 |---|---|---|---|
-| **Largura Máxima do Container** | `1200px` a `1280px` | Manter para consistência de leitura | **mantido** |
-| **Grid de Projetos** | Destaque isolado + grade secundária | Unificar a seção dando destaque máximo ao CronoLab 2.0 com métricas e demo | **ajustar** |
-| **Grid de Habilidades** | Flip Card 3D rotativo | Substituir por **Matriz Técnica de Especialidades** (mais editorial, direta e sem fadiga de flip) | **trocar** |
-| **Nova Seção: Processo de Trabalho** | Inexistente atualmente | Inserir `#processo` entre Sobre e Projetos com 4 etapas da engenharia | **ajustar** (nova seção) |
-| **Alinhamento & Ritmo Vertical** | `100px` padding entre seções | Manter espaçamento amplo editorial | **mantido** |
-| **Comportamento Mobile** | Gaveta fullscreen e cards empilhados | Otimizar toques e evitar cortes em telas < 400px | **ajustar** |
+| **Largura Máxima do Container** | `1200px` a `1280px` | Mantido para consistência de leitura | **mantido** |
+| **Grid de Projetos** | Destaque isolado + grade secundária | Seção unificada com destaque absoluto ao CronoLab 2.0, badge verde e filtros | **ajustado** (concluído) |
+| **Grid de Habilidades** | Flip Card 3D rotativo | Substituído por Matriz Técnica de Especialidades com badges e chips interativos | **trocado** (concluído) |
+| **Nova Seção: Processo de Trabalho** | Criada seção `#processo` com 4 etapas de IA & Engenharia de Software | Inserida no fluxo principal e linkada ao Navbar | **ajustado** (concluído) |
+| **Alinhamento & Ritmo Vertical** | `100px` padding entre seções | Espaçamento amplo e consistente mantido | **mantido** |
+| **Comportamento Mobile** | Gaveta fullscreen e grids colapsando em coluna única | Otimizado para telas pequenas (<900px) | **ajustado** (concluído) |
 
 ---
 

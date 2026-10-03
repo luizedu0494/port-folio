@@ -8,10 +8,10 @@
 
 | Sinal | Camada | Onde | Evidência | Severidade | Correção Proposta | Status |
 |---|---|---|---|---|---|---|
-| Repetição de Flip Card 3D idêntico em Projetos e Habilidades | Estrutura / Disposição | `Projects.tsx` & `Skills.tsx` | Ambos usam a mesma mecânica de flip card rotativo | Alta | Manter flip em Projetos; redesenhar Habilidades em matriz técnica/editorial com badges interativos | Pendente (Camada 3) |
-| Sequência clássica de seções sem processo autoral | Estrutura | Estrutura global da página | Ausência de seção de metodologia de trabalho | Média | Adicionar seção `#processo` com 4 etapas da engenharia de IA | Pendente (Camada 3) |
-| Microcopy de rodapé desconectada da autoridade em IA | Texto | `Contact.tsx:19` | Frase genérica sobre "landing pages" abre o contato | Média | Ajustar copy para destacar software escalável, agentes inteligentes e produtos web | **Resolvido (Camada 2)** |
-| Uso uniforme de glassmorphism em todos os containers | Visual | `index.css:8` | `--bg-card` idêntico em todas as seções | Baixa | Variar densidade e hierarquia visual dos cartões na Camada 3 | Pendente (Camada 3) |
+| Repetição de Flip Card 3D idêntico em Projetos e Habilidades | Estrutura / Disposição | `Projects.tsx` & `Skills.tsx` | Ambos usavam a mesma mecânica rotativa | Alta | Habilidades migradas para Matriz Técnica de Especialidades com badges e chips | **Resolvido (Camada 3)** |
+| Sequência clássica de seções sem processo autoral | Estrutura | Estrutura global da página | Ausência de seção de metodologia de trabalho | Média | Seção `#processo` criada em 4 etapas detalhadas de Engenharia & IA | **Resolvido (Camada 3)** |
+| Microcopy de rodapé desconectada da autoridade em IA | Texto | `Contact.tsx:19` | Frase genérica sobre "landing pages" abria o contato | Média | Ajustado para destacar software escalável, agentes autônomos e IA | **Resolvido (Camada 2)** |
+| Uso uniforme de glassmorphism em todos os containers | Visual | `index.css:8` | `--bg-card` idêntico em todas as seções | Baixa | Variação de densidade, sub-blocos escuros de entregas e wrappers com borda platina | **Resolvido (Camada 3)** |
 
-**Veredito do Diagnóstico:** **NÃO PASSA**  
-*Justificativa:* Presença de sinal de severidade Alta (repetição de componente 3D gerando monotonia) e Média (falta da seção de processo e copy de contato genérica). O veredito será reavaliado após a execução das camadas correspondentes.
+**Veredito Pós-Camada 3:** **PASSA**  
+*Justificativa:* Todos os sinais de severidade Alta e Média levantados no diagnóstico foram corrigidos. O portfólio agora possui ritmo estrutural variado, seção autoral de metodologia de engenharia e distinção clara entre os cards de projetos e a matriz de competências.
