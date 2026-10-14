@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckCircle2, Zap } from 'lucide-react';
+import { CheckCircle2, Zap, Sparkles } from 'lucide-react';
 import { DeveloperProfile } from '../types/portfolio';
 import { ScrambleText } from '../components/ScrambleText';
 import { SceneryMedia } from '../components/SceneryMedia';
@@ -7,9 +7,10 @@ import { AudioPlayer } from '../components/AudioPlayer';
 
 interface AboutProps {
   profile: DeveloperProfile;
+  onOpenDemo?: () => void;
 }
 
-export const About: React.FC<AboutProps> = ({ profile }) => (
+export const About: React.FC<AboutProps> = ({ profile, onOpenDemo }) => (
   <section id="sobre" className="about-intro-section reveal-on-scroll">
     <div className="container about-editorial-layout">
 
@@ -80,6 +81,29 @@ export const About: React.FC<AboutProps> = ({ profile }) => (
             </div>
           </div>
         )}
+
+        {/* Banner de Chamada para Showcase / Demo Comercial */}
+        <div className="about-showcase-banner">
+          <div className="about-showcase-info">
+            <span className="about-showcase-badge">Showcase Comercial</span>
+            <p className="about-showcase-text">
+              Deseja ver uma demonstração de landing page moderna para estúdios e empresas de IA?
+            </p>
+          </div>
+          <a
+            href="#demo"
+            className="btn-showcase-demo"
+            onClick={(e) => {
+              if (onOpenDemo) {
+                e.preventDefault();
+                onOpenDemo();
+              }
+            }}
+          >
+            <Sparkles size={14} />
+            <span>Ver Landing Page Exemplo →</span>
+          </a>
+        </div>
 
       </div>
     </div>

@@ -1,9 +1,9 @@
 # Estado Inicial do Projeto (Snapshot M-0)
 
-- **Data do Snapshot:** 2026-10-03
-- **Branch de Trabalho:** `melhoria/m3-v2-redesign-disposicao`
-- **Tag Git de Snapshot:** `snapshot-pre-m3-v2` (commit base `9db1e89`)
-- **Tipo de Intervenção:** M3 — Redesign por camadas (estrutura, disposição e experiência)
+- **Data do Snapshot:** 2026-10-14
+- **Branch de Trabalho:** `melhoria/m10-demo-showcase-landing-page`
+- **Tag Git de Snapshot:** `snapshot-pre-m10-demo`
+- **Tipo de Intervenção:** M10 — Adicionar efeito, mídia ou feature de referência (Landing Page de Demonstração / Showcase para Clientes)
 
 ---
 

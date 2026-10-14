@@ -1,6 +1,76 @@
 # Plano de Melhorias em Camadas — Portfólio Luiz Eduardo Lopes (M-4)
 
-> Objetivo: Melhorar a disposição dos itens e seções, lapidar os efeitos visuais, incluir a seção de processo de trabalho e elevar o portfólio para a versão 2.0 completa e de alto impacto.
+> **Intervenção Atual (2026-10-14):** M10 — Adicionar efeito, mídia ou feature de referência (Showcase / Landing Page de Demonstração para Clientes: High-End Tech Studio & Agentes de IA).  
+> **Aprovador:** Luiz Eduardo Lopes.  
+> **Estratégia:** Criar página/rota dedicada com efeitos inspirados em *aino.agency* (ASCII canvas, física de caracteres, scramble e microinterações de alto impacto), mantendo a Home principal 100% íntegra e protegida.
+
+---
+
+## PLANO M10 EM 4 CAMADAS (Execução Passo a Passo)
+
+### Camada 1: Arquitetura, Roteamento SPA Seguro & Ponto de Entrada
+- **Objetivo:** Estabelecer o mecanismo de renderização da demonstração de forma isolada e adicionar ponto de acesso na Home.
+- **Itens:**
+  1. Suporte a rota/visualização de demonstração em `src/App.tsx` (detectando hash/path `#demo` ou query `?page=demo` e estado interno reativo sem inflar o bundle com roteadores pesados).
+  2. Ponto de entrada elegante na Home: Badge/botão interativo no Navbar ("Demo: AI Studio") e botão de acesso direto no Hero ("Ver Landing Page Exemplo").
+  3. Botão flutuante de navegação rápida ("← Voltar ao Portfólio") presente na demonstração para alternância instantânea.
+- **Impacto:** Alto (acesso direto e intuitivo para o cliente, com isolamento de escopo).
+- **Esforço:** Baixo.
+- **Risco:** Baixo (a Home permanece intacta por padrão).
+- **Como reverter:** `git checkout HEAD~1 -- src/App.tsx`
+- **Arquivos afetados:** `src/App.tsx`, `src/index.css`.
+- **Métrica de sucesso:** Navegação suave entre o Portfólio e a Demo sem recarregar a página e sem quebrar nenhum link existente.
+
+---
+
+### Camada 2: Estrutura, Conteúdo Comercial & Estética High-End Studio
+- **Objetivo:** Construir a landing page comercial completa para o estúdio de tecnologia e agentes de IA.
+- **Itens:**
+  1. Criação do módulo `src/pages/DemoStudioLanding.tsx` com estrutura editorial de alto nível:
+     - **Navbar do Estúdio:** Marca "NEXUS // AI TECH STUDIO", status "Q4 Available for Projects", links internos e botão de retorno.
+     - **Hero Comercial:** Headline autoral e impactante ("Engenharia de Software de Precisão e Agentes Autônomos de IA para Operações de Alta Complexidade"), métricas tangíveis em tempo real (ex: "85% redução de latência operacional", "99.9% uptime de agentes", "2-4 semanas para MVP funcional").
+     - **Soluções & Agentes em Ação:** 3 pilares tangíveis com chips de tecnologia:
+       - *Agentes de Triagem & Decisão Autônoma* (análise preditiva de fluxos de trabalho)
+       - *Plataformas Fullstack Sob Medida* (Next/React + Cloud resiliente)
+       - *RAG Enterprise & Governança de LLMs* (segurança de dados corporativos)
+     - **Metodologia de Entrega Ágil:** Fases transparentes (Discovery → Arquitetura → Agentes → Deploy).
+     - **Seção de Conversão / Diagnóstico:** CTA comercial para WhatsApp e agendamento de diagnóstico técnico.
+- **Impacto:** Máximo (mostra aos clientes exatamente o valor e a sofisticação da entrega).
+- **Esforço:** Médio.
+- **Risco:** Baixo.
+- **Como reverter:** `git checkout HEAD~1 -- src/pages/DemoStudioLanding.tsx src/pages/DemoStudioLanding.css`
+- **Arquivos afetados:** `src/pages/DemoStudioLanding.tsx`, `src/pages/DemoStudioLanding.css`.
+- **Métrica de sucesso:** Conteúdo 100% específico sem clichês de IA (atende ao P-13); zero vazamento de CSS na Home.
+
+---
+
+### Camada 3: Efeitos Visuais de Referência (ASCII Canvas, Física de Texto & Scramble)
+- **Objetivo:** Incorporar os efeitos interativos inspirados no estudo da *aino.agency* e microinterações de impacto.
+- **Itens:**
+  1. **ASCII Hero Banner:** Canvas interativo que renderiza a malha tipográfica da demo e reage com física elástica ao ponteiro do mouse, pausando em aba inativa.
+  2. **Scramble Text Reveal:** Títulos e chamadas da demo com efeito de decodificação cibernética de alta performance ao entrar no viewport via `IntersectionObserver`.
+  3. **Hover Static & Microinterações:** Efeito de estática sutil nos botões de CTA e chips de tecnologia da demo.
+  4. **Alternador de Modo Visual:** Permite ao cliente alternar entre o modo estúdio tradicional e o modo ASCII interativo (demonstrando domínio técnico completo).
+- **Impacto:** Muito Alto (o diferencial estético de nível internacional que encanta clientes).
+- **Esforço:** Médio.
+- **Risco:** Médio (controlado com limites de FPS, Canvas 2D nativo e suporte a `prefers-reduced-motion`).
+- **Como reverter:** `git checkout HEAD~1 -- src/components/demo/ src/pages/DemoStudioLanding.tsx`
+- **Arquivos afetados:** `src/pages/DemoStudioLanding.tsx`, `src/ascii/`, componentes de efeito da demo.
+- **Métrica de sucesso:** 60 FPS estáveis; transições suaves; tempo de carregamento instantâneo.
+
+---
+
+### Camada 4: Responsividade Mobile, Acabamento Fino & Gate Anti-IA
+- **Objetivo:** Garantir toque perfeito em smartphones, harmonia de contraste e aprovação final.
+- **Itens:**
+  1. Revisão e ajuste fino de layout em breakpoints móveis (375px a 768px).
+  2. Garantir alinhamento milimétrico, áreas de clique confortáveis (>44px) e legibilidade.
+  3. Validação estática de ponta a ponta (`npm run typecheck`, `npm run lint`, `npm run build`).
+  4. Execução do Gate Anti-Cara-de-IA (`P-13`, Momento: Final da Intervenção M10).
+- **Impacto:** Alto.
+- **Esforço:** Baixo a Médio.
+- **Risco:** Mínimo.
+- **Métrica de sucesso:** `npm run build` passa com 0 erros; veredito do P-13: "PASSA".
 
 ---
 

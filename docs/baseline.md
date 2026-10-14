@@ -1,19 +1,19 @@
 # Baseline do Projeto — Portfólio Luiz Eduardo Lopes (M-2)
 
-> Medição realizada em 2026-10-03 antes de qualquer alteração de código.  
-> Ferramentas utilizadas: Vite 6.2.0 build pipeline, TypeScript 6.0.3, ESLint 10.11.0.
+> Medição realizada em 2026-10-14 antes de qualquer alteração de código para a intervenção M10.  
+> Ferramentas utilizadas: Vite 6.4.3 build pipeline, TypeScript 6.0.3, ESLint 10.11.0.
 
 ---
 
 ## 1. Métricas Técnicas de Compilação & Bundling
 
-- **Tempo de Build de Produção:** `6.33s`
+- **Tempo de Build de Produção:** `6.57s`
 - **Módulos Transformados:** 2297 módulos
 - **Erros de TypeScript (`tsc --noEmit`):** `0 erros` (100% aprovado)
 - **Tamanhos dos Chunks Gerados:**
-  - `dist/index.html`: `3.25 kB` (gzip: `1.27 kB`)
-  - `dist/assets/index-D-dXnTV4.css`: `78.69 kB` (gzip: `14.45 kB`)
-  - `dist/assets/index-D6K15DSw.js`: `469.83 kB` (gzip: `150.52 kB`)
+  - `dist/index.html`: `3.24 kB` (gzip: `1.26 kB`)
+  - `dist/assets/index-C7OGTU-W.css`: `85.49 kB` (gzip: `15.51 kB`)
+  - `dist/assets/index-CYTPbNQJ.js`: `479.76 kB` (gzip: `153.73 kB`)
 - **Requisições de Mídia Estática:**
   - Áudio: 8 arquivos MP3 sob demanda (`public/assets/audio/`, ~12 MB total, sem download inicial)
   - Imagens de preview: WebP / PNG otimizados
@@ -22,7 +22,9 @@
 
 ## 2. Qualidade de Código & Linter (ESLint)
 
-- **Total de Ocorrências:** 11 problemas (6 erros, 5 warnings)
+- **Total de Ocorrências:** 1 aviso (0 erros, 1 warning)
+- **Warning observado:** `AudioContext.tsx:192`: fast-refresh warning (exportação conjunta de constantes e hooks)
+- **Status:** 0 erros bloqueantes de compilação ou de regras de hooks do React 19.
 - **Erros Críticos de Performance/Hooks:**
   - `src/components/AsciiTitle.tsx:86`: `setState` síncrono dentro do corpo de `useEffect` (risco de cascading renders)
   - `src/components/TypewriterText.tsx:34`: `setState` síncrono dentro de `useEffect`

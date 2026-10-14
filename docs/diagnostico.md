@@ -1,7 +1,20 @@
 # Diagnóstico Geral — Portfólio Luiz Eduardo Lopes (M-3)
 
-> Realizado em 2026-10-03 sem alteração de código.  
-> Duas fontes de auditoria: Inspeção Técnica & Hooks + Princípios Editoriais de Interface (Jakub/Impeccable) + Gate Anti-Cara-de-IA (P-13).
+> Realizado em 2026-10-14 sem alteração de código para a intervenção M10 (Landing Page de Demonstração para Clientes).  
+> Duas fontes de auditoria: Inspeção Técnica & Concorrência React 19 + Princípios de UX/UI Comercial de Alta Conversão (Jakub/Impeccable) + Gate Anti-Cara-de-IA (P-13).
+
+---
+
+## 0. Diagnóstico Específico da Intervenção M10 (Showcase / Demo Comercial)
+
+### Achados Técnicos & de Arquitetura:
+1. **[Alto] Ausência de Roteamento ou Modo Vitrine Dedicado:** `src/App.tsx` opera como uma SPA de hash único para o portfólio pessoal. Para exibir uma landing page modelo sem misturar estilos nem quebrar a Home, é necessário um mecanismo modular de visualização da demonstração (ex: rota dedicada `/demo` ou toggle de página SPA mantendo o bundle rápido e sem bibliotecas de roteador pesadas).
+2. **[Médio] Módulos de ASCII / Scramble em `src/ascii/` Desconectados:** Os arquivos `TextScramble.ts`, `hoverStatic.ts`, `engine.ts` e o estudo da *aino.agency* estão prontos no repositório, mas ainda não estão expostos em um ecossistema comercial que os clientes possam interagir.
+3. **[Médio] Risco de Vazamento de Estilos:** A nova landing page precisa de identidade própria de estúdio de tecnologia, sem colidir com os seletores globais de `src/index.css`. Deve usar escopo limpo (CSS modular ou namespace `.demo-page`).
+
+### Achados Comerciais & Anti-Cara-de-IA:
+4. **[Alto] Risco de Copy Genérica de IA em Landing Pages:** Templates comuns usam slogans vazios ("Transforme seu negócio"). A demonstração de Studio de IA deve apresentar produtos e agentes reais: Agente de Operações, Agente de Atendimento Cognitivo, Orquestração com LLMs e Integrações Enterprise.
+5. **[Médio] Acessibilidade e Performance de Efeitos:** Efeitos de física de partículas de texto e canvas em ASCII precisam pausar em abas inativas e respeitar `prefers-reduced-motion` para garantir nota máxima em Core Web Vitals.
 
 ---
 

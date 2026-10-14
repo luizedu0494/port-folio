@@ -18,6 +18,7 @@ import { Projects } from './sections/Projects';
 import { Skills } from './sections/Skills';
 import { Certifications } from './sections/Certifications';
 import { Contact } from './sections/Contact';
+import { DemoStudioLanding } from './pages/DemoStudioLanding';
 
 const SECTION_IDS = ['sobre', 'processo', 'projetos', 'habilidades', 'certificacoes', 'contato'];
 
@@ -30,6 +31,41 @@ export const AppContent: React.FC = () => {
   const [previewMedia, setPreviewMedia] = useState<LightboxMedia | null>(null);
   const [activeSection, setActiveSection] = useState<string>('sobre');
   const [isNavVisible, setIsNavVisible] = useState<boolean>(true);
+
+  // Controle de Rota SPA (Portfólio Principal vs. Landing Page de Demonstração Comercial)
+  const [currentView, setCurrentView] = useState<'portfolio' | 'demo'>(() => {
+    if (typeof window !== 'undefined') {
+      return window.location.hash === '#demo' || window.location.search.includes('demo')
+        ? 'demo'
+        : 'portfolio';
+    }
+    return 'portfolio';
+  });
+
+  const navigateTo = (view: 'portfolio' | 'demo') => {
+    setCurrentView(view);
+    if (view === 'demo') {
+      window.location.hash = 'demo';
+    } else {
+      if (window.location.hash === '#demo') {
+        history.pushState('', document.title, window.location.pathname + window.location.search);
+      }
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    const handleHash = () => {
+      if (window.location.hash === '#demo') {
+        setCurrentView('demo');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (currentView === 'demo' && window.location.hash !== '#demo') {
+        setCurrentView('portfolio');
+      }
+    };
+    window.addEventListener('hashchange', handleHash);
+    return () => window.removeEventListener('hashchange', handleHash);
+  }, [currentView]);
 
   // Toggle de Efeitos (Modo Imersivo / Modo Foco de Alta Leitura)
   const [effectsEnabled, setEffectsEnabled] = useState<boolean>(() => {
@@ -220,6 +256,20 @@ export const AppContent: React.FC = () => {
 
           {/* Player de Áudio & Menu Toggle visíveis no Header no Mobile */}
           <div className="mobile-header-actions">
+            <a
+              href="#demo"
+              className="nav-demo-badge-btn mobile-demo-badge"
+              onClick={(e) => {
+                e.preventDefault();
+                setIsMobileMenuOpen(false);
+                navigateTo('demo');
+              }}
+              title="Ver Landing Page de Exemplo para Clientes"
+            >
+              <span className="demo-live-dot" />
+              <span>Demo</span>
+            </a>
+
             <button
               className="effects-toggle-btn mobile-effects-btn"
               onClick={toggleEffects}
@@ -248,6 +298,20 @@ export const AppContent: React.FC = () => {
             <div className="mobile-drawer-audio-container">
               <AudioPlayer variant="drawer" />
             </div>
+
+            <a
+              href="#demo"
+              className="nav-demo-badge-btn desktop-demo-badge"
+              onClick={(e) => {
+                e.preventDefault();
+                setIsMobileMenuOpen(false);
+                navigateTo('demo');
+              }}
+              title="Ver Landing Page de Exemplo para Clientes"
+            >
+              <span className="demo-live-dot" />
+              <span>Demo: AI Studio</span>
+            </a>
 
             {navLinks.map((link) => (
               <a
@@ -292,52 +356,58 @@ export const AppContent: React.FC = () => {
         </div>
       </header>
 
-      <main id="conteudo-principal">
-        <About profile={profile} />
-        <Process />
-        <Projects
-          projects={projects}
-          githubProfileUrl={profile.contacts.github}
-          onPreview={(m) => setPreviewMedia(m)}
-        />
-        <Skills profile={profile} />
-        <Certifications profile={profile} />
-        <Contact profile={profile} />
-      </main>
+      {currentView === 'demo' ? (
+        <DemoStudioLanding onBackToPortfolio={() => navigateTo('portfolio')} />
+      ) : (
+        <>
+          <main id="conteudo-principal">
+            <About profile={profile} onOpenDemo={() => navigateTo('demo')} />
+            <Process />
+            <Projects
+              projects={projects}
+              githubProfileUrl={profile.contacts.github}
+              onPreview={(m) => setPreviewMedia(m)}
+            />
+            <Skills profile={profile} />
+            <Certifications profile={profile} />
+            <Contact profile={profile} />
+          </main>
 
-      {/* Rodapé Expandido — Wordmark + Apresentação */}
-      <footer className="footer-ascii-section" aria-label="Rodapé do portfólio">
-        <div className="container footer-container">
-          <div className="footer-wordmark-wrapper footer-wordmark-wrapper--large">
-            <SvgAsciiWordmark variant="footer" />
-          </div>
+          {/* Rodapé Expandido — Wordmark + Apresentação */}
+          <footer className="footer-ascii-section" aria-label="Rodapé do portfólio">
+            <div className="container footer-container">
+              <div className="footer-wordmark-wrapper footer-wordmark-wrapper--large">
+                <SvgAsciiWordmark variant="footer" />
+              </div>
 
-          <div className="footer-headline-wrapper">
-            <p className="footer-headline-text">
-              <span className="footer-headline-intro">Desenvolvedor de Software focado em</span>
-              <span className="footer-headline-dynamic">
-                <TypewriterText
-                  words={[
-                    'Landing Pages de Alta Conversão',
-                    'Engenharia de IA & Agentes',
-                    'Desenvolvimento Fullstack React & Python',
-                    'Sistemas Inteligentes & Web Performance'
-                  ]}
-                />
-              </span>
-            </p>
-          </div>
+              <div className="footer-headline-wrapper">
+                <p className="footer-headline-text">
+                  <span className="footer-headline-intro">Desenvolvedor de Software focado em</span>
+                  <span className="footer-headline-dynamic">
+                    <TypewriterText
+                      words={[
+                        'Landing Pages de Alta Conversão',
+                        'Engenharia de IA & Agentes',
+                        'Desenvolvimento Fullstack React & Python',
+                        'Sistemas Inteligentes & Web Performance'
+                      ]}
+                    />
+                  </span>
+                </p>
+              </div>
 
-          <div className="footer-bottom-line">
-            <p className="footer-copy">
-              © {new Date().getFullYear()} Luiz Eduardo. Todos os direitos reservados.
-            </p>
-            <p className="footer-tech-stack">
-              Arquitetado com React 19, TypeScript &amp; Neural Space Canvas
-            </p>
-          </div>
-        </div>
-      </footer>
+              <div className="footer-bottom-line">
+                <p className="footer-copy">
+                  © {new Date().getFullYear()} Luiz Eduardo. Todos os direitos reservados.
+                </p>
+                <p className="footer-tech-stack">
+                  Arquitetado com React 19, TypeScript &amp; Neural Space Canvas
+                </p>
+              </div>
+            </div>
+          </footer>
+        </>
+      )}
 
       {/* Modal de Lightbox para Pré-visualização Ampliada */}
       {previewMedia && <ImageLightbox media={previewMedia} onClose={() => setPreviewMedia(null)} />}
