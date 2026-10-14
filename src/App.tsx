@@ -24,7 +24,9 @@ const SECTION_IDS = ['sobre', 'processo', 'projetos', 'habilidades', 'certificac
 
 export const AppContent: React.FC = () => {
   const { startExperienceWithAudio } = useAudio();
-  const [entered, setEntered] = useState<boolean>(false);
+  // Controle de Rota SPA (Portfólio Principal vs. Landing Page de Demonstração Comercial)
+  const isInitialDemo = typeof window !== 'undefined' && (window.location.hash === '#demo' || window.location.search.includes('demo'));
+  const [entered, setEntered] = useState<boolean>(() => isInitialDemo);
   const [profile] = useState<DeveloperProfile>(initialProfile);
   const [projects] = useState<Project[]>(initialProjects);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
@@ -32,19 +34,14 @@ export const AppContent: React.FC = () => {
   const [activeSection, setActiveSection] = useState<string>('sobre');
   const [isNavVisible, setIsNavVisible] = useState<boolean>(true);
 
-  // Controle de Rota SPA (Portfólio Principal vs. Landing Page de Demonstração Comercial)
   const [currentView, setCurrentView] = useState<'portfolio' | 'demo'>(() => {
-    if (typeof window !== 'undefined') {
-      return window.location.hash === '#demo' || window.location.search.includes('demo')
-        ? 'demo'
-        : 'portfolio';
-    }
-    return 'portfolio';
+    return isInitialDemo ? 'demo' : 'portfolio';
   });
 
   const navigateTo = (view: 'portfolio' | 'demo') => {
     setCurrentView(view);
     if (view === 'demo') {
+      setEntered(true);
       window.location.hash = 'demo';
     } else {
       if (window.location.hash === '#demo') {
@@ -57,6 +54,7 @@ export const AppContent: React.FC = () => {
   useEffect(() => {
     const handleHash = () => {
       if (window.location.hash === '#demo') {
+        setEntered(true);
         setCurrentView('demo');
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else if (currentView === 'demo' && window.location.hash !== '#demo') {
@@ -213,8 +211,8 @@ export const AppContent: React.FC = () => {
     <div className={`portfolio-app ${entered ? 'ready' : ''} ${effectsEnabled ? 'effects-active' : 'effects-disabled'}`}>
       <a href="#sobre" className="skip-link">Pular para o conteúdo</a>
 
-      {/* Intro Vortex Cosmic */}
-      {!entered && (
+      {/* Intro Vortex Cosmic — Apenas no portfólio se ainda não entrou */}
+      {!entered && currentView === 'portfolio' && (
         <AsciiIntro
           videoSrc="/assets/videos/tech-fear.mp4"
           onStart={(withAudio) => {
@@ -224,19 +222,21 @@ export const AppContent: React.FC = () => {
         />
       )}
 
-      {/* Background de Rede Neural Interativa em Movimento */}
-      {effectsEnabled && <NeuralNetworkBg />}
+      {/* Background de Rede Neural Interativa em Movimento — Apenas no portfólio */}
+      {effectsEnabled && currentView === 'portfolio' && <NeuralNetworkBg />}
 
-      {/* Cursor Cometa Cósmico no Desktop */}
-      {entered && effectsEnabled && <CosmicCometCursor />}
+      {/* Cursor Cometa Cósmico no Desktop — Apenas no portfólio */}
+      {entered && effectsEnabled && currentView === 'portfolio' && <CosmicCometCursor />}
 
       {/* Overlay escuro de fundo ao abrir drawer mobile */}
       {isMobileMenuOpen && <div className="mobile-overlay" onClick={() => setIsMobileMenuOpen(false)} />}
 
-      <header
-        className={`navbar ${!isNavVisible && !isMobileMenuOpen ? 'navbar--hidden' : ''}`}
-        inert={!entered}
-      >
+      {/* Header / Navbar do Portfólio Principal */}
+      {currentView === 'portfolio' && (
+        <header
+          className={`navbar ${!isNavVisible && !isMobileMenuOpen ? 'navbar--hidden' : ''}`}
+          inert={!entered}
+        >
         <div className="container nav-container">
           <a
             href="#sobre"
@@ -355,6 +355,7 @@ export const AppContent: React.FC = () => {
           </nav>
         </div>
       </header>
+      )}
 
       {currentView === 'demo' ? (
         <DemoStudioLanding onBackToPortfolio={() => navigateTo('portfolio')} />
