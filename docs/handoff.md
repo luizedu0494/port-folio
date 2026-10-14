@@ -1,12 +1,21 @@
-# Guia de Entrega & Handoff — Portfólio v2.0 Luiz Eduardo Lopes (M-18)
+# Guia de Entrega & Handoff — Portfólio Luiz Eduardo Lopes (M-18)
 
-> **Data de Entrega:** 2026-10-03  
-> **Branch de Trabalho:** `melhoria/m3-v2-redesign-disposicao`  
-> **Tag de Snapshot de Segurança:** `snapshot-pre-m3-v2` (commit `9db1e89`)
+> **Última Entrega (M10):** 2026-10-14 — Showcase & Landing Page de Demonstração Comercial para Clientes  
+> **Branch de Trabalho:** `melhoria/m10-demo-showcase-landing-page`  
+> **Snapshot de Segurança:** `snapshot-pre-m10-demo`  
+> **Versão Anterior (v2.0):** 2026-10-03 (`melhoria/m3-v2-redesign-disposicao` / `snapshot-pre-m3-v2`)  
 
 ---
 
-## 1. Resumo Executivo da Entrega
+## 0. Resumo Executivo da Entrega M10 (Showcase Nexus Studio)
+
+Foi implementada uma **Landing Page Comercial Completa de Demonstração (Nexus AI Studio)** acessível de forma isolada pela rota/hash `#demo`, com pontos de entrada elegantes na Navbar e na seção Sobre do portfólio principal.
+
+### O que foi entregue em 4 Camadas:
+1. **Camada 1 (Arquitetura & Roteamento SPA):** Rota `#demo` limpa em `App.tsx` sem dependências externas; botões de navegação e retorno instantâneo ("← Voltar ao Portfólio").
+2. **Camada 2 (Estrutura & Conteúdo Comercial):** Landing page completa (`DemoStudioLanding.tsx`) com Hero arrojado de estúdio de engenharia, faixa de métricas operacionais reais, 3 pilares de IA (Agentes de Triagem, Plataformas Fullstack, RAG Corporativo), cronograma de 4 semanas e CTA de WhatsApp.
+3. **Camada 3 (Efeitos Visuais de Referência):** Banner de ASCII Canvas com física de partículas elástica em 2D (*aino.agency*), efeito de decodificação cibernética (*ScrambleText*) em títulos e alternador de tema interativo (*Studio Dark* vs. *Matrix CRT*).
+4. **Camada 4 (Responsividade & QA):** Breakpoints finos (375px a 768px), `touch-action: pan-y` no canvas sem travar o scroll vertical e 0 erros de compilação.
 
 A versão 2.0 do portfólio de Luiz Eduardo Lopes foi executada seguindo rigorosamente a intervenção **M-3 (Redesign por Camadas)** do playbook de melhoria contínua. Todos os elementos identitários e artísticos centrais — a introdução conceitual, o background dinâmico de rede neural, a música de fundo e a estética *Pearl Platinum & Onyx Dark* — foram preservados e otimizados.
 
@@ -47,8 +56,8 @@ Quando você revisar e aprovar o resultado final na sua máquina:
 # 1. Certifique-se de que está na branch principal
 git checkout main
 
-# 2. Faça o merge da branch da v2
-git merge melhoria/m3-v2-redesign-disposicao
+# 2. Faça o merge da branch da intervenção M10
+git merge melhoria/m10-demo-showcase-landing-page
 
 # 3. Envie para o GitHub (o webhook da Vercel fará o deploy automático)
 git push origin main
@@ -58,12 +67,12 @@ git push origin main
 
 ## 4. Plano de Rollback Imediato (Caso Necessário)
 
-Se a qualquer momento você desejar retornar o código exatamente ao estado anterior ao início da intervenção v2:
+Se a qualquer momento você desejar retornar o código exatamente ao estado anterior ao início da intervenção M10:
 
 ```bash
-git checkout snapshot-pre-m3-v2
+git checkout snapshot-pre-m10-demo
 # Ou para resetar a branch atual:
-git reset --hard snapshot-pre-m3-v2
+git reset --hard snapshot-pre-m10-demo
 ```
 
 ---

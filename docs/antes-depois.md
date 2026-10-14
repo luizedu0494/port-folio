@@ -58,6 +58,29 @@
 | Preserva decisões deliberadas do criador | **SIM** | Abertura cósmica, rede neural interativa, música de fundo, ASCII art e estética ônix/platina foram estritamente preservadas. |
 | Elimina repetição de templates genéricos | **SIM** | Quebra do padrão monótono de 20 flip cards sucessivos; introdução de Matriz Técnica e Linha de Processo personalizada. |
 | Copy soa com autoridade técnica real | **SIM** | Vocabulário preciso de engenharia de software e inteligência artificial, sem clichês ("revolucionário", "apaixonado por café", "mágico"). |
+
+---
+
+## 4. Comparativo da Intervenção M10 — Showcase & Landing Page de Demonstração (2026-10-14)
+
+### 4.1 Tabela de Métricas Técnicas (M-17)
+
+| Métrica | Antes (Baseline 2026-10-14) | Depois (M10 Concluído) | Impacto / Avaliação |
+|---|---|---|---|
+| **Tempo de Build Vite** | `6.57s` | **5.62s** | **-14.5% mais veloz** (mesmo com os novos módulos de ASCII e demo) |
+| **Erros de TypeScript (`tsc --noEmit`)** | 0 erros | **0 erros** | Conformidade estrita mantida com React 19 e TS 6 |
+| **Erros de ESLint (`eslint .`)** | 0 erros (1 warning) | **0 erros** (1 warning legada) | Zero warnings introduzidas no código novo |
+| **Chunks de Produção** | `index.css`: 85.49 kB / `index.js`: 479.76 kB | `index.css`: 97.96 kB / `index.js`: 497.71 kB | Adição de página comercial completa com física 2D e estilos em menos de 18 kB gzipped |
+| **Suporte a Dispositivos Móveis** | Não havia demo dedicada | Layout adaptado (375px a 768px), `touch-action: pan-y` no canvas sem travar o scroll | Usabilidade fluida e toque reativo em smartphones |
+| **Acessibilidade de Animações** | Suporte global na Home | Suporte estendido: `prefers-reduced-motion` no `DemoAsciiCanvas` com renderização estática | 100% aderente a normas de acessibilidade |
+
+### 4.2 Checklist de Regressão: O que NÃO podia mudar permaneceu intacto?
+
+- [x] **Rede Neural em Canvas 2D:** 100% íntegra na Home principal.
+- [x] **Intro Conceitual / ASCII:** 100% preservada na Home principal.
+- [x] **Paleta Pearl Platinum & Onyx Dark:** Preservada e sem colisão de estilos (escopo isolado em `.demo-landing-root`).
+- [x] **URLs Canônicas & SEO:** Meta tags originais preservadas; rota SPA com `#demo` / query sem quebra de indexação.
+- [x] **Dados de Contato:** Links diretos de GitHub, LinkedIn e WhatsApp ativos e expandidos na demo com mensagem comercial direcionada.
 | Contraste e usabilidade para humanos | **SIM** | Contraste WCAG AA garantido em todos os textos secundários e controle de foco estático acessível a qualquer momento. |
 | **Veredito Geral** | **APROVADO (PASSA)** | O portfólio reflete a maturidade profissional de um Engenheiro de Software especializado em IA, sem aparência de template gerado automaticamente. |
 

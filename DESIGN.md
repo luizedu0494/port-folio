@@ -67,6 +67,7 @@
 3. **Player de Áudio Dev Focus:** Reprodução lofi/ambient via `AudioContext` com scrubber, controle de volume suave e persistência em `localStorage`.
 4. **Lightbox Modal:** Visualizador em tela cheia para screenshots e mídias de projetos sem cortes (`object-fit: contain`).
 5. **Botões com Movimento Fluido:** Botões com gradiente animado contínuo (`btnGradientFlow`) e efeito de respiração metálica perolizada.
+6. **Showcase Landing Page Modular (`DemoStudioLanding.tsx`):** Página de demonstração comercial completa para clientes, com escopo CSS isolado, faixa de métricas em tempo real, 3 pilares de IA com chips de tecnologia e CTA para WhatsApp.
 
 ---
 
@@ -76,6 +77,8 @@
 - **Intro ASCII / Vetorial:** Animação de entrada com redemoinho de caracteres e morfologia visual.
 - **Typewriter & Scramble:** Efeitos de digitação e revelação de texto com decodificação cibernética.
 - **Cursor Cósmico:** Rastro sutil de cometa (`CosmicCometCursor`) seguindo o ponteiro em telas desktop.
+- **Demo ASCII Canvas com Física 2D Elástica (`DemoAsciiCanvas.tsx`):** Malha de texto monoespaçada inspirada no motor da *aino.agency*, com física elástica em tempo real (Hooke's law + damping), morphing dinâmico de caracteres e suporte a toque móvel com `touch-action: pan-y`.
+- **Alternador de Estética Matrix CRT:** Modo visual temático com scanlines de fósforo verde (`#10b981`) para demonstração de versatilidade estética.
 
 ---
 

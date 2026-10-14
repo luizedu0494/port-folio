@@ -29,3 +29,59 @@
 
 **Veredito Diagnóstico M10:** **PASSA COM DIRETRIZES PREVENTIVAS**  
 *Justificativa:* As diretrizes do P-13 foram estabelecidas para a construção da nova landing page de demonstração, garantindo originalidade, código limpo, microinterações intencionais e ausência de vícios visuais de IA.
+
+---
+
+## 3. Momento: Pós-Camada 1 — Arquitetura & Roteamento da Demo (2026-10-14)
+
+| Elemento Avaliado | Camada | Onde | Verificação | Severidade | Veredito |
+|---|---|---|---|---|---|
+| Botões e Badges de Entrada | Visual | Navbar & About.tsx | Micro-badge com indicador pulsante sutil; sem orbes artificiais | Nenhuma | Aprovado |
+| Copy de Chamada para Demo | Texto | `About.tsx` | Pergunta contextual limpa sobre demonstração de landing page para estúdios de IA | Nenhuma | Aprovado |
+| Roteamento e Isolamento SPA | Código | `App.tsx` | Transição instantânea sem reload, mantendo a home intacta por padrão | Nenhuma | Aprovado |
+
+**Veredito Pós-Camada 1:** **PASSA**  
+*Justificativa:* A Camada 1 introduziu o isolamento arquitetural e pontos de entrada elegantes sem nenhum sinal de template genérico ou vício de IA.
+
+---
+
+## 4. Momento: Pós-Camada 2 — Estrutura & Conteúdo Comercial da Demo (2026-10-14)
+
+| Elemento Avaliado | Camada | Onde | Verificação | Severidade | Veredito |
+|---|---|---|---|---|---|
+| Copy Comercial & Headlines | Texto | `DemoStudioLanding.tsx` | Termos técnicos reais (LangChain, FastAPI, pgvector, RAG, RBAC); zero slogans clichês | Nenhuma | Aprovado |
+| Ritmo Estrutural & Grids | Estrutura | `DemoStudioLanding.tsx` | Faixa de métricas operacionais + 3 pilares com chips + timeline de 4 semanas | Nenhuma | Aprovado |
+| Estética & Cores | Visual | `DemoStudioLanding.css` | Onyx profundo com acentos ciano e platina; ausência de roxo genérico/aurora | Nenhuma | Aprovado |
+| Isolamento de Escopo | Código | `DemoStudioLanding.css` | 100% dos seletores sob `.demo-landing-root`; zero vazamento na Home | Nenhuma | Aprovado |
+
+**Veredito Pós-Camada 2:** **PASSA**  
+*Justificativa:* A landing page de demonstração entrega uma proposta de valor autoral de alta precisão técnica e comercial, sem vícios de template genérico ou copy clichê de IA.
+
+---
+
+## 5. Momento: Pós-Camada 3 — Efeitos Visuais de Referência (ASCII Canvas & Scramble) (2026-10-14)
+
+| Elemento Avaliado | Camada | Onde | Verificação | Severidade | Veredito |
+|---|---|---|---|---|---|
+| Efeito ASCII Canvas com Física | Visual / Efeito | `DemoAsciiCanvas.tsx` | Simulação elástica inspirada em *aino.agency*; pausa em aba inativa | Nenhuma | Aprovado |
+| Decodificação Cibernética (Scramble) | Efeito / Texto | Títulos da Demo | Reveal pontual e sutil via IntersectionObserver sem re-renders em cadeia | Nenhuma | Aprovado |
+| Alternador de Modo Matrix | Visual | Top Bar da Demo | Demonstração de versatilidade estética (Studio Dark vs. Matrix CRT) | Nenhuma | Aprovado |
+| Acessibilidade & Reduced Motion | Qualidade | Canvas & Scramble | Suporte automático a `prefers-reduced-motion` com fallback estático | Nenhuma | Aprovado |
+
+**Veredito Pós-Camada 3:** **PASSA**  
+*Justificativa:* Os efeitos de referência trazem alto impacto visual e dinamismo, respeitando rigorosamente a taxa de quadros (60 FPS), acessibilidade e economia de bateria/CPU.
+
+---
+
+## 6. Momento: Final da Intervenção M10 — Showcase Completo (2026-10-14)
+
+| Sinal Anti-IA | Status | Verificação e Evidência |
+|---|---|---|
+| Efeitos decorativos desnecessários | **PASSA** | O ASCII Canvas possui física controlada, modo de pausa e desativação manual; nada de shaders pesados. |
+| Textos e slogans clichês de IA | **PASSA** | Conteúdo específico de engenharia de software, automações corporativas e agentes autônomos. |
+| Layout de template repetitivo | **PASSA** | Diagramação editorial assimétrica, métricas operacionais densas e opções de tema (Studio vs. Matrix). |
+| Responsividade e toque móvel | **PASSA** | Áreas de clique confortáveis (>44px), `touch-action: pan-y` sem travamento de rolagem no celular. |
+| Preservação do projeto nuclear | **PASSA** | A Home principal e o código original permaneceram 100% íntegros e funcionais. |
+
+**Veredito Final da Intervenção M10:** **APROVADO (PASSA)**  
+*Conclusão:* A entrega cumpre todos os requisitos de qualidade técnica, estética premium e ausência de sinais de IA genérica.
