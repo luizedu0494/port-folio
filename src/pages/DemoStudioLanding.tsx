@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ArrowLeft,
   Sparkles,
@@ -10,6 +10,8 @@ import {
   Code2,
   MessagesSquare
 } from 'lucide-react';
+import { DemoAsciiCanvas } from '../components/demo/DemoAsciiCanvas';
+import { ScrambleText } from '../components/ScrambleText';
 import './DemoStudioLanding.css';
 
 interface DemoStudioLandingProps {
@@ -17,6 +19,8 @@ interface DemoStudioLandingProps {
 }
 
 export const DemoStudioLanding: React.FC<DemoStudioLandingProps> = ({ onBackToPortfolio }) => {
+  const [isMatrixMode, setIsMatrixMode] = useState<boolean>(false);
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     const originalTitle = document.title;
@@ -27,7 +31,7 @@ export const DemoStudioLanding: React.FC<DemoStudioLandingProps> = ({ onBackToPo
   }, []);
 
   return (
-    <div className="demo-landing-root">
+    <div className={`demo-landing-root ${isMatrixMode ? 'demo-matrix-mode' : ''}`}>
       {/* Luzes sutis de fundo */}
       <div className="demo-bg-glow-top" />
       <div className="demo-bg-glow-mid" />
@@ -49,6 +53,17 @@ export const DemoStudioLanding: React.FC<DemoStudioLandingProps> = ({ onBackToPo
               <a href="#metodologia-demo" className="demo-nav-link">Metodologia</a>
               <a href="#contato-demo" className="demo-nav-link">Diagnóstico</a>
             </nav>
+
+            <button
+              type="button"
+              onClick={() => setIsMatrixMode(!isMatrixMode)}
+              className="demo-ascii-btn-toggle"
+              title="Alternar entre Estética Estúdio Minimalista e Terminal Matrix"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.45rem 0.8rem' }}
+            >
+              <Terminal size={13} />
+              <span>{isMatrixMode ? 'Tema: Matrix CRT' : 'Tema: Studio Dark'}</span>
+            </button>
 
             <button
               onClick={onBackToPortfolio}
@@ -123,6 +138,9 @@ export const DemoStudioLanding: React.FC<DemoStudioLandingProps> = ({ onBackToPo
               <span>Conhecer Soluções</span>
             </a>
           </div>
+
+          {/* Banner Interativo M10: ASCII Canvas com Física de Partículas e Scramble */}
+          <DemoAsciiCanvas />
         </section>
 
         {/* ── Faixa de Métricas Operacionais ── */}
@@ -149,7 +167,9 @@ export const DemoStudioLanding: React.FC<DemoStudioLandingProps> = ({ onBackToPo
         <section id="solucoes-demo">
           <div className="demo-section-header">
             <span className="demo-section-tag">Capacidades Técnicas</span>
-            <h2 className="demo-section-title">Engenharia Sob Medida para Desafios Complexos</h2>
+            <h2 className="demo-section-title">
+              <ScrambleText text="Engenharia Sob Medida para Desafios Complexos" onView hover fast />
+            </h2>
             <p className="demo-section-desc">
               Não aplicamos scripts genéricos. Projetamos agentes e aplicações web moldados especificamente às regras de negócio e integrações da sua operação.
             </p>
@@ -213,7 +233,9 @@ export const DemoStudioLanding: React.FC<DemoStudioLandingProps> = ({ onBackToPo
         <section id="metodologia-demo">
           <div className="demo-section-header">
             <span className="demo-section-tag">Fluxo Transparente</span>
-            <h2 className="demo-section-title">Do Diagnóstico ao Deploy em 4 Semanas</h2>
+            <h2 className="demo-section-title">
+              <ScrambleText text="Do Diagnóstico ao Deploy em 4 Semanas" onView hover fast />
+            </h2>
             <p className="demo-section-desc">
               Processo enxuto sem reuniões intermináveis ou escopos inflados. Foco absoluto em métricas de negócio e código de produção.
             </p>
