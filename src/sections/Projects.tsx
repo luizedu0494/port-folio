@@ -48,12 +48,6 @@ export const Projects: React.FC<ProjectsProps> = ({ projects, githubProfileUrl, 
           project.stack.some((s) => AI_STACK_KEYWORDS.includes(s.toLowerCase())) ||
           AI_PROJECT_IDS.includes(project.id)
         );
-      if (activeFilter === 'landing')
-        return (
-          project.id.includes('landing') ||
-          project.stack.some((s) => s.toLowerCase().includes('landing') || s.toLowerCase().includes('html')) ||
-          project.language.toLowerCase().includes('html')
-        );
       if (activeFilter === 'python')
         return (
           project.language.toLowerCase().includes('python') ||
@@ -79,7 +73,6 @@ export const Projects: React.FC<ProjectsProps> = ({ projects, githubProfileUrl, 
         </>
       )
     },
-    { id: 'landing', label: 'Landing Pages' },
     { id: 'python', label: 'Python / Data' },
     { id: 'react', label: 'React 19' },
     { id: 'mobile', label: 'React Native' }

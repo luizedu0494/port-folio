@@ -13,13 +13,14 @@ import { AudioProvider, useAudio } from './context/AudioContext';
 import { initGridSystem } from './ascii/gridSystem';
 import { CosmicCometCursor } from './components/CosmicCometCursor';
 import { About } from './sections/About';
+import { LandingPageShowcase } from './sections/LandingPageShowcase';
 import { Projects } from './sections/Projects';
 import { Skills } from './sections/Skills';
 import { Certifications } from './sections/Certifications';
 import { Contact } from './sections/Contact';
 import { DemoStudioLanding } from './pages/DemoStudioLanding';
 
-const SECTION_IDS = ['sobre', 'projetos', 'habilidades', 'certificacoes', 'contato'];
+const SECTION_IDS = ['sobre', 'landing-page', 'projetos', 'habilidades', 'certificacoes', 'contato'];
 
 export const AppContent: React.FC = () => {
   const { startExperienceWithAudio } = useAudio();
@@ -200,6 +201,7 @@ export const AppContent: React.FC = () => {
   }, []);
 
   const navLinks = [
+    { id: 'landing-page', label: 'Landing Page' },
     { id: 'projetos', label: 'Projetos' },
     { id: 'habilidades', label: 'Habilidades' },
     { id: 'certificacoes', label: 'Certificados' }
@@ -339,6 +341,7 @@ export const AppContent: React.FC = () => {
         <>
           <main id="conteudo-principal">
             <About profile={profile} />
+            <LandingPageShowcase />
             <Projects
               projects={projects}
               githubProfileUrl={profile.contacts.github}
