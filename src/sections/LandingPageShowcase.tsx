@@ -10,7 +10,6 @@ import {
   CheckCircle2
 } from 'lucide-react';
 import { SectionHeader } from '../components/SectionHeader';
-import { ScrambleText } from '../components/ScrambleText';
 
 export const LandingPageShowcase: React.FC = () => {
   return (
@@ -23,41 +22,33 @@ export const LandingPageShowcase: React.FC = () => {
         />
 
         <p className="landing-showcase-intro">
-          Desenvolvimento de páginas comerciais e institucionais projetadas para <strong>valorizar marcas</strong>,{' '}
-          prender a atenção e transformar visitantes em <strong>agendamentos reais pelo WhatsApp</strong> — combinando
-          design editorial elegante, carregamento instantâneo e SEO local.
+          Desenvolvimento de páginas comerciais projetadas para <strong>valorizar marcas</strong>,{' '}
+          prender a atenção e transformar visitantes em <strong>clientes reais pelo WhatsApp</strong> — com design
+          editorial refinado, carregamento instantâneo e foco absoluto em conversão.
         </p>
 
-        {/* ── Card Principal de Destaque Comercial ── */}
+        {/* ── Card Principal de Exemplificação Comercial ── */}
         <div className="landing-feature-card">
           <div className="landing-feature-grid">
 
-            {/* Coluna de Conteúdo & Métricas */}
+            {/* Coluna de Conteúdo & Benefícios para o Cliente */}
             <div className="landing-feature-content">
-              <div className="landing-feature-badge-row">
-                <span className="landing-live-badge">
-                  <span className="landing-live-dot" />
-                  Case Comercial no Ar · Maceió, AL
-                </span>
-                <span className="landing-tag-category">Saúde &amp; Estética Avançada</span>
-              </div>
-
               <h3 className="landing-feature-title font-subtitle">
-                <ScrambleText text="Dra. Valéria Brandão" onView hover fast />
+                Exemplo de Landing Page Profissional
               </h3>
 
               <p className="landing-feature-tagline">
-                Gerenciamento Dérmico &amp; Rejuvenescimento · Instituto V2
+                Design Sofisticado · Carregamento Instantâneo · Foco em Vendas &amp; Agendamentos
               </p>
 
               <p className="landing-feature-description">
-                Página desenvolvida sob medida para a clínica de estética avançada no Instituto V2.
-                Projetada com arquitetura de alta conversão para conduzir o público do Google e Instagram
-                diretamente ao agendamento de consultas pelo WhatsApp, aliando sofisticação visual à máxima
-                velocidade de navegação no celular.
+                Uma demonstração prática de como uma página web de alto padrão posiciona sua marca com
+                autoridade, atrai o público certo e transforma visitas em contatos reais. Estrutura
+                pensada para prestadores de serviços, clínicas, escritórios e empresas que desejam captar
+                clientes pelo Google e redes sociais sem perder oportunidades por lentidão ou layout amador.
               </p>
 
-              {/* Pilares Comerciais do Projeto */}
+              {/* Pilares Comerciais de Impacto */}
               <div className="landing-pillars-grid">
                 <div className="landing-pillar-item">
                   <div className="landing-pillar-icon-box">
@@ -66,7 +57,7 @@ export const LandingPageShowcase: React.FC = () => {
                   <div>
                     <h4 className="landing-pillar-title">Conversão no WhatsApp</h4>
                     <p className="landing-pillar-desc">
-                      Copywriting persuasivo e chamadas estratégicas para agendamento rápido sem atrito.
+                      Copywriting persuasivo e chamadas estratégicas para agendamento sem atrito.
                     </p>
                   </div>
                 </div>
@@ -78,19 +69,7 @@ export const LandingPageShowcase: React.FC = () => {
                   <div>
                     <h4 className="landing-pillar-title">Velocidade &amp; Performance</h4>
                     <p className="landing-pillar-desc">
-                      Imagens leves em WebP e CSS otimizado para carregamento veloz em 4G/5G.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="landing-pillar-item">
-                  <div className="landing-pillar-icon-box">
-                    <Search size={16} color="var(--accent-soft)" />
-                  </div>
-                  <div>
-                    <h4 className="landing-pillar-title">SEO Local Estruturado</h4>
-                    <p className="landing-pillar-desc">
-                      Metadados semânticos Schema.org para ranqueamento de clínica em Maceió.
+                      Carregamento instantâneo em 4G/5G para não perder clientes por lentidão.
                     </p>
                   </div>
                 </div>
@@ -102,20 +81,22 @@ export const LandingPageShowcase: React.FC = () => {
                   <div>
                     <h4 className="landing-pillar-title">100% Mobile-First</h4>
                     <p className="landing-pillar-desc">
-                      Experiência fluida em smartphones com menu overlay de resposta instantânea.
+                      Navegação fluida e perfeita no celular, onde está mais de 80% do público.
                     </p>
                   </div>
                 </div>
-              </div>
 
-              {/* Tags Técnicas da Landing Page */}
-              <div className="landing-tech-tags">
-                <span className="landing-tech-tag">HTML5 Semântico</span>
-                <span className="landing-tech-tag">CSS3 Minificado</span>
-                <span className="landing-tech-tag">JavaScript Puro</span>
-                <span className="landing-tech-tag">Schema.org / SEO</span>
-                <span className="landing-tech-tag">Design Responsivo</span>
-                <span className="landing-tech-tag">Vercel Deploy</span>
+                <div className="landing-pillar-item">
+                  <div className="landing-pillar-icon-box">
+                    <Search size={16} color="var(--accent-soft)" />
+                  </div>
+                  <div>
+                    <h4 className="landing-pillar-title">SEO &amp; Presença no Google</h4>
+                    <p className="landing-pillar-desc">
+                      Estrutura otimizada para buscas locais e ranqueamento na sua região.
+                    </p>
+                  </div>
+                </div>
               </div>
 
               {/* Botão de Ação Direta */}
@@ -125,10 +106,10 @@ export const LandingPageShowcase: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="landing-primary-btn"
-                  aria-label="Acessar landing page da Dra. Valéria Brandão no ar"
+                  aria-label="Ver demonstração da landing page no ar"
                 >
                   <ExternalLink size={16} />
-                  <span>Acessar Landing Page no Ar</span>
+                  <span>Ver Demonstração no Ar</span>
                   <ArrowRight size={16} className="btn-arrow" />
                 </a>
 
@@ -138,14 +119,14 @@ export const LandingPageShowcase: React.FC = () => {
               </div>
             </div>
 
-            {/* Coluna Visual: Mockup de Navegador com Imagem Real */}
+            {/* Coluna Visual: Mockup de Navegador com Demonstração */}
             <div className="landing-feature-preview">
               <a
                 href="https://exemplo-landing-rouge.vercel.app/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="landing-mockup-frame"
-                title="Clique para abrir a landing page no ar"
+                title="Clique para abrir a demonstração no ar"
               >
                 {/* Topbar do Mockup de Browser */}
                 <div className="landing-mockup-bar">
@@ -156,15 +137,15 @@ export const LandingPageShowcase: React.FC = () => {
                   </div>
                   <div className="landing-mockup-address">
                     <span className="mockup-lock">🔒</span>
-                    dravaleriabrandao.com.br / instituto-v2
+                    seunegocio.com.br / landing-page
                   </div>
                 </div>
 
-                {/* Imagem Real da Landing Page */}
+                {/* Imagem Real da Demonstração */}
                 <div className="landing-mockup-image-container">
                   <img
                     src="/images/valeria_brandao_preview.jpg"
-                    alt="Preview da Landing Page Dra. Valéria Brandão"
+                    alt="Exemplo de Landing Page de Alta Conversão"
                     className="landing-mockup-img"
                     loading="lazy"
                     decoding="async"
@@ -172,7 +153,7 @@ export const LandingPageShowcase: React.FC = () => {
                   <div className="landing-mockup-overlay">
                     <span className="landing-mockup-hover-btn">
                       <ExternalLink size={16} />
-                      <span>Ver Projeto Completo no Ar ↗</span>
+                      <span>Ver Demonstração Completa ↗</span>
                     </span>
                   </div>
                 </div>
@@ -181,9 +162,9 @@ export const LandingPageShowcase: React.FC = () => {
                 <div className="landing-mockup-footer">
                   <div className="mockup-footer-badge">
                     <CheckCircle2 size={13} color="#22c55e" />
-                    <span>Design Editorial &amp; Tipografia Playfair / Montserrat</span>
+                    <span>Design Editorial &amp; Tipografia Refinada</span>
                   </div>
-                  <span className="mockup-footer-tag">Online</span>
+                  <span className="mockup-footer-tag">Demonstração</span>
                 </div>
               </a>
             </div>
