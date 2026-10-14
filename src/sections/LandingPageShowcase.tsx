@@ -10,13 +10,14 @@ import {
   CheckCircle2
 } from 'lucide-react';
 import { SectionHeader } from '../components/SectionHeader';
+import { BorderGlow } from '../components/BorderGlow';
 
 export const LandingPageShowcase: React.FC = () => {
   return (
     <section id="landing-page" className="reveal-on-scroll section-padded landing-showcase-section">
       <div className="container">
         <SectionHeader
-          icon={<Globe color="var(--accent-soft)" size={28} />}
+          icon={<Globe color="var(--accent-platinum)" size={28} />}
           title="Landing Page de Alta Conversão"
           triggerId="landing-page"
         />
@@ -27,8 +28,19 @@ export const LandingPageShowcase: React.FC = () => {
           editorial refinado, carregamento instantâneo e foco absoluto em conversão.
         </p>
 
-        {/* ── Card Principal de Exemplificação Comercial ── */}
-        <div className="landing-feature-card">
+        {/* ── Card Principal com Efeito de Borda Luminosa e Flutuação ── */}
+        <BorderGlow
+          className="landing-feature-card"
+          edgeSensitivity={30}
+          glowColor="0 0 100"
+          backgroundColor="#090a10"
+          borderRadius={24}
+          glowRadius={42}
+          glowIntensity={1.0}
+          coneSpread={25}
+          animated={false}
+          colors={['#ffffff', '#cbd5e1', '#94a3b8']}
+        >
           <div className="landing-feature-grid">
 
             {/* Coluna de Conteúdo & Benefícios para o Cliente */}
@@ -52,7 +64,7 @@ export const LandingPageShowcase: React.FC = () => {
               <div className="landing-pillars-grid">
                 <div className="landing-pillar-item">
                   <div className="landing-pillar-icon-box">
-                    <MessageSquare size={16} color="var(--accent-soft)" />
+                    <MessageSquare size={16} color="var(--accent-platinum)" />
                   </div>
                   <div>
                     <h4 className="landing-pillar-title">Conversão no WhatsApp</h4>
@@ -64,7 +76,7 @@ export const LandingPageShowcase: React.FC = () => {
 
                 <div className="landing-pillar-item">
                   <div className="landing-pillar-icon-box">
-                    <Zap size={16} color="var(--accent-soft)" />
+                    <Zap size={16} color="var(--accent-platinum)" />
                   </div>
                   <div>
                     <h4 className="landing-pillar-title">Velocidade &amp; Performance</h4>
@@ -76,7 +88,7 @@ export const LandingPageShowcase: React.FC = () => {
 
                 <div className="landing-pillar-item">
                   <div className="landing-pillar-icon-box">
-                    <Smartphone size={16} color="var(--accent-soft)" />
+                    <Smartphone size={16} color="var(--accent-platinum)" />
                   </div>
                   <div>
                     <h4 className="landing-pillar-title">100% Mobile-First</h4>
@@ -88,7 +100,7 @@ export const LandingPageShowcase: React.FC = () => {
 
                 <div className="landing-pillar-item">
                   <div className="landing-pillar-icon-box">
-                    <Search size={16} color="var(--accent-soft)" />
+                    <Search size={16} color="var(--accent-platinum)" />
                   </div>
                   <div>
                     <h4 className="landing-pillar-title">SEO &amp; Presença no Google</h4>
@@ -99,7 +111,7 @@ export const LandingPageShowcase: React.FC = () => {
                 </div>
               </div>
 
-              {/* Botão de Ação Direta */}
+              {/* Botão de Ação Direta em Branco/Preto de Alto Contraste */}
               <div className="landing-action-row">
                 <a
                   href="https://exemplo-landing-rouge.vercel.app/"
@@ -128,12 +140,12 @@ export const LandingPageShowcase: React.FC = () => {
                 className="landing-mockup-frame"
                 title="Clique para abrir a demonstração no ar"
               >
-                {/* Topbar do Mockup de Browser */}
+                {/* Topbar do Mockup de Browser com dots monocromáticos */}
                 <div className="landing-mockup-bar">
                   <div className="landing-mockup-dots">
-                    <span className="mockup-dot red" />
-                    <span className="mockup-dot yellow" />
-                    <span className="mockup-dot green" />
+                    <span className="mockup-dot dot-1" />
+                    <span className="mockup-dot dot-2" />
+                    <span className="mockup-dot dot-3" />
                   </div>
                   <div className="landing-mockup-address">
                     <span className="mockup-lock">🔒</span>
@@ -158,10 +170,10 @@ export const LandingPageShowcase: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Rodapé do Frame com Indicador */}
+                {/* Rodapé do Frame Monocromático */}
                 <div className="landing-mockup-footer">
                   <div className="mockup-footer-badge">
-                    <CheckCircle2 size={13} color="#22c55e" />
+                    <CheckCircle2 size={13} color="var(--accent-platinum)" />
                     <span>Design Editorial &amp; Tipografia Refinada</span>
                   </div>
                   <span className="mockup-footer-tag">Demonstração</span>
@@ -170,7 +182,7 @@ export const LandingPageShowcase: React.FC = () => {
             </div>
 
           </div>
-        </div>
+        </BorderGlow>
 
       </div>
     </section>

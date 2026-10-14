@@ -265,7 +265,7 @@ export const AppContent: React.FC = () => {
               aria-label={effectsEnabled ? "Ativar Modo Foco" : "Ativar Modo Imersivo"}
             >
               {effectsEnabled ? (
-                <Sparkles size={15} color="#38bdf8" />
+                <Sparkles size={15} color="var(--accent-platinum)" />
               ) : (
                 <Moon size={15} color="var(--text-muted)" />
               )}
@@ -312,7 +312,7 @@ export const AppContent: React.FC = () => {
               aria-label={effectsEnabled ? "Ativar Modo Foco" : "Ativar Modo Imersivo"}
             >
               {effectsEnabled ? (
-                <Sparkles size={16} color="#38bdf8" />
+                <Sparkles size={16} color="var(--accent-platinum)" />
               ) : (
                 <Moon size={16} color="var(--text-muted)" />
               )}
