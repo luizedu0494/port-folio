@@ -1,5 +1,5 @@
 import React from 'react';
-import { CheckCircle2, Zap, Sparkles } from 'lucide-react';
+import { CheckCircle2, Zap, ExternalLink } from 'lucide-react';
 import { DeveloperProfile } from '../types/portfolio';
 import { ScrambleText } from '../components/ScrambleText';
 import { SceneryMedia } from '../components/SceneryMedia';
@@ -82,26 +82,22 @@ export const About: React.FC<AboutProps> = ({ profile, onOpenDemo }) => (
           </div>
         )}
 
-        {/* Banner de Chamada para Showcase / Demo Comercial */}
+        {/* Banner de Destaque — Landing Page Comercial de Exemplo */}
         <div className="about-showcase-banner">
           <div className="about-showcase-info">
-            <span className="about-showcase-badge">Showcase Comercial</span>
+            <span className="about-showcase-badge">Landing Page Comercial</span>
             <p className="about-showcase-text">
-              Deseja ver uma demonstração de landing page moderna para estúdios e empresas de IA?
+              Conheça a <strong>ArquiVisão</strong> — landing page moderna desenvolvida para escritórios de arquitetura e interiores.
             </p>
           </div>
           <a
-            href="#demo"
+            href="https://exemplo-landing.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
             className="btn-showcase-demo"
-            onClick={(e) => {
-              if (onOpenDemo) {
-                e.preventDefault();
-                onOpenDemo();
-              }
-            }}
           >
-            <Sparkles size={14} />
-            <span>Ver Landing Page Exemplo →</span>
+            <ExternalLink size={14} />
+            <span>Ver Exemplo Online ↗</span>
           </a>
         </div>
 

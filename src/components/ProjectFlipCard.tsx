@@ -83,17 +83,19 @@ export const ProjectFlipCard: React.FC<ProjectFlipCardProps> = ({
 
       <div className="project-flip-back-footer">
         <div className="project-flip-actions">
-          <a
-            href={repoUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={handleLinkClick}
-            onPointerDown={(e) => e.stopPropagation()}
-            className="project-action-btn project-action-btn--primary"
-            aria-label={`Ver repositório do ${project.name} no GitHub`}
-          >
-            <GithubIcon size={16} /> Ver no GitHub
-          </a>
+          {project.repo ? (
+            <a
+              href={repoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={handleLinkClick}
+              onPointerDown={(e) => e.stopPropagation()}
+              className="project-action-btn project-action-btn--primary"
+              aria-label={`Ver repositório do ${project.name} no GitHub`}
+            >
+              <GithubIcon size={16} /> Ver no GitHub
+            </a>
+          ) : null}
 
           {project.demoUrl && (
             <a
@@ -103,9 +105,12 @@ export const ProjectFlipCard: React.FC<ProjectFlipCardProps> = ({
               onClick={handleLinkClick}
               onPointerDown={(e) => e.stopPropagation()}
               className="project-action-btn project-action-btn--secondary"
-              aria-label={`Acessar aplicação ${project.name}`}
+              aria-label={`Acessar ${project.name}`}
             >
-              <ExternalLink size={15} /> Demo
+              <ExternalLink size={15} />
+              {project.language.toLowerCase().includes('html') || project.id.includes('landing')
+                ? 'Ver Landing Page'
+                : 'Demo'}
             </a>
           )}
         </div>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Sparkles } from 'lucide-react';
+import { Sparkles, Moon } from 'lucide-react';
 import { DeveloperProfile, Project } from './types/portfolio';
 import { initialProfile, initialProjects } from './data/initialData';
 import { NeuralNetworkBg } from './components/NeuralNetworkBg';
@@ -13,14 +13,13 @@ import { AudioProvider, useAudio } from './context/AudioContext';
 import { initGridSystem } from './ascii/gridSystem';
 import { CosmicCometCursor } from './components/CosmicCometCursor';
 import { About } from './sections/About';
-import { Process } from './sections/Process';
 import { Projects } from './sections/Projects';
 import { Skills } from './sections/Skills';
 import { Certifications } from './sections/Certifications';
 import { Contact } from './sections/Contact';
 import { DemoStudioLanding } from './pages/DemoStudioLanding';
 
-const SECTION_IDS = ['sobre', 'processo', 'projetos', 'habilidades', 'certificacoes', 'contato'];
+const SECTION_IDS = ['sobre', 'projetos', 'habilidades', 'certificacoes', 'contato'];
 
 export const AppContent: React.FC = () => {
   const { startExperienceWithAudio } = useAudio();
@@ -201,7 +200,6 @@ export const AppContent: React.FC = () => {
   }, []);
 
   const navLinks = [
-    { id: 'processo', label: 'Processo' },
     { id: 'projetos', label: 'Projetos' },
     { id: 'habilidades', label: 'Habilidades' },
     { id: 'certificacoes', label: 'Certificados' }
@@ -254,33 +252,22 @@ export const AppContent: React.FC = () => {
             </span>
           </a>
 
-          {/* Player de Áudio & Menu Toggle visíveis no Header no Mobile */}
+          {/* Ações Mobile e Player de Áudio no Header */}
           <div className="mobile-header-actions">
-            <a
-              href="#demo"
-              className="nav-demo-badge-btn mobile-demo-badge"
-              onClick={(e) => {
-                e.preventDefault();
-                setIsMobileMenuOpen(false);
-                navigateTo('demo');
-              }}
-              title="Ver Landing Page de Exemplo para Clientes"
-            >
-              <span className="demo-live-dot" />
-              <span>Demo</span>
-            </a>
+            <AudioPlayer variant="navbar" />
 
             <button
-              className="effects-toggle-btn mobile-effects-btn"
+              className={`effects-toggle-btn mobile-effects-btn ${effectsEnabled ? 'effects-active' : 'effects-focus'}`}
               onClick={toggleEffects}
-              title={effectsEnabled ? "Modo Imersivo ativo — Clique para Modo Foco" : "Modo Foco ativo — Clique para reativar efeitos"}
-              aria-label="Alternar efeitos visuais"
+              title={effectsEnabled ? "Modo Imersivo ativo — Clique para Modo Foco (reduzir efeitos visuais)" : "Modo Foco ativo — Clique para reativar efeitos visuais"}
+              aria-label={effectsEnabled ? "Ativar Modo Foco" : "Ativar Modo Imersivo"}
             >
-              <Sparkles size={14} color={effectsEnabled ? "var(--accent-platinum)" : "var(--text-muted)"} />
-              <span className="effects-toggle-text">{effectsEnabled ? "Efeitos" : "Foco"}</span>
+              {effectsEnabled ? (
+                <Sparkles size={15} color="#38bdf8" />
+              ) : (
+                <Moon size={15} color="var(--text-muted)" />
+              )}
             </button>
-
-            <AudioPlayer variant="navbar" />
 
             <button
               className="mobile-menu-btn"
@@ -298,20 +285,6 @@ export const AppContent: React.FC = () => {
             <div className="mobile-drawer-audio-container">
               <AudioPlayer variant="drawer" />
             </div>
-
-            <a
-              href="#demo"
-              className="nav-demo-badge-btn desktop-demo-badge"
-              onClick={(e) => {
-                e.preventDefault();
-                setIsMobileMenuOpen(false);
-                navigateTo('demo');
-              }}
-              title="Ver Landing Page de Exemplo para Clientes"
-            >
-              <span className="demo-live-dot" />
-              <span>Demo: AI Studio</span>
-            </a>
 
             {navLinks.map((link) => (
               <a
@@ -331,13 +304,16 @@ export const AppContent: React.FC = () => {
             ))}
 
             <button
-              className="effects-toggle-btn desktop-effects-btn"
+              className={`effects-toggle-btn desktop-effects-btn ${effectsEnabled ? 'effects-active' : 'effects-focus'}`}
               onClick={toggleEffects}
               title={effectsEnabled ? "Modo Imersivo ativo — Clique para alternar para o Modo Foco" : "Modo Foco ativo — Clique para reativar os efeitos visuais"}
-              aria-label="Alternar efeitos visuais"
+              aria-label={effectsEnabled ? "Ativar Modo Foco" : "Ativar Modo Imersivo"}
             >
-              <Sparkles size={13} color={effectsEnabled ? "var(--accent-platinum)" : "var(--text-muted)"} />
-              <span className="effects-toggle-text">{effectsEnabled ? "Efeitos: On" : "Modo Foco"}</span>
+              {effectsEnabled ? (
+                <Sparkles size={16} color="#38bdf8" />
+              ) : (
+                <Moon size={16} color="var(--text-muted)" />
+              )}
             </button>
 
             <a
@@ -362,8 +338,7 @@ export const AppContent: React.FC = () => {
       ) : (
         <>
           <main id="conteudo-principal">
-            <About profile={profile} onOpenDemo={() => navigateTo('demo')} />
-            <Process />
+            <About profile={profile} />
             <Projects
               projects={projects}
               githubProfileUrl={profile.contacts.github}

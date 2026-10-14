@@ -149,7 +149,24 @@ export const initialProjects: Project[] = [
       'Painel mobile responsivo, com foco em usabilidade'
     ]
   },
-
+  {
+    id: 'arquivisao-landing',
+    name: 'ArquiVisão · Landing Page',
+    repo: '',
+    language: 'HTML5 / CSS3 / JavaScript',
+    featured: false,
+    demoUrl: 'https://exemplo-landing.vercel.app/',
+    imageUrl: '/images/arquivisao_preview.jpg',
+    description:
+      'Landing page comercial desenvolvida para escritório de arquitetura e design de interiores — com catálogo de projetos, tipografia editorial refinada, narrativa visual e foco direto na captação de clientes.',
+    stack: ['HTML5 Semântico', 'CSS3 Avançado', 'JavaScript', 'Design Responsivo', 'Vercel Deploy'],
+    highlights: [
+      'Design editorial elegante com foco em apresentação de projetos arquitetônicos',
+      'Estrutura pensada para retenção visual e conversão direta de clientes',
+      'Layout 100% responsivo para mobile, tablets e desktops',
+      'Deploy otimizado e hospedado na Vercel'
+    ]
+  },
   {
     id: 'decifrai',
     name: 'DecifrAI',
