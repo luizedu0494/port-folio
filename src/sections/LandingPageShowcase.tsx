@@ -6,10 +6,7 @@ import {
   Zap,
   Search,
   Smartphone,
-  CheckCircle2,
-  Database,
-  Sparkles,
-  Calendar
+  CheckCircle2
 } from 'lucide-react';
 import { SectionHeader } from '../components/SectionHeader';
 import { BorderGlow } from '../components/BorderGlow';
@@ -26,9 +23,8 @@ export const LandingPageShowcase: React.FC = () => {
         />
 
         <p className="landing-showcase-intro">
-          Desenvolvimento de páginas comerciais projetadas para <strong>valorizar marcas</strong>,{' '}
-          prender a atenção e transformar visitantes em <strong>clientes reais pelo WhatsApp</strong> — com design
-          editorial refinado, carregamento instantâneo e foco absoluto em conversão.
+          Desenvolvimento de páginas comerciais e soluções web projetadas para <strong>valorizar marcas</strong>,{' '}
+          prender a atenção e transformar visitantes em <strong>clientes reais pelo WhatsApp</strong> — desde landing pages de alta conversão até sistemas com banco de dados e agendamento.
         </p>
 
         {/* ── Card Principal com Efeito de Borda Idêntico ao Card de Habilidades ── */}
@@ -53,10 +49,7 @@ export const LandingPageShowcase: React.FC = () => {
               </h3>
 
               <p className="landing-feature-description">
-                Uma demonstração prática de como uma página web de alto padrão posiciona sua marca com
-                autoridade, atrai o público certo e transforma visitas em contatos reais. Estrutura
-                pensada para prestadores de serviços, clínicas, escritórios e empresas que desejam captar
-                clientes pelo Google e redes sociais sem perder oportunidades por lentidão ou layout amador.
+                Uma demonstração prática de como uma presença web de alto padrão posiciona sua marca com autoridade e converte visitantes em clientes reais. Desenvolvo desde <strong>landing pages de alta performance</strong> para captação imediata até <strong>sistemas completos com banco de dados</strong> e agendamento online integrado. Seja para criar sua página ou desenvolver um sistema sob medida, entre em contato para planejar seu projeto e solicitar um orçamento.
               </p>
 
               {/* Pilares Comerciais de Impacto */}
@@ -110,7 +103,7 @@ export const LandingPageShowcase: React.FC = () => {
                 </div>
               </div>
 
-              {/* Botão de Ação Direta idêntico ao CronoLab */}
+              {/* Botões de Ação Direta: Acessar Aplicação e Solicitar Orçamento */}
               <div className="landing-action-row">
                 <a
                   href="https://exemplo-landing-rouge.vercel.app/"
@@ -122,42 +115,23 @@ export const LandingPageShowcase: React.FC = () => {
                   <ExternalLink size={17} /> Acessar Aplicação
                 </a>
 
+                <a
+                  href="https://wa.me/5582999931035?text=Ol%C3%A1%20Luiz!%20Gostaria%20de%20solicitar%20um%20or%C3%A7amento%20para%20uma%20landing%20page%20ou%20sistema."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-secondary"
+                  aria-label="Solicitar orçamento para landing page ou sistema no WhatsApp"
+                >
+                  <WhatsappIcon size={16} /> Solicitar Orçamento
+                </a>
+
                 <span className="landing-url-hint">
                   exemplo-landing-rouge.vercel.app
                 </span>
               </div>
-
-              {/* ── Evolução para Sistema / Agendamento com Banco de Dados ── */}
-              <div className="landing-system-upgrade-card">
-                <div className="system-upgrade-header">
-                  <div className="system-upgrade-badge">
-                    <Database size={13} color="var(--accent-platinum)" />
-                    <span>Evolução Sob Medida</span>
-                  </div>
-                  <span className="system-upgrade-pill">Sistema &amp; Banco de Dados</span>
-                </div>
-                <h4 className="system-upgrade-title">
-                  Quer evoluir para um sistema completo?
-                </h4>
-                <p className="system-upgrade-desc">
-                  Caso seu negócio precise de mais do que uma landing page institucional, o projeto pode expandir para um <strong>sistema web sob medida</strong> — incluindo <strong>agendamento dinâmico</strong> integrado a <strong>banco de dados</strong>, painel administrativo e autenticação.
-                </p>
-                <div className="system-upgrade-action-row">
-                  <a
-                    href="https://wa.me/5582999931035?text=Ol%C3%A1%20Luiz!%20Gostaria%20de%20solicitar%20um%20or%C3%A7amento%20para%20uma%20landing%20page%20ou%20sistema%20sob%20medida."
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-secondary system-budget-btn"
-                    aria-label="Solicitar orçamento para sistema ou agendamento no WhatsApp"
-                  >
-                    <WhatsappIcon size={16} /> Solicitar Orçamento
-                  </a>
-                  <span className="system-upgrade-hint">Atendimento direto pelo WhatsApp</span>
-                </div>
-              </div>
             </div>
 
-            {/* Coluna Visual: Mockup de Navegador com Interface Renderizada */}
+            {/* Coluna Visual: Mockup de Navegador com Print Fornecido */}
             <div className="landing-feature-preview">
               <a
                 href="https://exemplo-landing-rouge.vercel.app/"
@@ -179,52 +153,15 @@ export const LandingPageShowcase: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Interface Digital Renderizada em Código (Sem foto de cliente antiga) */}
-                <div className="landing-mockup-screen">
-                  <div className="mockup-screen-hero">
-                    <div className="mockup-screen-nav">
-                      <span className="mockup-screen-logo">✦ SEU NEGÓCIO</span>
-                      <div className="mockup-screen-nav-links">
-                        <span>Serviços</span>
-                        <span>Agendamentos</span>
-                        <span>Contato</span>
-                      </div>
-                    </div>
-
-                    <div className="mockup-screen-headline">
-                      <span className="mockup-screen-eyebrow">Design Editorial &amp; Alta Conversão</span>
-                      <h5 className="mockup-screen-title">Página Comercial de Alto Padrão</h5>
-                      <p className="mockup-screen-subtitle">
-                        Estrutura pensada para atrair clientes qualificados e gerar agendamentos imediatos no WhatsApp.
-                      </p>
-                    </div>
-
-                    <div className="mockup-screen-interactive-row">
-                      <div className="screen-widget-calendar">
-                        <div className="widget-cal-header">
-                          <Calendar size={12} color="var(--accent-platinum)" />
-                          <span>Agendamento Online</span>
-                        </div>
-                        <span className="widget-cal-status">● Horários Integrados ao Banco de Dados</span>
-                      </div>
-                    </div>
-
-                    <div className="mockup-screen-features">
-                      <div className="screen-feat-chip">
-                        <span className="feat-chip-dot" />
-                        <span>Carregamento Ultra Rápido</span>
-                      </div>
-                      <div className="screen-feat-chip">
-                        <span className="feat-chip-dot" />
-                        <span>100% Mobile</span>
-                      </div>
-                      <div className="screen-feat-chip">
-                        <span className="feat-chip-dot" />
-                        <span>Banco de Dados</span>
-                      </div>
-                    </div>
-                  </div>
-
+                {/* Print Real da Demonstração */}
+                <div className="landing-mockup-image-container">
+                  <img
+                    src="/images/landing_page_preview.png"
+                    alt="Exemplo de Landing Page Profissional e Elegante"
+                    className="landing-mockup-img"
+                    loading="lazy"
+                    decoding="async"
+                  />
                   <div className="landing-mockup-overlay">
                     <span className="landing-mockup-hover-btn">
                       <ExternalLink size={16} />
