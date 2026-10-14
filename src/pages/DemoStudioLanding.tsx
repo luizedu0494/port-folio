@@ -75,7 +75,7 @@ export const DemoStudioLanding: React.FC<DemoStudioLandingProps> = ({ onBackToPo
             </button>
 
             <a
-              href="https://wa.me/5582987178952?text=Ol%C3%A1%20Luiz,%20vi%20a%20landing%20page%20de%20exemplo%20do%20Nexus%20Studio%20e%20gostaria%20de%20um%20diagn%C3%B3stico%20para%20minha%20empresa."
+              href="https://wa.me/5582999931035?text=Ol%C3%A1%20Luiz,%20vi%20a%20landing%20page%20de%20exemplo%20do%20Nexus%20Studio%20e%20gostaria%20de%20um%20diagn%C3%B3stico%20para%20minha%20empresa."
               target="_blank"
               rel="noopener noreferrer"
               className="demo-cta-hire"
@@ -122,7 +122,7 @@ export const DemoStudioLanding: React.FC<DemoStudioLandingProps> = ({ onBackToPo
 
           <div className="demo-hero-cta-group">
             <a
-              href="https://wa.me/5582987178952?text=Ol%C3%A1%20Luiz,%20gostaria%20de%20agendar%20um%20diagn%C3%B3stico%20de%20IA%20e%20Software."
+              href="https://wa.me/5582999931035?text=Ol%C3%A1%20Luiz,%20gostaria%20de%20agendar%20um%20diagn%C3%B3stico%20de%20IA%20e%20Software."
               target="_blank"
               rel="noopener noreferrer"
               className="demo-btn-primary"
@@ -288,7 +288,7 @@ export const DemoStudioLanding: React.FC<DemoStudioLandingProps> = ({ onBackToPo
 
           <div className="demo-cta-actions">
             <a
-              href="https://wa.me/5582987178952?text=Ol%C3%A1%20Luiz,%20gostaria%20de%20agendar%20um%20diagn%C3%B3stico%20de%20IA%20e%20Software%20para%20minha%20empresa."
+              href="https://wa.me/5582999931035?text=Ol%C3%A1%20Luiz,%20gostaria%20de%20agendar%20um%20diagn%C3%B3stico%20de%20IA%20e%20Software%20para%20minha%20empresa."
               target="_blank"
               rel="noopener noreferrer"
               className="demo-btn-primary"

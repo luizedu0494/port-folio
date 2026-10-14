@@ -45,13 +45,13 @@ O projeto é estruturado como uma **Single-Page Application (SPA)** de alto dese
 ## 4. Formulários & Destinos
 
 - **Formulários de envio:** Não há formulários HTML (`<form>`) com envio para backend ou banco de dados.
-- **Mecanismo de Contato:** Contato direto por links acionáveis com protocolos nativos (`https://wa.me/5582987178952`, `mailto:`, links do LinkedIn e GitHub).
+- **Mecanismo de Contato:** Contato direto por links acionáveis com protocolos nativos (`https://wa.me/5582999931035`, `mailto:`, links do LinkedIn e GitHub).
 
 ---
 
 ## 5. Integrações Externas
 
-- **WhatsApp API / Link direto:** `https://wa.me/5582987178952` com mensagem contextual de contato [`src/data/initialData.ts:L31`]
+- **WhatsApp API / Link direto:** `https://wa.me/5582999931035` com mensagem contextual de contato [`src/data/initialData.ts:L31`]
 - **LinkedIn:** `https://www.linkedin.com/in/luiz-eduardo-052385291/`
 - **GitHub:** `https://github.com/luizedu0494`
 - **E-mails:** Gmail pessoal e Outlook institucional Cesmac
