@@ -2,7 +2,6 @@ import React from 'react';
 import {
   Globe,
   ExternalLink,
-  ArrowRight,
   MessageSquare,
   Zap,
   Search,
@@ -28,18 +27,18 @@ export const LandingPageShowcase: React.FC = () => {
           editorial refinado, carregamento instantâneo e foco absoluto em conversão.
         </p>
 
-        {/* ── Card Principal com Efeito de Borda Luminosa e Flutuação ── */}
+        {/* ── Card Principal com Efeito de Borda Idêntico ao Card de Habilidades ── */}
         <BorderGlow
           className="landing-feature-card"
           edgeSensitivity={30}
-          glowColor="0 0 100"
-          backgroundColor="#090a10"
-          borderRadius={24}
-          glowRadius={42}
+          glowColor="40 80 80"
+          backgroundColor="#0d0e15"
+          borderRadius={20}
+          glowRadius={40}
           glowIntensity={1.0}
           coneSpread={25}
           animated={false}
-          colors={['#ffffff', '#cbd5e1', '#94a3b8']}
+          colors={['#38bdf8', '#c084fc', '#f472b6']}
         >
           <div className="landing-feature-grid">
 
@@ -111,18 +110,16 @@ export const LandingPageShowcase: React.FC = () => {
                 </div>
               </div>
 
-              {/* Botão de Ação Direta em Branco/Preto de Alto Contraste */}
+              {/* Botão de Ação Direta idêntico ao CronoLab */}
               <div className="landing-action-row">
                 <a
                   href="https://exemplo-landing-rouge.vercel.app/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="landing-primary-btn"
-                  aria-label="Ver demonstração da landing page no ar"
+                  className="btn-primary"
+                  aria-label="Acessar aplicação de demonstração da landing page"
                 >
-                  <ExternalLink size={16} />
-                  <span>Ver Demonstração no Ar</span>
-                  <ArrowRight size={16} className="btn-arrow" />
+                  <ExternalLink size={17} /> Acessar Aplicação
                 </a>
 
                 <span className="landing-url-hint">

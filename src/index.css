@@ -5049,12 +5049,12 @@ body::before {
   width: 100%;
   will-change: transform;
   animation: celestial-drift-a 7.5s ease-in-out infinite;
-  transition: transform var(--transition-normal);
+  transition: transform var(--transition-fast);
 }
 
 .landing-feature-card:hover {
   animation-play-state: paused;
-  transform: translateY(-4px);
+  transform: translateY(-6px);
 }
 
 .landing-feature-card .border-glow-inner {
@@ -5145,42 +5145,12 @@ body::before {
   margin: 0;
 }
 
-/* Ações em Preto e Branco de Alto Contraste */
+/* Ações com Botão Padrão (.btn-primary) */
 .landing-action-row {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   gap: 16px;
-}
-
-.landing-primary-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  background: #f8fafc;
-  color: #05060c !important;
-  font-weight: 700;
-  font-size: 0.92rem;
-  padding: 13px 24px;
-  border-radius: var(--radius-pill);
-  border: 1px solid rgba(255, 255, 255, 0.9);
-  box-shadow: 0 4px 18px rgba(255, 255, 255, 0.14);
-  text-decoration: none;
-  transition: all var(--transition-normal);
-}
-
-.landing-primary-btn:hover {
-  transform: translateY(-2px);
-  background: #ffffff;
-  box-shadow: 0 6px 26px rgba(255, 255, 255, 0.28);
-}
-
-.landing-primary-btn .btn-arrow {
-  transition: transform var(--transition-fast);
-}
-
-.landing-primary-btn:hover .btn-arrow {
-  transform: translateX(4px);
 }
 
 .landing-url-hint {
